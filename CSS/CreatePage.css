@@ -1,0 +1,455 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend+Deca:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+}
+
+.header {
+    width: 100vw;
+    height: 8vh;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    font-family: 'Figtree', serif;
+}
+
+.nav a {
+    text-decoration: none;
+    color: #ECECEC;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+.nav_logo {
+    font-weight: 200;
+}
+
+.nav_list {
+    width: 40vw;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nav ul {
+    list-style: none;
+}
+
+.main {
+    margin: 3vh 5vw 3vh;
+    height: 78vh;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main .container {
+    width: 50%;
+    height: 100%;
+    border-radius: 20px;
+    border: 1px solid #ECECEC;
+    background: transparent;
+    backdrop-filter: blur(20px);
+}
+
+.main * {
+    font-family: 'Lexend Deca';
+    font-size: 0.8em;
+    color: #FFFFFF;
+    text-align: left;
+}
+
+.container h3 {
+    text-align: center;
+    margin-top: 3em;
+}
+
+.form-content  {
+    margin-top: 3em;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-content * {
+    margin: 0.5em 0.25em 0.8em 0.25em;
+}
+
+
+.form-content input {
+    font-size: 0.95em;
+    padding-left: 1em;
+    background: transparent;
+    width: 65%;
+    height: 2.5em;
+    border-radius: 20px;
+    border: 1px solid #FFFFFF;   
+}
+
+.form-content input::placeholder {
+    color: #FFFFFF;
+}
+
+.form-content button {
+    margin-top: 1em;
+    border: 1px solid #FFFFFF;
+    border-radius: 20px;
+    text-align: center;
+    background-color: #FFFFFF;
+    color: #303548;
+    font-weight: 700;
+    height: 2.5em;
+    width: 65%;
+}
+
+.form-content button:hover {
+    background: transparent;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+
+.footer {
+    width: 100vw;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-family: 'Figtree';
+}
+
+.footer a, .footer p {
+    color: #ECECEC;
+    text-decoration: none;
+    text-align: center;
+}
+
+
+
+@media (min-height: 500px) and (max-height: 650px) {
+    .container h3 {
+        margin: 1em 0em 0em 0em;
+        font-size: 1em;
+    }
+    
+    .form-content {
+        margin: 0;
+    }
+
+    .form-content input {
+        margin: 0;
+    }
+
+    
+}
+
+
+@media (min-width: 320px) and (max-width: 400px) {    
+    .nav {
+        padding: 12px 25px 12px;
+    }
+    
+    .nav_logo {
+        margin-top: 1px;
+        font-size: 0.8em;
+    }
+
+    .nav_list {
+        width: 70vw;
+        font-size: 0.7em;
+    }
+
+    .footer {
+        font-size: 0.6em;
+    }
+
+    .main h3 {
+        font-size: 0.6em;
+    }
+
+    .main .container {
+        width: 80%;
+        height: 50%;
+    }
+
+    .form-content {
+        margin-top: 2em;
+    }
+
+    .form-content * {
+        margin: 0.25em 0.25em 0.8em 0.25em;
+    }
+
+    .form-content input {
+        height: 4em;
+        font-size: 6px;
+    }
+
+    .form-content button {
+        height: 3.5em;
+    }
+}
+
+@media (min-width: 401px) and (max-width: 475px) {
+    .nav {
+        padding: 12px 25px 12px;
+    }
+    
+    .nav_logo {
+        font-size: 1em;
+    }
+
+    .nav_list {
+        width: 65vw;
+        font-size: 0.8em;
+    }
+
+    .main h3 {
+        font-size: 0.8em;
+        margin-top: 2em;
+    }
+
+    .main .container {
+        width: 80%;
+        height: 50%;
+    }
+
+    .form-content {
+        margin-top: 2em;
+    }
+
+    .form-content * {
+        margin: 0.25em 0.25em 0.7em 0.25em;
+    }
+
+    .form-content input {
+        height: 3em;
+        font-size: 8px;
+    }
+
+    .form-content button {
+        height: 3em;
+        font-size: 1em;
+    }
+
+    .footer {
+        font-size: 0.8em;
+    }
+
+}
+
+@media (min-width: 476px) and (max-width: 599px) {
+    .nav {
+        padding: 12px 25px 12px;
+    }
+    
+    .nav_logo {
+        font-size: 1em;
+    }
+
+    .nav_list {
+        width: 65vw;
+        font-size: 1em;
+    }
+
+    .main h3 {
+        margin-top: 2em;
+    }
+
+    .main .container {
+        width: 80%;
+        height: 50%;
+    }
+
+    .form-content {
+        margin-top: 2em;
+    }
+
+    .form-content * {
+        margin: 0.25em 0.25em 0.6em 0.25em;
+    }
+
+    .form-content input {
+        height: 3em;
+        font-size: 8px;
+    }
+
+    .form-content button {
+        height: 2.5em;
+        font-size: 1.2em;
+    }
+}
+
+
+@media (min-width: 600px) and (max-width: 768px) {
+    .nav {
+        padding: 12px 25px 12px;
+    }
+    
+    .nav_logo {
+        font-size: 1em;
+    }
+
+    .nav_list {
+        width: 50vw;
+    }
+
+    .main h3 {
+        font-size: 1.2em;
+        margin-top: 2em;
+    }
+
+    .main .container {
+        width: 70%;
+        height: 70%;
+    }
+
+    .form-content {
+        margin-top: 2em;
+    }
+
+    .form-content * {
+        margin: 0.5em 0.25em 1em 0.25em;
+    }
+
+    .form-content input {
+        height: 3em;
+        font-size: 10px;
+    }
+
+    .form-content button {
+        height: 3.5em;
+        font-size: 1.2em;
+    }
+
+
+}
+
+@media (min-width: 769px) and (max-width: 920px) {
+    .nav {
+        padding: 7px 40px 7px;
+    }
+
+    .nav_logo {
+        font-size: 1.2em;
+    }
+
+    .nav_list {
+        margin-right: -40px;
+        width: 55vw;
+        font-size: 1.2em;
+    }
+
+    .main h3 {
+        font-size: 1.2em;
+        margin-top: 2em;
+    }
+
+    .main .container {
+        width: 70%;
+        height: 70%;
+    }
+
+    .form-content {
+        margin-top: 2em;
+    }
+
+    .form-content * {
+        margin: 0.5em 0.25em 0.8em 0.25em;
+    }
+
+    .form-content input {
+        height: 2.5em;
+        font-size: 12px;
+    }
+
+    .form-content button {
+        height: 3.5em;
+        font-size: 1.2em;
+    }
+
+}
+
+@media (min-width: 921px) and (max-width: 1200px) {
+    .nav {
+        padding: 7px 40px 7px;
+    }
+
+    .nav_logo {
+        font-size: 1.2em;
+    }
+
+    .nav_list {
+        margin-right: -40px;
+        width: 55vw;
+        font-size: 1.2em;
+    }
+
+    .main h3 {
+        font-size: 1.2em;
+        margin-top: 1em;
+    }
+
+    .main .container {
+        width: 70%;
+        height: 70%;
+    }
+
+    .form-content {
+        margin-top: 2em;
+    }
+
+    .form-content * {
+        margin: 0.2em 0.25em 0.8em 0.25em;
+    }
+
+    .form-content input {
+        height: 3em;
+        font-size: 12px;
+    }
+
+    .form-content button {
+        height: 3.5em;
+        font-size: 1.2em;
+    }
+
+}
+
+@media (min-width: 1201px) and (max-width: 1500px) {
+    .nav {
+        padding: 12px 40px 10px;
+    }
+
+    .nav_logo {
+        font-size: 1.2em;
+    }
+
+    .nav_list {
+        margin-right: -40px;
+        width: 55vw;
+        font-size: 1.2em;
+    }
+
+    
+    .main * {
+        font-size: 1em;
+    }
+
+    .main p {
+        font-size: 1.05em;
+    }
+}

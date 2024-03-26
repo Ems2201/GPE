@@ -89,8 +89,7 @@ a:hover {
     margin: 0.5em 0.25em 0.8em 0.25em;
 }
 
-
-.form-content input {
+.form-content input, select {
     font-size: 0.95em;
     padding-left: 1em;
     background: transparent;
@@ -100,8 +99,31 @@ a:hover {
     border: 1px solid #FFFFFF;   
 }
 
+.form-content optgroup {
+    background-color: rgba(100,43,115,1);
+}
+
+.form-content select:hover {
+    cursor: pointer;
+}
+
+.form-content option {
+    font-size: 1.5em;
+}
+
+.form-content option:hover {
+    cursor: pointer;
+}
+
 .form-content input::placeholder {
     color: #FFFFFF;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    padding: 1em 2em;
 }
 
 .form-content button {
@@ -113,7 +135,7 @@ a:hover {
     color: #303548;
     font-weight: 700;
     height: 2.5em;
-    width: 65%;
+    width: 30%;
 }
 
 .form-content button:hover {
@@ -174,7 +196,7 @@ a:hover {
         margin: 0.25em 0.25em 0.8em 0.25em;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         height: 4em;
         font-size: 6px;
     }
@@ -216,7 +238,7 @@ a:hover {
         margin: 0.25em 0.25em 0.7em 0.25em;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         height: 3em;
         font-size: 8px;
     }
@@ -263,7 +285,7 @@ a:hover {
         margin: 0.25em 0.25em 0.6em 0.25em;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         height: 3em;
         font-size: 8px;
     }
@@ -306,7 +328,7 @@ a:hover {
         margin: 0.5em 0.25em 1em 0.25em;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         height: 3em;
         font-size: 10px;
     }
@@ -352,7 +374,7 @@ a:hover {
         margin: 0.5em 0.25em 0.8em 0.25em;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         height: 2.5em;
         font-size: 12px;
     }
@@ -397,7 +419,7 @@ a:hover {
         margin: 0.8em 0.25em 0.8em 0.25em;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         height: 3em;
         font-size: 12px;
     }

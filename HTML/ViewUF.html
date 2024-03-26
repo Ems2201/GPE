@@ -8,7 +8,7 @@
     <meta name="author" content="Erick Paes">
     <meta name="description" content="Gerador de Painéis Elétricos">
     <meta name="robots" content="nofollow, noindex">
-    <link rel='stylesheet' type='text/css' media='screen' href='../CSS/style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../CSS/ViewPage.css'>
     <script src='../JS/script.js'></script>
 </head>
 <body>
@@ -26,7 +26,40 @@
         </nav>
     </header>
      <main class="main">
-        <h3 class="title-paragraph">Selecione a Unidade Funcional Desejada</h3>
+        
+        <div class="container">
+            <h3 class="title-paragraph">Selecione a Unidade Funcional Desejada</h3>
+            <form class="form" id="form">
+                <div class="form-content">
+                    <label for="name_uf"></label>
+                    <select name="" id="">
+                        <optgroup label="">
+                            <option class=".option">Partida Direta WEG</option>
+                        </optgroup>
+                        <optgroup label="">
+                            <option class=".option">Disjuntor Schneider</option>
+                        </optgroup>
+                        <optgroup label="">
+                            <option class=".option">Disjuntor ABB</option>
+                        </optgroup>
+                        <optgroup label="">
+                            <option class=".option">Partida Direta ABB</option>
+                        </optgroup>
+                    </select>
+                    
+                    <label for="type_uf"></label>
+                    <input type="text" id="type_uf" placeholder="Tipo da Unidade Funcional" readonly>
+                    <label for="height_uf"></label>
+                    <input type="text" draggable="false"id="height_uf" placeholder="Altura(mm) da Unidade Funcional" readonly>
+                    <label for="value_uf"></label>
+                    <input type="text" id="value_uf" placeholder="Potência(CV) ou Corrente(A) da UF" readonly>
+                    <div class="button-container">
+                        <button type="submit" id="update_uf">Atualizar UF</button>
+                        <button type="submit" id="delete_uf">Deletar UF</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </main>
     <footer class="footer">
         <p>Feito Por Erick Paes</p>

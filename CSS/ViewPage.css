@@ -1,12 +1,21 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend+Deca:wght@100..900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 body {
+    background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
     background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
 }
 
@@ -16,7 +25,11 @@ body {
 }
 
 .nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     list-style: none;
     font-family: 'Figtree', serif;
@@ -37,8 +50,14 @@ a:hover {
 
 .nav_list {
     width: 40vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
     justify-content: space-evenly;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 }
 
@@ -50,9 +69,15 @@ a:hover {
     margin: 3vh 5vw 3vh;
     height: 78vh;
     border-radius: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
-    align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+     align-items: center;
 }
 
 .main .container {
@@ -61,7 +86,18 @@ a:hover {
     border-radius: 20px;
     border: 1px solid #ECECEC;
     background: transparent;
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+     align-items: center;
 }
 
 .main * {
@@ -73,28 +109,34 @@ a:hover {
 
 .container h3 {
     text-align: center;
-    margin-top: 3em;
 }
 
 .form-content  {
-    margin-top: 3em;
+    margin-top: 1em;
     width: 100%;
     height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
     flex-direction: column;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 }
 
 .form-content * {
-    margin: 0.5em 0.25em 0.8em 0.25em;
+    margin: 0.5em;
 }
 
 .form-content input, select {
-    font-size: 0.95em;
+    font-size: 1em;
     padding-left: 1em;
     background: transparent;
-    width: 65%;
-    height: 2.5em;
+    width: 200px;
+    height: 3.5em;
     border-radius: 20px;
     border: 1px solid #FFFFFF;   
 }
@@ -115,15 +157,48 @@ a:hover {
     cursor: pointer;
 }
 
+.form-content input::-webkit-input-placeholder {
+    color: #FFFFFF;
+}
+
+.form-content input::-moz-placeholder {
+    color: #FFFFFF;
+}
+
+.form-content input:-ms-input-placeholder {
+    color: #FFFFFF;
+}
+
+.form-content input::-ms-input-placeholder {
+    color: #FFFFFF;
+}
+
 .form-content input::placeholder {
     color: #FFFFFF;
 }
 
 .button-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
-    width: 70%;
+    width: 350px;
     padding: 1em 2em;
+}
+
+.form-content a {
+    margin-top: 1em;
+    color: #303548;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    width: 100px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    height: 3em;
+    border: #FFFFFF 1px solid;
 }
 
 .form-content button {
@@ -134,11 +209,11 @@ a:hover {
     background-color: #FFFFFF;
     color: #303548;
     font-weight: 700;
-    height: 2.5em;
-    width: 30%;
+    height: 3em;
+    width: 100px;
 }
 
-.form-content button:hover {
+.form-content button:hover, .form-content a:hover {
     background: transparent;
     color: #FFFFFF;
     cursor: pointer;
@@ -148,8 +223,13 @@ a:hover {
 .footer {
     width: 100vw;
     height: 8vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -ms-flex-pack: distribute;
     justify-content: space-around;
     font-family: 'Figtree';
 }
@@ -180,30 +260,36 @@ a:hover {
     }
 
     .main h3 {
-        font-size: 0.6em;
-    }
-
-    .main .container {
-        width: 80%;
-        height: 50%;
-    }
-
-    .form-content {
         margin-top: 2em;
     }
 
-    .form-content * {
-        margin: 0.25em 0.25em 0.8em 0.25em;
+    .main .container {
+        height: 260px;
+        width: 260px;
+    }
+
+    .form-content {
+        margin-top: 1em;
+        width: 100%;
     }
 
     .form-content input, .form-content select {
-        height: 4em;
-        font-size: 6px;
+        width: 190px;
+        height: 3em;
+        font-size: 1em;
     }
 
-    .form-content button {
-        height: 3.5em;
+    .button-container {
+        width: 220px;
     }
+    
+    .button-container a {
+        width: 100px;
+        text-align: center;
+        padding-top: 0.6em;
+        font-size: 0.8em;
+    }
+
 }
 
 @media (min-width: 401px) and (max-width: 475px)  {
@@ -220,38 +306,43 @@ a:hover {
         font-size: 0.8em;
     }
 
-    .main h3 {
-        font-size: 0.8em;
-        margin-top: 2em;
-    }
-
-    .main .container {
-        width: 80%;
-        height: 50%;
-    }
-
-    .form-content {
-        margin-top: 2em;
-    }
-
-    .form-content * {
-        margin: 0.25em 0.25em 0.7em 0.25em;
-    }
-
-    .form-content input, .form-content select {
-        height: 3em;
-        font-size: 8px;
-    }
-
-    .form-content button {
-        height: 3em;
-        font-size: 1em;
-    }
-
     .footer {
         font-size: 0.8em;
     }
 
+    .main h3 {
+        margin-top: 0em;
+    }
+
+    .main .container {
+        height: 300px;
+        width: 300px;
+    }
+
+    .form-content {
+        margin-top: 2em;
+        width: 100%;
+    }
+
+    .form-content input, .form-content select {
+        width: 210px;
+        height: 3em;
+        font-size: 1.05em;
+        margin: 0.5em;
+    }
+
+    .button-container {
+        width: 260px;
+        font-size: 1.2em;
+        margin: 0em;
+    }
+
+    .button-container a {
+        width: 100px;
+        text-align: center;
+        padding-top: 0.7em;
+        font-size: 0.8em;
+    }
 }
 
 @media (min-width: 476px) and (max-width: 599px) {
@@ -269,30 +360,38 @@ a:hover {
     }
 
     .main h3 {
-        margin-top: 2em;
+        font-size: 1em;
+        margin-top: 0em;
     }
 
     .main .container {
-        width: 80%;
-        height: 50%;
+        height: 350px;
+        width: 350px;
     }
 
     .form-content {
         margin-top: 2em;
-    }
-
-    .form-content * {
-        margin: 0.25em 0.25em 0.6em 0.25em;
+        width: 100%;
     }
 
     .form-content input, .form-content select {
+        width: 250px;
         height: 3em;
-        font-size: 8px;
+        font-size: 1.1em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        height: 2.5em;
+    .button-container {
+        width: 300px;
         font-size: 1.2em;
+        margin: 0em;
+    }
+
+    .button-container a {
+        width: 100px;
+        text-align: center;
+        padding-top: 0.7em;
+        font-size: 0.8em;
     }
 }
 
@@ -311,34 +410,39 @@ a:hover {
     }
 
     .main h3 {
-        font-size: 1.2em;
-        margin-top: 2em;
+        font-size: 1.1em;
+        margin-top: 0em;
     }
 
     .main .container {
-        width: 70%;
-        height: 70%;
+        height: 400px;
+        width: 400px;
     }
 
     .form-content {
         margin-top: 2em;
-    }
-
-    .form-content * {
-        margin: 0.5em 0.25em 1em 0.25em;
+        width: 100%;
     }
 
     .form-content input, .form-content select {
+        width: 300px;
         height: 3em;
-        font-size: 10px;
-    }
-
-    .form-content button {
-        height: 3.5em;
         font-size: 1.2em;
+        margin: 0.5em;
     }
 
+    .button-container {
+        width: 350px;
+        font-size: 1.3em;
+        margin: 0em;
+    }
 
+    .button-container a {
+        width: 100px;
+        text-align: center;
+        padding-top: 0.7em;
+        font-size: 0.8em;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 920px) {
@@ -357,36 +461,42 @@ a:hover {
     }
 
     .main h3 {
-        font-size: 1.2em;
-        margin-top: 2em;
+        font-size: 1.1em;
+        margin-top: 0em;
     }
 
     .main .container {
-        width: 70%;
-        height: 70%;
+        height: 400px;
+        width: 400px;
     }
 
     .form-content {
         margin-top: 2em;
-    }
-
-    .form-content * {
-        margin: 0.5em 0.25em 0.8em 0.25em;
+        width: 100%;
     }
 
     .form-content input, .form-content select {
-        height: 2.5em;
-        font-size: 12px;
-    }
-
-    .form-content button {
-        height: 3.5em;
+        width: 300px;
+        height: 3em;
         font-size: 1.2em;
+        margin: 0.5em;
     }
 
+    .button-container {
+        width: 350px;
+        font-size: 1.3em;
+        margin: 0em;
+    }
+
+    .button-container a {
+        width: 100px;
+        text-align: center;
+        padding-top: 0.7em;
+        font-size: 0.8em;
+    }
 }
 
-@media (min-width: 921px) and (max-width: 1499px) {
+@media (min-width: 921px) and (max-width: 1200px) {
     .nav {
         padding: 7px 40px 7px;
     }
@@ -400,38 +510,46 @@ a:hover {
         width: 55vw;
         font-size: 1.2em;
     }
-
+    
     .main h3 {
-        font-size: 1.2em;
-        margin-top: 2em;
+        font-size: 1.1em;
+        margin-top: 0em;
     }
 
     .main .container {
-        width: 60%;
-        height: 80%;
+        height: 400px;
+        width: 400px;
     }
 
     .form-content {
         margin-top: 2em;
-    }
-
-    .form-content * {
-        margin: 0.8em 0.25em 0.8em 0.25em;
+        width: 100%;
     }
 
     .form-content input, .form-content select {
+        width: 300px;
         height: 3em;
-        font-size: 12px;
+        font-size: 1.2em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        height: 3.5em;
-        font-size: 1.2em;
+    .button-container {
+        width: 350px;
+        font-size: 1.3em;
+        margin: 0em;
+    }
+
+    .button-container a {
+        width: 100px;
+        text-align: center;
+        padding-top: 0.7em;
+        font-size: 0.8em;
     }
 
 }
 
-@media (min-width: 1501px) and (max-width: 2000px) {
+
+@media (min-width: 1201px) and (max-width: 1600px) {
     .nav {
         padding: 12px 40px 10px;
     }
@@ -446,385 +564,41 @@ a:hover {
         font-size: 1.2em;
     }
 
-    .main .container {
-        height: 70%;
-    }
-
-    .main .container h3 {
-        font-size: 1.8em;
-    }
-
-    .form-content {
-        margin-top: 3em;
-    }
-
-    .form-content * {
-        margin: 0.2em 0.25em 0.8em 0.25em;
-    }
-
-    .form-content input {
-        height: 3em;
-        font-size: 16px;
-    }
-
-    .form-content button {
-        height: 3.5em;
-        font-size: 1.5em;
-    }
-
-}
-
-@media (min-width: 1201px) and (max-width: 1500px) {
-    .nav {
-        padding: 12px 40px 10px;
-    }
-
-    .nav_logo {
-        font-size: 1.2em;
-    }
-
-    .nav_list {
-        margin-right: -40px;
-        width: 55vw;
-        font-size: 1.2em;
+    .main h3 {
+        font-size: 1.4em;
+        margin-top: 2em;
     }
 
     .main .container {
-        height: 80%;
-    }
-
-    .main .container h3 {
-        margin-top: 1.2em;
-        font-size: 1.8em;
+        height: 400px;
+        width: 450px;
     }
 
     .form-content {
         margin-top: 1em;
-    }
-
-    .form-content * {
-        margin: 1.5em 0.25em 0.25em;
-    }
-
-    .form-content input {
-        height: 3em;
-        font-size: 1.5em;
-    }
-
-    .form-content button {
-        height: 3.5em;
-        font-size: 1.5em;
-    }
-
-}
-
-
-@media (max-height: 580px) and (min-width: 320px) {
-    .main .container * {
-        margin: 0.4em;
-    }
-
-    .main .container h3 {
-        margin-top: 1.8em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-}
-
-
-@media (max-height: 580px) and (min-width: 400px) {
-    .main .container * {
-        margin: 0.25em;
-    }
-
-    .main .container h3 {
-        margin-top: 1.8em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-}
-
-
-@media (max-height: 580px) and (min-width: 601px) {
-    .main .container * {
-        margin: 0.25em;
-    }
-
-    .main .container h3 {
-        margin-top: 2.2em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-}
-
-
-@media (max-height: 580px) and (min-width: 769px) {
-    .main .container {
-        height: 80%;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 1.8em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-}
-
-
-@media (max-height: 700px) and (min-width: 1200px) {
-    .main .container {
-        height: 85%;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 3em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-
-@media (min-height: 701px) and (min-width: 320px) {
-    .main .container {
-        height: 35%;
         width: 100%;
     }
 
-    .button-container {
-        padding: 0 0.2em;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 3em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-
-@media (min-height: 701px) and (min-width: 401px) {
-    .main .container {
-        height: 38%;
-        width: 90%;
-    }
-
-    .button-container {
-        padding: 0 0.2em;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 3em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-@media (min-height: 701px) and (min-width: 600px) {
-    .main .container {
-        height: 48%;
-        width: 90%;
-    }
-
-    .button-container {
-        padding: 0 0.2em;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 3em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-@media (min-height: 701px) and (min-width: 700px) {
-    .main .container {
-        height: 48%;
-        width: 70%;
-    }
-
-    .button-container {
-        padding: 0 0.2em;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 3em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-@media (min-height: 701px) and (min-width: 921px) {
-    .main .container {
-        height: 52%;
-        width: 60%;
-    }
-
-    .button-container {
-        padding: 0 0.2em;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 3em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-@media (min-height: 701px) and (min-width: 921px) {
-    .main .container {
-        height: 60%;
-        width: 55%;
-    }
-
-    .button-container {
-        padding: 0 0.2em;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 3em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-@media (max-height: 650px) and (min-width: 1200px) {
-    .main .container {
-        height: 85%;
-    }
-    
-    .main .container * {
-        margin: 0.5em;
-    }
-
-    .main .container h3 {
-        margin-top: 1.5em;
-    }
-
-    .form-content input {
-        margin: 0;
-    }
-
-    
-}
-
-
-
-@media (min-width: 1501px) and (max-width: 2600px) {
-    .nav {
-        padding: 12px 40px 10px;
-    }
-
-    .nav_logo {
-        font-size: 2.5em;
-        padding-left: 1.5em;
-    }
-
-    .nav_list {
-        margin-right: -40px;
-        width: 55vw;
-        font-size: 2.5em;
-    }
-
-    .main .container {
-        height: 70%;
-    }
-
-    .main .container h3 {
-        font-size: 3em;
-    }
-
-    .form-content {
-        margin-top: 3em;
-    }
-
-    .form-content * {
-        margin: 0.8em 0.25em 0.8em 0.25em;
-    }
-
-    .form-content input {
+    .form-content input, .form-content select {
+        width: 350px;
         height: 3em;
-        font-size: 3em;
+        font-size: 1.5em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        height: 2.5em;
-        font-size: 3em;
-    }
-
-    .footer * {
+    .button-container {
+        width: 410px;
         font-size: 1.5em;
     }
 
+    .button-container button {
+        width: 150px;
+    }
+
+    .button-container a {
+        width: 150px;
+        text-align: center;
+        padding-top: 7px;
+        font-size: 0.8em;
+    }
 }

@@ -82,16 +82,22 @@ a:hover {
 
 .main .container {
     width: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     height: 100%;
     border-radius: 20px;
     border: 1px solid #ECECEC;
     background: transparent;
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+     align-items: center;
 }
 
 .main * {
@@ -106,7 +112,7 @@ a:hover {
 }
 
 .form-content  {
-    margin-top: 3em;
+    margin-top: 1em;
     width: 100%;
     height: 100%;
     display: -webkit-box;
@@ -121,19 +127,23 @@ a:hover {
     align-items: center;
 }
 
-.form-content input {
-    font-size: 0.95em;
+.form-content * {
+    margin: 0.5em;
+}
+
+.form-content input, select {
+    font-size: 1em;
     padding-left: 1em;
     background: transparent;
-    width: 100px;
-    margin: 0.5em;
-    height: 2.5em;
+    width: 200px;
+    height: 3.5em;
     border-radius: 20px;
     border: 1px solid #FFFFFF;   
 }
 
 .form-content optgroup {
     background-color: rgba(100,43,115,1);
+    width: 300px;
 }
 
 .form-content select:hover {
@@ -142,6 +152,7 @@ a:hover {
 
 .form-content option {
     font-size: 1.5em;
+    width: 300px;
 }
 
 .form-content option:hover {
@@ -174,12 +185,12 @@ a:hover {
     display: flex;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
+    width: 350px;
     padding: 1em 2em;
 }
 
-.form-content button {
+.form-content button, .form-content a {
     margin-top: 1em;
     border: 1px solid #FFFFFF;
     border-radius: 20px;
@@ -187,8 +198,16 @@ a:hover {
     background-color: #FFFFFF;
     color: #303548;
     font-weight: 700;
-    height: 2.5em;
-    width: 100%;
+    height: 3em;
+    width: 100px;
+}
+
+.form-content a {
+    padding: 0;
+    margin-top: 0.5em;
+    height: 100%;
+    background: transparent;
+    border: none;
 }
 
 .form-content button:hover {
@@ -237,23 +256,35 @@ a:hover {
         font-size: 0.6em;
     }
 
+    .main h3 {
+        margin-top: 2em;
+        font-size: 0.7em;
+    }
+
     .main .container {
         height: 260px;
         width: 260px;
     }
 
     .form-content {
-        margin-top: 2em;
+        margin-top: 1em;
         width: 100%;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         width: 190px;
-        margin: 0.9em;
+        height: 3em;
+        font-size: 1em;
     }
 
-    .form-content button {
-        width: 100px;
+    .button-container {
+        width: 220px;
+    }
+    
+    .button-container a button {
+        width: 90px;
+        margin-top: 0.57em;
+        height: 3.8108em;
     }
 }
 
@@ -275,13 +306,14 @@ a:hover {
         font-size: 0.8em;
     }
 
+    .main h3 {
+        margin-top: 0em;
+        font-size: 0.8em;
+    }
+
     .main .container {
         height: 300px;
         width: 300px;
-    }
-
-    .main .container h3 {
-        font-size: 1.1em;
     }
 
     .form-content {
@@ -289,15 +321,21 @@ a:hover {
         width: 100%;
     }
 
-    .form-content input {
-        width: 240px;
-        font-size: 1.2em;
-        margin: 0.7em;
+    .form-content input, .form-content select {
+        width: 210px;
+        height: 3em;
+        font-size: 1.05em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        width: 150px;
+    .button-container {
+        width: 260px;
         font-size: 1.2em;
+        margin: 0em;
+    }
+
+    .button-container button {
+        width: 140px;
     }
 
 }
@@ -316,13 +354,14 @@ a:hover {
         font-size: 1em;
     }
 
+    .main h3 {
+        font-size: 0.9em;
+        margin-top: 1.5em;
+    }
+
     .main .container {
         height: 350px;
         width: 350px;
-    }
-
-    .main .container h3 {
-        font-size: 1.3em;
     }
 
     .form-content {
@@ -330,16 +369,23 @@ a:hover {
         width: 100%;
     }
 
-    .form-content input {
-        width: 260px;
-        font-size: 1.3em;
-        margin: 0.9em;
+    .form-content input, .form-content select {
+        width: 250px;
+        height: 3em;
+        font-size: 1.1em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        width: 180px;
-        font-size: 1.3em;
+    .button-container {
+        width: 300px;
+        font-size: 1.2em;
+        margin: 0em;
     }
+
+    .button-container button {
+        width: 140px;
+    }
+    
 }
 
 
@@ -356,13 +402,14 @@ a:hover {
         width: 50vw;
     }
 
-    .main .container {
-        height: 350px;
-        width: 400px;
+    .main h3 {
+        font-size: 1em;
+        margin-top: 0em;
     }
-    
-    .main .container h3 {
-        font-size: 1.5em;
+
+    .main .container {
+        height: 400px;
+        width: 400px;
     }
 
     .form-content {
@@ -370,15 +417,21 @@ a:hover {
         width: 100%;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         width: 300px;
-        font-size: 1.5em;
-        margin: 0.9em;
+        height: 3em;
+        font-size: 1.2em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        width: 220px;
+    .button-container {
+        width: 350px;
         font-size: 1.3em;
+        margin: 0em;
+    }
+
+    .button-container button {
+        width: 180px;
     }
 }
 
@@ -397,18 +450,14 @@ a:hover {
         font-size: 1.2em;
     }
 
-    .main .container {
-        height: 350px;
-        width: 350px;
+    .main h3 {
+        font-size: 1em;
+        margin-top: 0em;
     }
-    
+
     .main .container {
-        height: 350px;
+        height: 400px;
         width: 400px;
-    }
-    
-    .main .container h3 {
-        font-size: 1.5em;
     }
 
     .form-content {
@@ -416,16 +465,23 @@ a:hover {
         width: 100%;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         width: 300px;
-        font-size: 1.5em;
-        margin: 0.7em;
+        height: 3em;
+        font-size: 1.2em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        width: 220px;
+    .button-container {
+        width: 350px;
         font-size: 1.3em;
+        margin: 0em;
     }
+
+    .button-container button {
+        width: 180px;
+    }
+    
 }
 
 @media (min-width: 921px) and (max-width: 1200px) {
@@ -442,19 +498,15 @@ a:hover {
         width: 55vw;
         font-size: 1.2em;
     }
+    
+    .main h3 {
+        font-size: 1em;
+        margin-top: 0em;
+    }
 
     .main .container {
-        height: 350px;
-        width: 350px;
-    }
-    
-    .main .container {
-        height: 350px;
+        height: 400px;
         width: 400px;
-    }
-    
-    .main .container h3 {
-        font-size: 1.5em;
     }
 
     .form-content {
@@ -462,19 +514,24 @@ a:hover {
         width: 100%;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
         width: 300px;
-        font-size: 1.5em;
-        margin: 0.7em;
+        height: 3em;
+        font-size: 1.2em;
+        margin: 0.5em;
     }
 
-    .form-content button {
-        width: 220px;
+    .button-container {
+        width: 350px;
         font-size: 1.3em;
+        margin: 0em;
     }
-    
 
+    .button-container button {
+        width: 180px;
+    }
 }
+
 
 @media (min-width: 1201px) and (max-width: 1600px) {
     .nav {
@@ -491,29 +548,35 @@ a:hover {
         font-size: 1.2em;
     }
 
-    .main .container {
-        height: 400px;
-        width: 500px;
+    .main h3 {
+        font-size: 1.2em;
+        margin-top: 2em;
     }
 
-    .main .container h3 {
-        font-size: 1.8em;
+    .main .container {
+        height: 400px;
+        width: 450px;
     }
 
     .form-content {
+        margin-top: 1em;
         width: 100%;
     }
 
-    .form-content input {
+    .form-content input, .form-content select {
+        width: 350px;
         height: 3em;
-        width: 200%;
         font-size: 1.5em;
-        margin: 0.7em;
+        margin: 0.5em;
     }
 
-    .form-content button {
+    .button-container {
+        width: 410px;
         font-size: 1.5em;
-        width: 100%;
+    }
+
+    .button-container button {
+        width: 200px;
     }
 
 }

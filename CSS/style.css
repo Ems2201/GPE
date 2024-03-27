@@ -3,10 +3,12 @@
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 body {
+    background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
     background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
 }
 
@@ -16,7 +18,11 @@ body {
 }
 
 .nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
     justify-content: space-between;
     list-style: none;
     font-family: 'Figtree', serif;
@@ -37,8 +43,14 @@ a:hover {
 
 .nav_list {
     width: 40vw;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
     justify-content: space-evenly;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
 }
 
@@ -69,8 +81,13 @@ a:hover {
 .footer {
     width: 100vw;
     height: 8vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
+    -ms-flex-pack: distribute;
     justify-content: space-around;
     font-family: 'Figtree';
 }
@@ -258,20 +275,6 @@ a:hover {
         font-size: 1.05em;
     }
 }
-
-
-@media (min-height: 500px) and (max-height: 550px) {
-    
-
-    
-}
-
-@media (min-height: 551px) and (max-height: 600px) {
-    
-
-    
-}
-
 
 @media (min-width:767px) and (max-height: 650px) {
     .main p {

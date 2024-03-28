@@ -11,7 +11,7 @@
     margin: 0;
     padding: 0;
     -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
@@ -253,7 +253,7 @@ a:hover {
     }
 
     .form-content button {
-        width: 100px;
+        width: 130px;
     }
 }
 
@@ -296,7 +296,7 @@ a:hover {
     }
 
     .form-content button {
-        width: 150px;
+        width: 180px;
         font-size: 1.2em;
     }
 
@@ -337,7 +337,7 @@ a:hover {
     }
 
     .form-content button {
-        width: 180px;
+        width: 210px;
         font-size: 1.3em;
     }
 }
@@ -377,7 +377,7 @@ a:hover {
     }
 
     .form-content button {
-        width: 220px;
+        width: 250px;
         font-size: 1.3em;
     }
 }
@@ -423,7 +423,7 @@ a:hover {
     }
 
     .form-content button {
-        width: 220px;
+        width: 250px;
         font-size: 1.3em;
     }
 }
@@ -469,7 +469,7 @@ a:hover {
     }
 
     .form-content button {
-        width: 220px;
+        width: 250px;
         font-size: 1.3em;
     }
     
@@ -513,7 +513,12 @@ a:hover {
 
     .form-content button {
         font-size: 1.5em;
-        width: 100%;
+        width: 110%;
     }
 
 }
+
+.form-content .error {
+    border: 1px solid red;
+}
+

@@ -12,7 +12,6 @@ form.addEventListener("submit", (event) => {
     checkInputType();
     checkInputHeight();
     checkInputValue();
-    validateButton();
 })
 
 function checkInputName() {
@@ -45,6 +44,7 @@ function checkInputHeight() {
     if (heightUFvalue === "") {
         errorInput(heightUF, "Preencha a Altura da UF!")
     }
+
     else {
         const formItem = heightUF;
         formItem.className = "input"
@@ -64,23 +64,35 @@ function checkInputValue() {
     }
 }
 
-function validateButton() {
-    if (nameUF.value != "" && typeUF.value != "" && heightUF.value != "" && valueUF.value != "") {
-        submitUF.textContent = "Cadastrado com Sucesso";
+function errorInput(input, message) {
+    const formItem = input.parentElement;
+    const inputs = formItem.querySelector(".input");
+
+    input.className = "error input";
+    
+    input.placeholder = message;
+}
+
+function cadastrarUF() {
+    if (nameUF.value != "" && typeUF.value != "" && heightUF.value != "" && heightUF.value != Number && valueUF.value != "") {
+        submitUF.textContent = "Cadastrando UF...";
+        
+        let UF = JSON.parse(localStorage.getItem('form') || '[]');
+
+        UF.push({
+            name: nameUF.value,
+            type: typeUF.value,
+            height: heightUF.value,
+            value: valueUF.value
+        });
+
+        localStorage.setItem('form', JSON.stringify(UF));
+
+        setTimeout(() => {
+            window.location.href = '../HTML/ViewUF.html';
+        }, 2500)
     } 
     else {
         submitUF.textContent = "Preencha todos os campos!";
     }
 }
-
-function errorInput(input, message) {
-    const formItem = input.parentElement;
-    const inputs = formItem.querySelectorAll("input");
-
-    inputs.forEach((input) => {
-        input.className = "input error";
-    });
-    
-    input.placeholder = message;
-}
-

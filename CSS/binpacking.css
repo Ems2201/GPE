@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&family=Lexend+Deca:wght@100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: 'Lexend Deca';
+}
+
+body {
+    background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    background-color: white;
+    border-radius: 20px ;
+    width: 620px;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+label {
+    font-size: 0.7em;    
+    display: block;
+}
+
+input {
+    width: 400px;
+    border-radius: 20px;
+    border: 1px solid black;
+    height: 30px;
+    padding: 5px 10px;
+    margin-top: 10px;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+h1 {
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 2em;
+    color: rgba(100,43,115,1);
+}
+
+#bin {
+    display: flex;
+    height: 280px;
+}
+
+
+.bins {
+    width: 100px;
+    height: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px solid black;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+button {
+    width: 180px;
+    margin: 10px;
+    font-size: 0.7em;
+    text-align: center;
+    height: 30px;
+    border: 2px solid rgba(100,43,115,1);
+    border-radius: 30px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+    color: white;
+    border: 2px solid black;
+}
+
+.item {
+    font-size: 0.7em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: blueviolet;
+    border: 1px solid black;
+    height: 40px;
+}
+
+@media (min-width: 320px) AND (max-width: 375px) {
+
+    .container {
+        width: 300px;
+        height: 400px;
+    }
+
+    h1 {
+        margin-top: 10px;
+        font-size: 1.2em;
+    }
+
+    label {
+        margin-top: 10px;
+        font-size: 0.5em;
+    }
+
+    input {
+        width: 220px;
+        font-size: 0.5em;
+    }
+
+    button {
+        margin-top: 0px;
+        width: 80px;
+        font-size: 0.4em;
+    }
+
+    #bin {
+        height: 200px;
+        margin-bottom: 30px;
+    }
+    .bins {
+        margin: 10px;
+        height: 200px;
+        width: 70px;
+        font-size: 0.7em;
+    }
+
+    .item {
+        height: 30px;
+    }
+}

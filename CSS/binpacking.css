@@ -53,8 +53,9 @@
     }
 
     .container {
-        background-color: white;
-        border-radius: 20px ;
+        background-color: transparent;
+        border-radius: 20px;
+        border: 1px solid white;
         width:  620px;
         height: 505px;
         margin: 0;
@@ -71,6 +72,8 @@
         -webkit-box-pack: center;
         -ms-flex-pack: center;
         justify-content: center;
+        backdrop-filter: blur(100%);
+
     }
 
     .content {
@@ -91,6 +94,7 @@
     }
 
     label {
+        color: white;
         font-size: 1em;    
         display: block;
     }
@@ -98,9 +102,17 @@
     input {
         width: 500px;
         border-radius: 20px;
-        border: 1px solid black;
+        color: white;
+        background-color: transparent;
+        border: 1px solid white;
         padding: 10px;
         margin-top: 10px;
+        font-family: 'Lexend Deca';
+    }
+
+    input::placeholder {
+        color: white;
+        font-family: 'Lexend Deca';
     }
 
     input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
@@ -110,7 +122,9 @@
     h1 {
         font-family: 'Lexend Deca', sans-serif;
         font-size: 2em;
-        color: rgba(100,43,115,1);
+        color: white;
+        margin-top: 0;
+        margin-bottom: 1px;
     }
 
     #bin {
@@ -124,10 +138,10 @@
 
 
     .bins {
-        width: 100px;
+        width: 40px;
         height: 100%;
         margin: auto 10px;
-        border: 1px solid black;
+        border: 1px solid white;
         padding: 0;
         box-sizing: border-box;
     }
@@ -150,16 +164,17 @@
         font-family: 'Lexend Deca';
         text-align: center;
         height: 30px;
-        border: 2px solid rgba(100,43,115,1);
+        font-weight: 400;
+        background-color: white;
+        border: 1px solid black;
         border-radius: 30px;
     }
 
     button:hover {
         cursor: pointer;
-        background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
-        background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+        background: transparent;
         color: white;
-        border: 2px solid black;
+        border: 1px solid white;
     }
 
     .item {
@@ -175,7 +190,7 @@
         justify-content: center;
         color: white;
         background-color: blueviolet;
-        border: 1px solid black;
+        border: 1px solid white;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
@@ -183,7 +198,7 @@
 
     @media (min-width: 320px) and (max-width: 375px) {
         .container {
-            width: 290px;
+            width: 300px;
             height: 420px;
         }
 
@@ -210,7 +225,7 @@
         }
 
         .bins {
-            width: 70px;
+            width: 17px;
             font-size: 1em;
         }
 
@@ -259,7 +274,7 @@
         }
 
         .bins {
-            width: 80px;
+            width: 20px;
             font-size: 1em;
         }
 
@@ -308,7 +323,7 @@
         }
 
         .bins {
-            width: 75px;
+            width: 30px;
             font-size: 1em;
         }
 

@@ -46,9 +46,9 @@ a:hover {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: space-evenly;
-    -ms-flex-pack: space-evenly;
-    justify-content: space-evenly;
+    -webkit-box-pack: space-around;
+    -ms-flex-pack: space-around;
+    justify-content: space-around;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -61,6 +61,7 @@ a:hover {
 .main {
     margin: 3vh 5vw 3vh;
     height: 78vh;
+    width: 90vw;
     background: #ECECEC;
     border-radius: 20px;
     padding: 1.5em;
@@ -115,7 +116,7 @@ body {
     }
 
     .nav_list {
-        width: 70vw;
+        width: 40vw;
         font-size: 0.7em;
     }
 
@@ -142,7 +143,7 @@ body {
     }
 
     .nav_list {
-        width: 65vw;
+        width: 45vw;
         font-size: 0.8em;
     }
 
@@ -170,7 +171,7 @@ body {
     }
 
     .nav_list {
-        width: 65vw;
+        width: 45vw;
         font-size: 1em;
     }
 
@@ -194,7 +195,7 @@ body {
     }
 
     .nav_list {
-        width: 50vw;
+        width: 45vw;
     }
 
     .main * {
@@ -217,7 +218,7 @@ body {
 
     .nav_list {
         margin-right: -40px;
-        width: 55vw;
+        width: 45vw;
         font-size: 1.2em;
     }
 
@@ -242,7 +243,7 @@ body {
 
     .nav_list {
         margin-right: -40px;
-        width: 55vw;
+        width: 35vw;
         font-size: 1.2em;
     }
 
@@ -256,7 +257,7 @@ body {
     }
 }
 
-@media (min-width: 1201px) and (max-width: 1500px) {
+@media (min-width: 1201px) and (max-width: 2000px) {
     .nav {
         padding: 12px 40px 10px;
     }
@@ -267,7 +268,7 @@ body {
 
     .nav_list {
         margin-right: -40px;
-        width: 55vw;
+        width: 30vw;
         font-size: 1.2em;
     }
 

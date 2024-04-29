@@ -43,6 +43,8 @@ random.addEventListener('click', () => {
     location.reload();
 })
 
+
+
 // Função AlgoritmofirstFit
 function algoritmofirstFit() {
     // Pegue os valores do formulário
@@ -51,10 +53,11 @@ function algoritmofirstFit() {
     let inputValue = input.value.split(',');
     // Transforma cada valor em número e tire os espaços em branco
     inputValue = inputValue.map(value => parseFloat(value.trim()));
-
     // Defina a altura da Coluna e Escala dela para as
-    let columnCapacity = 20;
+    let columnCapacity = 1800;
     let scale = columnCapacity/280;
+    inputValue.sort((a, b) => b - a);
+
 
     // Inicialza a Lista Vazia de Colunas
     let columns = [];
@@ -129,9 +132,9 @@ function algoritmobestFit() {
     let inputValue = input.value.split(',');
     // Transforma cada valor em número e tire os espaços em branco
     inputValue = inputValue.map(value => parseFloat(value.trim()));
-    
+
     // Defina a altura da Coluna e Escala dela para as
-    let columnCapacity = 20;
+    let columnCapacity = 1800;
     let scale = columnCapacity/280;
     
     // Inicialza a Lista Vazia de Colunas
@@ -142,6 +145,7 @@ function algoritmobestFit() {
         let uf = inputValue[i];
         let bestColumnIndex = -1;
         let minWaste = Number.MAX_VALUE;
+     
 
         for (let j = 0; j < columns.length; j++) {
             let column = columns[j];
@@ -163,8 +167,8 @@ function algoritmobestFit() {
             };
             columns.push(newColumn);
         }
+        
     }
-
     // Pegue no Site o Container Invísivel de Colunas
     let container = document.getElementById('bin');
     
@@ -203,7 +207,7 @@ function algoritmobestFit2() {
     inputValue.sort((a, b) => b - a);
 
     // Defina a altura da Coluna e Escala dela para as
-    let columnCapacity = 20;
+    let columnCapacity = 1800;
     let scale = columnCapacity/280;
     
     // Inicialza a Lista Vazia de Colunas
@@ -214,7 +218,7 @@ function algoritmobestFit2() {
         let uf = inputValue[i];
         let bestColumnIndex = -1;
         let minWaste = Number.MAX_VALUE;
-
+        
         for (let j = 0; j < columns.length; j++) {
             let column = columns[j];
             if (column.currentCapacity + uf <= columnCapacity) {

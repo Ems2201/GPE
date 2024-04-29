@@ -8,7 +8,8 @@
     <meta name="author" content="Erick Paes">
     <meta name="description" content="Gerador de Painéis Elétricos">
     <meta name="robots" content="nofollow, noindex">
-    <link rel='stylesheet' type='text/css' media='screen' href='../CSS/style.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../CSS/panel.css'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <script src='../JS/script.js'></script>
 </head>
 <body>
@@ -17,21 +18,89 @@
             <div class="nav_logo">
                 <a href="./HomePage.html" class="title"><h1>GPE</h1></a>
             </div>
-                <ul class="nav_list">
-                    <li><a href="./CreateUF.html" class="nav_link">Criar UF</a></li>              
-                    <li><a href="./ViewUF.html" class="nav_link">Ver UF</a></li>          
+                <ul class="nav_list">       
                     <li><a href="./CreatePanel.html" class="nav_link">Criar Painel</a></li>
                     <li><a href="./ViewPanel.html" class="nav_link">Ver Painel</a></li>             
                 </ul>
         </nav>
     </header>
      <main class="main">
-        <h3 class="title-paragraph">Insira as Unidades Funcionais</h3>
-    </main>
+            <h3 class="title-paragraph">Criar Painel</h3>
+        <form action="" id="form" class="form">
+            <div class="content">
+                <div class="form-content">
+                    <label for="select">Selecione o Fabricante</label>
+                    <select name="select" class="input">
+                        <optgroup>
+                            <option value="" class="option">WEG</option>
+                            <option value="" class="option">ABB</option>
+                            <option value="" class="option">SCHNEIDER</option>
+                            <option value="" class="option">SIEMENS</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+                 </div>
+            <div class="content">
+            <div class="form-content">
+                <label for="select">Selecione a unidade Funcional</label>
+                <select name="select" class="input">
+                    <optgroup>
+                        <option value="" class="option">Partida Direta</option>
+                        <option value="" class="option">Partida Reversora</option>
+                        <option value="" class="option">Disjuntor</option>
+                        <option value="" class="option">Alimentador</option>
+                        <option value="" class="option">Inversor de Frequência</option>
+                        <option value="" class="option">Soft-starter</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-content">
+                <label for="name">Valor</label>
+                <input type="text" class="input" id="name" placeholder="Digite o Valor do Painel">
+            </div>
+            <!-- <div class="form-content">
+                <label for="height">Altura</label>
+                <input name="height" type="number" class="input" readonly placeholder="Digite o valor da Potência ou Corrente">
+            </div> -->
+            <div class="form-content">
+                <label for="quantity">Quantidade</label>
+                <input name="quantity"type="number" class="input" placeholder="Digite a Quantidade">
+            </div>
+            <div class="form-content" id="btn">
+                <button class="button" id="button"> Adicionar UF</button>
+                <button class="button" id="button"> Cadastrar Painel</button>
+            </div>
+            </div>
+        </form>
+        <div class="content">
+            <table class="uf-list">
+                <thead>
+                    <tr>
+                        <th>Fabricante</th>
+                        <th>Unidade Funcional</th>
+                        <th>Valor</th>
+                        <th>Quantidade</th>
+                        <th>Remover UF</th>   
+                    </tr>
+                    </thead>
+                <tbody>
+                    
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total de Unidades Funcionais</td>
+                        <td>8</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </main> 
     <footer class="footer">
         <p>Feito Por Erick Paes</p>
         <p><a href="mailto:Ems2201@outlook.com" target="_blank">Contato</a></p>
         <p><a href="https://sor.ifsp.edu.br/" target="_blank">Conheça o IFSP Sorocaba</a></p>
     </footer>  
+    <script src="../JS/CreatePanel.js"></script>
 </body>
 </html>

@@ -34,6 +34,7 @@
     .main {
         background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
         background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+        background-size: cover;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
@@ -72,7 +73,7 @@
         -webkit-box-pack: center;
         -ms-flex-pack: center;
         justify-content: center;
-        backdrop-filter: blur(100%);
+        backdrop-filter: blur(10px);
 
     }
 

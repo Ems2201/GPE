@@ -336,7 +336,7 @@ function algoritmobestFit() {
     // Para cada UF menor que o total de UFs
     for (let i = 0; i < inputValue.length; i++) {
         let uf = inputValue[i];
-        
+
         let bestColumnIndex = -1;
         let minWaste = Number.MAX_VALUE;
      

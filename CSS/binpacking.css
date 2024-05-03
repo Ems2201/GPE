@@ -226,7 +226,7 @@
         }
 
         .bins {
-            width: 25px;
+            width: 30px;
             font-size: 1em;
         }
 
@@ -234,7 +234,6 @@
             height: 22px;
             width: 45px;
             margin: 10px 2px;
-            padding-bottom: 1px;
             text-align: center;
             font-size: 0.4em;
         }

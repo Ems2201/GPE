@@ -30,8 +30,9 @@
             <div class="content">
                 <div class="form-content">
                     <label for="select">Selecione o Fabricante</label>
-                    <select name="select" class="input">
+                    <select name="select" class="input" id="fabricante">
                         <optgroup>
+                            <option value="" class="option" hidden></option>
                             <option value="" class="option">WEG</option>
                             <option value="" class="option">ABB</option>
                             <option value="" class="option">SCHNEIDER</option>
@@ -43,33 +44,30 @@
                  </div>
             <div class="content">
             <div class="form-content">
-                <label for="select">Selecione a unidade Funcional</label>
-                <select name="select" class="input">
+                <label for="select">Selecione a Unidade Funcional</label>
+                <select name="select" class="input" id="unidadeFuncional">
                     <optgroup>
-                        <option value="" class="option">Partida Direta</option>
-                        <option value="" class="option">Partida Reversora</option>
-                        <option value="" class="option">Disjuntor</option>
-                        <option value="" class="option">Alimentador</option>
-                        <option value="" class="option">Inversor de Frequência</option>
-                        <option value="" class="option">Soft-starter</option>
+                        <option value="" class="option" hidden></option>
+                        <option value="PTDD" class="option">Partida Direta</option>
+                        <option value="PTDR" class="option">Partida Reversora</option>
+                        <option value="DISJ" class="option">Disjuntor</option>
+                        <option value="ALI" class="option">Alimentador</option>
+                        <option value="INV" class="option">Inversor de Frequência</option>
+                        <option value="SOFT" class="option">Soft-starter</option>
                     </optgroup>
                 </select>
             </div>
             <div class="form-content">
-                <label for="name">Valor</label>
-                <input type="text" class="input" id="name" placeholder="Digite o Valor do Painel">
+                <label id="label" for="valor">Valor</label>
+                <input type="text" class="input" id="valor" placeholder="Digite o Valor da UF">
             </div>
-            <!-- <div class="form-content">
-                <label for="height">Altura</label>
-                <input name="height" type="number" class="input" readonly placeholder="Digite o valor da Potência ou Corrente">
-            </div> -->
             <div class="form-content">
                 <label for="quantity">Quantidade</label>
-                <input name="quantity"type="number" class="input" placeholder="Digite a Quantidade">
+                <input name="quantity"type="number" id="quantidade" class="input" placeholder="Digite a Quantidade">
             </div>
             <div class="form-content" id="btn">
-                <button class="button" id="button"> Adicionar UF</button>
-                <button class="button" id="button"> Cadastrar Painel</button>
+                <button class="button" id="addUF"> Adicionar UF</button>
+                <button class="button" id="addPanel"> Cadastrar Painel</button>
             </div>
             </div>
         </form>

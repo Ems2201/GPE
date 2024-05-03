@@ -57,8 +57,8 @@
         background-color: transparent;
         border-radius: 20px;
         border: 1px solid white;
-        width:  620px;
-        height: 505px;
+        width:  1000px;
+        height: 550px;
         margin: 0;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -226,22 +226,24 @@
         }
 
         .bins {
-            width: 17px;
+            width: 25px;
             font-size: 1em;
         }
 
         button {
             height: 22px;
-            width: 60px;
+            width: 45px;
             margin: 10px 2px;
             padding-bottom: 1px;
             text-align: center;
-            font-size: 0.5em;
+            font-size: 0.4em;
         }
+
+        
 
     }
 
-    @media (min-width: 376px) and (max-width: 450px) {
+    @media (min-width: 375px) and (max-width: 450px) {
         .main {
             margin: 0;
         }
@@ -280,17 +282,17 @@
         }
 
         button {
-            margin: 10px 3px;
+            margin: 10px 2px;
             height: 25px;
-            width: 75px;
+            width: 50px;
             padding-bottom: 3px;
             text-align: center;
-            font-size: 0.6em;
+            font-size: 0.4em;
         }
 
     }
 
-    @media (min-width: 451px) and (max-width: 660px) {
+    @media (min-width: 450px) and (max-width: 660px) {
         .main {
             margin: 0;
         }
@@ -329,9 +331,58 @@
         }
 
         button {
-            margin: 10px 3px;
+            margin: 10px 2px;
             height: 25px;
-            width: 90px;
+            width: 60px;
+            padding-bottom: 2px;
+            text-align: center;
+            font-size: 0.6em;
+        }
+
+    }
+
+    @media (min-width: 660px) and (max-width: 920px) {
+        .main {
+            margin: 0;
+        }
+
+        .container {
+            width: 600px;
+            height: 500px;
+        }
+
+        .content {
+            margin-left: 0;
+        }
+        .title {
+            margin-top: 10px;
+            margin-bottom: 1px;
+            margin-left: 25px;
+            font-size: 1.6em;
+        }
+
+        label {
+            margin-left: 25px;
+            font-size: 0.7em;
+        }
+
+        input {
+            margin-left: 25px;
+            height: 12px;
+            width: 350px;
+            font-size: 0.9em;
+            font-size: 'Lexend Deca';
+        }
+
+        .bins {
+            width: 30px;
+            font-size: 1em;
+        }
+
+        button {
+            margin: 10px 5px;
+            height: 25px;
+            width: 80px;
             padding-bottom: 2px;
             text-align: center;
             font-size: 0.6em;

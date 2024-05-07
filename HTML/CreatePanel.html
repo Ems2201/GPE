@@ -25,74 +25,43 @@
         </nav>
     </header>
      <main class="main">
-            <h3 class="title-paragraph">Criar Painel</h3>
-        <form action="" id="form" class="form">
-            <div class="content">
-                <div class="form-content">
-                    <label for="select">Selecione o Fabricante</label>
-                    <select name="select" class="input" id="fabricante">
-                        <optgroup>
-                            <option value="" class="option" hidden></option>
-                            <option value="" class="option">WEG</option>
-                            <option value="" class="option">ABB</option>
-                            <option value="" class="option">SCHNEIDER</option>
-                            <option value="" class="option">SIEMENS</option>
-                        </optgroup>
-                    </select>
-                </div>
-            </div>
-                 </div>
-            <div class="content">
-            <div class="form-content">
-                <label for="select">Selecione a Unidade Funcional</label>
-                <select name="select" class="input" id="unidadeFuncional">
-                    <optgroup>
-                        <option value="" class="option" hidden></option>
-                        <option value="PTDD" class="option">Partida Direta</option>
-                        <option value="PTDR" class="option">Partida Reversora</option>
-                        <option value="DISJ" class="option">Disjuntor</option>
-                        <option value="ALI" class="option">Alimentador</option>
-                        <option value="INV" class="option">Inversor de Frequência</option>
-                        <option value="SOFT" class="option">Soft-starter</option>
-                    </optgroup>
-                </select>
-            </div>
-            <div class="form-content">
-                <label id="label" for="valor">Valor</label>
-                <input type="text" class="input" id="valor" placeholder="Digite o Valor da UF">
-            </div>
-            <div class="form-content">
-                <label for="quantity">Quantidade</label>
-                <input name="quantity"type="number" id="quantidade" class="input" placeholder="Digite a Quantidade">
-            </div>
-            <div class="form-content" id="btn">
-                <button class="button" id="addUF"> Adicionar UF</button>
-                <button class="button" id="addPanel"> Cadastrar Painel</button>
-            </div>
-            </div>
-        </form>
         <div class="content">
-            <table class="uf-list">
-                <thead>
-                    <tr>
-                        <th>Fabricante</th>
-                        <th>Unidade Funcional</th>
-                        <th>Valor</th>
-                        <th>Quantidade</th>
-                        <th>Remover UF</th>   
-                    </tr>
-                    </thead>
-                <tbody>
-                    
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Total de Unidades Funcionais</td>
-                        <td>8</td>
-                    </tr>
-                </tfoot>
-            </table>
+            <h3>Tabela Dinâmica</h3>
+    
+            <label for="fabricante">Fabricante:</label>
+            <select id="fabricante">
+        
+            </select>
+            <label for="unidade">Unidade Funcional:</label>
+            <select id="unidade">
+        
+            </select>
+   
+            <label for="valor">Valor:</label>
+            <input type="number" id="valor" placeholder="Digite o Valor">
+    
+            <label for="quantidade">Quantidade:</label>
+            <input type="number" id="quantidade" placeholder="Digite a Quantidade">
+            
+            <div class="btn">
+                <button id="adicionar">Adicionar UF</button>
+                <button id="cadastrar">Cadastrar Painel</button>
+            </div>
         </div>
+        <table id="tabela">
+        <thead>
+            <tr>
+                <th>Unidade Funcional</th>
+                <th>Altura</th>
+                <th>Valor</th>
+                <th>Quantidade</th>
+                <th>Remover Linha</th>
+            </tr>
+        </thead>
+        <tbody id="corpo-tabela">
+            <!-- Aqui serão adicionadas as linhas da tabela -->
+        </tbody>
+    </table>
     </main> 
     <footer class="footer">
         <p>Feito Por Erick Paes</p>

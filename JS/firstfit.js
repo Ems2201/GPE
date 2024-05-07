@@ -132,32 +132,32 @@ function algoritmofirstFit() {
         }
     }
 
-    // Pegue no Site o Container Invísivel de Colunas
-    let container = document.getElementById('bin');
+   // Pegue no Site o Container Invísivel de Colunas
+   let container = document.getElementById('bin');
 
-    // Para cada Coluna na Lista de Colunas
-    columns.forEach((column) => {
-        // Pega Coluna J
-        let columnElement = document.createElement('div');
-        // Aplica o Estilo da Coluna
-        columnElement.className= 'bins';
-        // Adiciona a Coluna no Container
-        container.appendChild(columnElement);
+   // Para cada Coluna na Lista de Colunas
+   columns.forEach((column) => {
+       // Pega Coluna J
+       let columnElement = document.createElement('div');
+       // Aplica o Estilo da Coluna
+       columnElement.className= 'bins';
+       // Adiciona a Coluna no Container
+       container.appendChild(columnElement);
 
-        // Para cada UF na Coluna
-        column.uf.forEach(uf => {
-            // Pega a UF I
-            let ufElement = document.createElement('div');
-            // Aplica o Estilo da UF
-            ufElement.className = 'item';
-            // Define a Altura da UF com base no valor da UF / a Escala de Redução e Informa a Unidade Pixel
-            ufElement.style.height = (uf/scale) + 'px';
-            // Coloca o Texto do Valor da UF na UF
-            ufElement.textContent = uf;
-            // Adiciona a UF na Coluna
-            columnElement.appendChild(ufElement);
-        });
-    });
+       // Para cada UF na Coluna
+       column.uf.forEach(uf => {
+           // Pega a UF I
+           let ufElement = document.createElement('div');
+           // Aplica o Estilo da UF
+           ufElement.className = 'item';
+           // Define a Altura da UF com base no valor da UF / a Escala de Redução e Informa a Unidade Pixel
+           ufElement.style.height = (uf/scale) + 'px';
+           // Coloca o Texto do Valor da UF na UF
+           ufElement.textContent = uf;
+           // Adiciona a UF na Coluna
+           columnElement.appendChild(ufElement);
+       });
+   });
 }
 
 function algoritmofirstFit2() {

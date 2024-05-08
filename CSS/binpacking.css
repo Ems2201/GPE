@@ -58,7 +58,7 @@
         border-radius: 20px;
         border: 1px solid white;
         width:  1000px;
-        height: 550px;
+        height: 520px;
         margin: 0;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -139,7 +139,7 @@
 
 
     .bins {
-        width: 40px;
+        width: 120px;
         height: 100%;
         margin: auto 10px;
         border: 1px solid white;
@@ -160,7 +160,7 @@
 
     button {
         width: 120px;
-        margin: 10px;
+        margin: 10px 30px;
         font-size: 0.7em;
         font-family: 'Lexend Deca';
         text-align: center;
@@ -200,7 +200,7 @@
     @media (min-width: 320px) and (max-width: 375px) {
         .container {
             width: 300px;
-            height: 420px;
+            height: 450px;
         }
 
         .content {
@@ -226,16 +226,16 @@
         }
 
         .bins {
-            width: 30px;
-            font-size: 1em;
+            width: 70px;
+            font-size: 0.6em;
         }
 
         button {
             height: 22px;
-            width: 45px;
-            margin: 10px 2px;
+            width: 60px;
+            margin: 10px 5px;
             text-align: center;
-            font-size: 0.4em;
+            font-size: 0.5em;
         }
 
         
@@ -249,7 +249,7 @@
 
         .container {
             width: 350px;
-            height: 450px;
+            height: 510px;
         }
 
         .content {
@@ -275,18 +275,22 @@
             font-size: 'Lexend Deca';
         }
 
+        #bin {
+            margin: 20px;
+        }
+
         .bins {
-            width: 20px;
-            font-size: 1em;
+            width: 80px;
+            font-size: 0.7em;
         }
 
         button {
-            margin: 10px 2px;
+            margin: 10px 5px;
             height: 25px;
-            width: 50px;
-            padding-bottom: 3px;
+            width: 70px;
+            padding-bottom: 2px;
             text-align: center;
-            font-size: 0.4em;
+            font-size: 0.6em;
         }
 
     }
@@ -298,7 +302,7 @@
 
         .container {
             width: 420px;
-            height: 450px;
+            height: 510px;
         }
 
         .content {
@@ -324,15 +328,19 @@
             font-size: 'Lexend Deca';
         }
 
+        #bin {
+            margin: 20px;
+        }
+
         .bins {
-            width: 30px;
-            font-size: 1em;
+            width: 80px;
+            font-size: 0.7em;
         }
 
         button {
-            margin: 10px 2px;
+            margin: 10px 8px;
             height: 25px;
-            width: 60px;
+            width: 80px;
             padding-bottom: 2px;
             text-align: center;
             font-size: 0.6em;
@@ -340,7 +348,7 @@
 
     }
 
-    @media (min-width: 660px) and (max-width: 920px) {
+    @media (min-width: 661px) and (max-width: 1050px) {
         .main {
             margin: 0;
         }
@@ -374,15 +382,15 @@
         }
 
         .bins {
-            width: 30px;
-            font-size: 1em;
+            width: 100px;
+            font-size: 0.9em;
         }
 
         button {
-            margin: 10px 5px;
-            height: 25px;
-            width: 80px;
-            padding-bottom: 2px;
+            margin: 10px 20px;
+            height: 30px;
+            width: 100px;
+            padding-bottom: 3px;
             text-align: center;
             font-size: 0.6em;
         }

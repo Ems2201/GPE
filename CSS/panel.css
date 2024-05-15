@@ -7,9 +7,9 @@
             box-sizing: border-box;
 }
 
-body {
+body {        
     background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
-    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );     
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
 }
 
 .header {
@@ -46,9 +46,9 @@ a:hover {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    -webkit-box-pack: space-around;
-    -ms-flex-pack: space-around;
-    justify-content: space-around;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
@@ -227,7 +227,7 @@ body {
     }
 
     .nav_list {
-        width: 40vw;
+        width: 20vw;
         font-size: 0.7em;
     }
 
@@ -305,7 +305,7 @@ body {
     }
 
     .nav_list {
-        width: 45vw;
+        width: 20vw;
         font-size: 0.8em;
     }
 
@@ -370,7 +370,7 @@ body {
     }
 
     .nav_list {
-        width: 45vw;
+        width: 20vw;
         font-size: 1em;
     } 
 }
@@ -386,7 +386,7 @@ body {
     }
 
     .nav_list {
-        width: 45vw;
+        width: 15vw;
     }
 }
 
@@ -400,7 +400,7 @@ body {
     }
 
     .nav_list {
-        width: 45vw;
+        width: 10vw;
     }  
 }
 
@@ -414,7 +414,7 @@ body {
     }
 
     .nav_list {
-        width: 45vw;
+        width: 15vw;
     }
     
     .main {
@@ -468,8 +468,7 @@ body {
     }
 
     .nav_list {
-        margin-right: -40px;
-        width: 35vw;
+        width: 10vw;
         font-size: 1.2em;
     }
 }
@@ -484,8 +483,7 @@ body {
     }
 
     .nav_list {
-        margin-right: -40px;
-        width: 30vw;
+        width: 10vw;
         font-size: 1.2em;
     }
 }
@@ -500,9 +498,76 @@ body {
     }
 
     .nav_list {
-        margin-right: -40px;
-        width: 30vw;
+        width: 10vw;
         font-size: 1.2em;
+    }
+}
+
+@media (min-width: 2001px) and (max-width: 5000px) {
+    .nav {
+        padding: 12px 40px 10px;
+    }
+
+    .nav_logo {
+        font-size: 1.4em;
+    }
+
+    .nav_list {
+        width: 10vw;
+        font-size: 1.4em;
+    }
+
+    
+
+    .main {
+        height: 50vh;
+        margin: 17vh;
+        width: 1200px;
+    }
+
+    .content {
+        align-items: center;
+        width: 600px;
+        justify-content: center;
+    }
+
+    #tabela {
+        width: 600px;
+        font-size: 0.9em;
+        padding: 0;
+    }
+
+    #tabela th {
+        padding:  15px;
+    }
+
+    #tabela td {
+        padding: 15px 30px;
+    }
+
+
+    h3 {
+        font-size: 2.5em;
+    }
+
+    .btn {
+        width: 500px;
+    }
+
+    label {
+        margin: 10px;
+        width: 490px;
+    }
+
+    input, select {
+        height: 40px;
+        width: 500px;
+    }
+
+    button {
+        height: 40px;
+        width: 200px;
+        font-size: 1em;
     }
 }
 

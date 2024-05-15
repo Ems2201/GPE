@@ -5,7 +5,9 @@
     * Browsers: last 4 version
     */
 
-    body {
+    body {    
+        background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
+        background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
         margin: 0;
         padding: 0;
         -webkit-box-sizing: border-box;
@@ -32,8 +34,6 @@
     }
 
     .main {
-        background-image: -o-radial-gradient( 10% 20%,  circle farthest-corner,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
-        background-image: radial-gradient( circle farthest-corner at 10% 20%,  rgba(100,43,115,1) 0%, rgba(4,0,4,1) 90% );
         background-size: cover;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -139,10 +139,11 @@
 
 
     .bins {
-        width: 120px;
+        width: 30px;
         height: 100%;
         margin: auto 10px;
         border: 1px solid white;
+        background-color: black;
         padding: 0;
         box-sizing: border-box;
     }
@@ -396,3 +397,15 @@
         }
 
     }
+
+
+@media (min-width: 2000px) and (max-width: 5000px) {
+    .container {
+        width: 1000px;
+        height: 700px;
+    }
+
+    #bin {
+        margin: 80px;
+    }
+}

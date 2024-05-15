@@ -2,7 +2,7 @@
 let bestFit = document.getElementById('bestFit');
 let bestFit2 = document.getElementById('bestFit2');
 let bestFit3 = document.getElementById('bestFit3');
-let bestFit4 = document.getElementById('bestFit3');
+let bestFit4 = document.getElementById('bestFit4');
 
 bestFit.addEventListener('click', () => {
     // Se não haver valores no formulário

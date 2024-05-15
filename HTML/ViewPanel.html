@@ -8,8 +8,7 @@
     <meta name="author" content="Erick Paes">
     <meta name="description" content="Gerador de Painéis Elétricos">
     <meta name="robots" content="nofollow, noindex">
-    <link rel='stylesheet' type='text/css' media='screen' href='../CSS/style.css'>
-    <script src='../JS/script.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='../CSS/view.css'>
 </head>
 <body>
     <header class="header">
@@ -19,17 +18,31 @@
             </div>
                 <ul class="nav_list">        
                     <li><a href="./CreatePanel.html" class="nav_link">Criar Painel</a></li>
-                    <li><a href="./ViewPanel.html" class="nav_link">Ver Painel</a></li>             
                 </ul>
         </nav>
     </header>
      <main class="main">
-        <h3 class="title-paragraph">Selecione o Painel Desejado</h3>
+        <div class="content">
+            <h3>Selecione o Algoritmo Desejado</h3>
+            <select name="" id="select">
+            <option value=""></option>
+            <option value="bestFit">Best-Fit</option>
+            <option value="bestFit2">Best-Fit Menor Para o Maior</option>
+            <option value="bestFit3">Best-Fit Maior Para o Menor</option>
+            </select>
+        <div class="panel">
+            <div id="bin">
+                <div class="bins" hidden></div>
+            </div>
+        </div>
+        <p>Total de Colunas: </p>
+        </div>
     </main>
     <footer class="footer">
         <p>Feito Por Erick Paes</p>
         <p><a href="mailto:Ems2201@outlook.com" target="_blank">Contato</a></p>
         <p><a href="https://sor.ifsp.edu.br/" target="_blank">Conheça o IFSP Sorocaba</a></p>
-    </footer>  
+    </footer>
+    <script src="../JS/ViewPage.js"></script>  
 </body>
 </html>

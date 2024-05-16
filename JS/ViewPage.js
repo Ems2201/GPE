@@ -3,7 +3,6 @@ const select = document.getElementById('select');
 document.addEventListener('DOMContentLoaded', function() {    
     select.addEventListener('change', () => {
         const selectValue = select.value; // Moveu esta linha para dentro do evento de mudança
-
         switch (selectValue) {
             case "firstFit":
                 firstFit();
@@ -26,7 +25,15 @@ document.addEventListener('DOMContentLoaded', function() {
             default:
                 break;
         }
+
+        let TotalColumns = document.getElementById('TotalColumns');
+        let bin = document.getElementById('bin');
+        let bins = bin.querySelectorAll('.bins');
+        TotalColumns.textContent = 'Total de Colunas: ' + bins.length;
     });
+
+    
+
     sessionStorage.removeItem("item");
 });
 
@@ -83,12 +90,16 @@ function firstFit() {
             const ufElement = document.createElement('div');
             ufElement.classList.add('item');
             ufElement.textContent = `${uf.nome} ${uf.valor}`;
-            ufElement.style.height = (uf.altura / scale) - 2 + 'px';
+            ufElement.style.height = (uf.altura / scale) + 'px';
             columnElement.appendChild(ufElement);
+
+        
         });
     });
-
-    // Limpa os dados do sessionStorage
+    
+   
+    
+    
 }
 
 function firstFit2() {
@@ -144,7 +155,7 @@ function firstFit2() {
             const ufElement = document.createElement('div');
             ufElement.classList.add('item');
             ufElement.textContent = `${uf.nome} ${uf.valor}`;
-            ufElement.style.height = (uf.altura / scale) - 2 + 'px';
+            ufElement.style.height = (uf.altura / scale) + 'px';
             columnElement.appendChild(ufElement);
         });
     });
@@ -205,7 +216,7 @@ function firstFit3() {
             const ufElement = document.createElement('div');
             ufElement.classList.add('item');
             ufElement.textContent = `${uf.nome} ${uf.valor}`;
-            ufElement.style.height = (uf.altura / scale) - 2 + 'px';
+            ufElement.style.height = (uf.altura / scale) + 'px';
             columnElement.appendChild(ufElement);
         });
     });
@@ -271,7 +282,7 @@ function bestFit() {
             const ufElement = document.createElement('div');
             ufElement.classList.add('item');
             ufElement.textContent = `${uf.nome} ${uf.valor}`;
-            ufElement.style.height = (uf.altura / scale) - 2 + 'px';
+            ufElement.style.height = (uf.altura / scale) + 'px';
             columnElement.appendChild(ufElement);
         });
     });
@@ -338,7 +349,7 @@ function bestFit2() {
             const ufElement = document.createElement('div');
             ufElement.classList.add('item');
             ufElement.textContent = `${uf.nome} ${uf.valor}`;
-            ufElement.style.height = (uf.altura / scale) - 2 + 'px';
+            ufElement.style.height = (uf.altura / scale) + 'px';
             columnElement.appendChild(ufElement);
         });
     });
@@ -406,7 +417,7 @@ function bestFit3() {
             const ufElement = document.createElement('div');
             ufElement.classList.add('item');
             ufElement.textContent = `${uf.nome} ${uf.valor}`;
-            ufElement.style.height = (uf.altura / scale) - 2 + 'px';
+            ufElement.style.height = (uf.altura / scale) + 'px';
             columnElement.appendChild(ufElement);
         });
     });

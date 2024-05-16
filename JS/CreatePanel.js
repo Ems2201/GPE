@@ -262,15 +262,21 @@ const fabricantes = [
                 const altura = Number(row.cells[1].innerText);
                 const valor = row.cells[2].innerText;
                 const quantidade = Number(row.cells[3].innerText);
-
+                
                 data.push({ nome, altura, valor, quantidade });
             }
 
-            // Armazena os dados no sessionStorage
-            sessionStorage.setItem('data', JSON.stringify(data));
+            if (tabela.rows.length < 1) {
+                window.alert('Cadastre Uma Unidade Funcional Antes!');
+            }
 
-            // Redireciona para a outra página
-            window.location.href = 'ViewPanel.html';
+            else {
+                // Armazena os dados no sessionStorage
+                sessionStorage.setItem('data', JSON.stringify(data));
+
+                // Redireciona para a outra página
+                window.location.href = 'ViewPanel.html';
+            }
         });
     });
 

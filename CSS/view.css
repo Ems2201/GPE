@@ -120,18 +120,18 @@ p {
 }
 
 .bins {
-    box-sizing: content-box;
-    border: 1px solid black;
+    border: 0.1px solid black;
     width: 120px;
-    padding: 0px;
     height: 350px;
     text-align: center;
     margin: 0px;
+    padding: 0px;
+    box-sizing: content-box;
+
 }
 
 .item {
-    box-sizing: content-box;
-    border: 1px solid black;
+    border: 0.1px solid black;
     margin: 0px;
     padding: 0;
     width: 100%;
@@ -140,6 +140,7 @@ p {
     align-items: center;
     justify-content: center;
     color: white;
+    box-sizing: border-box;
 }
 
 .footer {

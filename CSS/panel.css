@@ -419,6 +419,8 @@ body {
     
     .main {
         width: 700px;
+        height: 38vh;
+        margin: 23vh auto;
     }
 
     .content {
@@ -471,6 +473,15 @@ body {
         width: 10vw;
         font-size: 1.2em;
     }
+
+    .main {
+        height: 50vh;
+        margin: 17vh auto;
+    }
+
+    .content h3 {
+        margin-top: 90px;
+    }
 }
 
 @media (min-width: 1201px) and (max-width: 1500px) {
@@ -486,6 +497,15 @@ body {
         width: 10vw;
         font-size: 1.2em;
     }
+
+    .main {
+        height: 50vh;
+        margin: 17vh auto;
+    }
+
+    .content h3 {
+        margin-top: 90px;
+    }
 }
 
 @media (min-width: 1501px) and (max-width: 2000px) {
@@ -500,6 +520,15 @@ body {
     .nav_list {
         width: 10vw;
         font-size: 1.2em;
+    }
+
+    .main {
+        height: 50vh;
+        margin: 17vh auto;
+    }
+
+    .content h3 {
+        margin-top: 90px;
     }
 }
 

@@ -23,43 +23,45 @@
         </nav>
     </header>
      <main class="main">
-        <div class="content">
-            <h3>Tabela Dinâmica</h3>
-    
-            <label for="fabricante">Fabricante:</label>
-            <select id="fabricante">
+        <div class="container">
+            <div class="content">
+                <h3>Tabela Dinâmica</h3>
         
-            </select>
-            <label for="unidade">Unidade Funcional:</label>
-            <select id="unidade">
-        
-            </select>
-   
-            <label for="valor" id="labelvalor">Corrente:</label>
-            <input id="valor" placeholder="Digite a Corrente">
-    
-            <label for="quantidade">Quantidade:</label>
-            <input type="number" id="quantidade" placeholder="Digite a Quantidade">
+                <label for="fabricante">Fabricante:</label>
+                <select id="fabricante">
             
-            <div class="btn">
-                <button id="adicionar">Adicionar UF</button>
-                <button id="cadastrar">Cadastrar Painel</button>
+                </select>
+                <label for="unidade">Unidade Funcional:</label>
+                <select id="unidade">
+            
+                </select>
+       
+                <label for="valor" id="labelvalor">Corrente:</label>
+                <input id="valor" placeholder="Digite a Corrente">
+        
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" placeholder="Digite a Quantidade">
+                
+                <div class="btn">
+                    <button id="adicionar">Adicionar UF</button>
+                    <button id="cadastrar">Cadastrar Painel</button>
+                </div>
             </div>
+            <table id="tabela">
+            <thead>
+                <tr>
+                    <th>Unidade Funcional</th>
+                    <th>Altura</th>
+                    <th>Valor</th>
+                    <th>Quantidade</th>
+                    <th>Remover Linha</th>
+                </tr>
+            </thead>
+            <tbody id="corpo-tabela">
+                <!-- Aqui serão adicionadas as linhas da tabela -->
+            </tbody>
+        </table>
         </div>
-        <table id="tabela">
-        <thead>
-            <tr>
-                <th>Unidade Funcional</th>
-                <th>Altura</th>
-                <th>Valor</th>
-                <th>Quantidade</th>
-                <th>Remover Linha</th>
-            </tr>
-        </thead>
-        <tbody id="corpo-tabela">
-            <!-- Aqui serão adicionadas as linhas da tabela -->
-        </tbody>
-    </table>
     </main> 
     <footer class="footer">
         <p>Feito Por Erick Paes</p>

@@ -67,19 +67,20 @@ const fabricantes = [
              {
                 nome: 'Inversor',
                 dados: [
-                    { altura: 450, valor: 0.75 }, { altura: 450, valor: 1.1 }, { altura: 450, valor: 1.5 }, { altura: 450, valor: 2.2 },
-                    { altura: 450, valor: 3 }, { altura: 450, valor: 4 }, { altura: 450, valor: 5.5 }, { altura: 450, valor: 7.5 },
-                    { altura: 450, valor: 11 }, { altura: 600, valor: 15 }, { altura: 600, valor: 18.5 }, { altura: 600, valor: 22 },
-                    { altura: 900, valor: 30 }, { altura: 900, valor: 37 }, { altura: 900, valor: 45 }, { altura: 900, valor: 55 },
-                    { altura: 900, valor: 75 }, { altura: 900, valor: 90 }, { altura: 900, valor: 110 }, { altura: 1050, valor: 132 },
-                    { altura: 1050, valor: 160 }, { altura: 1050, valor: 200 }, { altura: 1050, valor: 250},
-                    { altura: 450, valor: "0.75 kW" }, { altura: 450, valor: "1.1 kW" }, { altura: 450, valor: "1.5 kW" }, { altura: 450, valor: "2.2 kW" },
-                    { altura: 450, valor: "3 kW" }, { altura: 450, valor: "4 kW" }, { altura: 450, valor: "5.5 kW" }, { altura: 450, valor: "7.5 kW" },
-                    { altura: 450, valor: "11 kW" }, { altura: 600, valor: "15 kW" }, { altura: 600, valor: "18.5 kW" }, { altura: 600, valor: "22 kW" },
-                    { altura: 900, valor: "30 kW" }, { altura: 900, valor: "37 kW" }, { altura: 900, valor: "45 kW" }, { altura: 900, valor: "55 kW" },
-                    { altura: 900, valor: "75 kW" }, { altura: 900, valor: "90 kW" }, { altura: 900, valor: "110 kW" }, { altura: 1050, valor: "132 kW" },
-                    { altura: 1050, valor: "160 kW" }, { altura: 1050, valor: "200 kW" }, { altura: 1050, valor: "250 kW" }
-                ]
+                    { altura: 150, valor: 1 }, { altura: 150, valor: 1.5 },{ altura: 150, valor: 2 }, { altura: 150, valor: 3 }, 
+                    { altura: 150, valor: 5 }, { altura: 300, valor: 7.5 },{ altura: 300, valor: 10 }, { altura: 300, valor: 15 }, 
+                    { altura: 300, valor: 20 }, { altura: 300, valor: 25 },{ altura: 300, valor: 30 }, { altura: 450, valor: 40 }, 
+                    { altura: 450, valor: 50 }, { altura: 600, valor: 60 },{ altura: 600, valor: 75 }, { altura: 750, valor: 100 }, 
+                    { altura: 900, valor: 125 }, { altura: 900, valor: 150 },{ altura: 1050, valor: 200 }, { altura: 1800, valor: 250 }, 
+                    { altura: 1800, valor: 300 }, { altura: 1800, valor: 350 },
+                    
+                    { altura: 150, valor: "1 CV" }, { altura: 150, valor: "1.5 CV" },{ altura: 150, valor: "2 CV" }, { altura: 150, valor: "3 CV" }, 
+                    { altura: 150, valor: "5 CV" }, { altura: 300, valor: "7.5 CV" },{ altura: 300, valor: "10 CV" }, { altura: 300, valor: "15 CV" }, 
+                    { altura: 300, valor: "20 CV" }, { altura: 300, valor: "25 CV" },{ altura: 300, valor: "30 CV" }, { altura: 450, valor: "40 CV" }, 
+                    { altura: 450, valor: "50 CV" }, { altura: 600, valor: "60 CV" },{ altura: 600, valor: "75 CV" }, { altura: 750, valor: "100 CV" }, 
+                    { altura: 900, valor: "125 CV" }, { altura: 900, valor: "150 CV" },{ altura: 1050, valor: "200 CV" }, { altura: 1800, valor: "250 CV" }, 
+                    { altura: 1800, valor: "300 CV" }, { altura: 1800, valor: "350 CV" },
+                    ]
              },
              {
                 nome: 'Soft-Starter',

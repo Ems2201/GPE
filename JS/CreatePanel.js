@@ -56,23 +56,23 @@ const fabricantes = [
                     { altura: 150, valor: 35 }, { altura: 150, valor: 40 }, { altura: 150, valor: 50 }, { altura: 150, valor: 60 },
                     { altura: 150, valor: 70 }, { altura: 150, valor: 80 }, { altura: 150, valor: 90 }, { altura: 250, valor: 100 },
                     { altura: 250, valor: 125 }, { altura: 250, valor: 150 }, { altura: 250, valor: 200 }, { altura: 250, valor: 250 },
-                    { altura: 250, valor: 300 }, { altura: 250, valor: 400 }, { altura: 600, valor: 630 }, { altura: 600, valor: 800 },
+                    { altura: 250, valor: 320 }, { altura: 250, valor: 400 }, { altura: 600, valor: 630 }, { altura: 600, valor: 800 },
                     { altura: 150, valor: "15 A" }, { altura: 150, valor: "20 A" }, { altura: 150, valor: "25 A" }, { altura: 150, valor: "30 A" },
                     { altura: 150, valor: "35 A" }, { altura: 150, valor: "40 A" }, { altura: 150, valor: "50 A" }, { altura: 150, valor: "60 A" },
                     { altura: 150, valor: "70 A" }, { altura: 150, valor: "80 A" }, { altura: 150, valor: "90 A" }, { altura: 250, valor: "100 A" },
                     { altura: 250, valor: "125 A" }, { altura: 250, valor: "150 A" }, { altura: 250, valor: "200 A" }, { altura: 250, valor: "250 A" },
-                    { altura: 250, valor: "300 A" }, { altura: 250, valor: "400 A" }, { altura: 600, valor: "630 A" }, { altura: 600, valor: "800 A" }
+                    { altura: 250, valor: "320 A" }, { altura: 250, valor: "400 A" }, { altura: 600, valor: "630 A" }, { altura: 600, valor: "800 A" }
                 ]
              },
              {
                 nome: 'Inversor',
                 dados: [
-                    { altura: 150, valor: 1 }, { altura: 150, valor: 1.5 },{ altura: 150, valor: 2 }, { altura: 150, valor: 3 }, 
-                    { altura: 150, valor: 5 }, { altura: 300, valor: 7.5 },{ altura: 300, valor: 10 }, { altura: 300, valor: 15 }, 
-                    { altura: 300, valor: 20 }, { altura: 300, valor: 25 },{ altura: 300, valor: 30 }, { altura: 450, valor: 40 }, 
-                    { altura: 450, valor: 50 }, { altura: 600, valor: 60 },{ altura: 600, valor: 75 }, { altura: 750, valor: 100 }, 
-                    { altura: 900, valor: 125 }, { altura: 900, valor: 150 },{ altura: 1050, valor: 200 }, { altura: 1800, valor: 250 }, 
-                    { altura: 1800, valor: 300 }, { altura: 1800, valor: 350 },
+                    { altura: 450, valor: 1 }, { altura: 450, valor: 1.5 },{ altura: 450, valor: 2 }, { altura: 450, valor: 3 }, 
+                    { altura: 450, valor: 5 }, { altura: 450, valor: 7.5 },{ altura: 450, valor: 10 }, { altura: 450, valor: 15 }, 
+                    { altura: 600, valor: 20 }, { altura: 600, valor: 25 },{ altura: 600, valor: 30 }, { altura: 900, valor: 40 }, 
+                    { altura: 900, valor: 50 }, { altura: 900, valor: 60 },{ altura: 900, valor: 75 }, { altura: 900, valor: 100 }, 
+                    { altura: 900, valor: 125 }, { altura: 900, valor: 150 },{ altura: 1050, valor: 200 }, { altura: 1050, valor: 250 }, 
+                    { altura: 1050, valor: 300 }, { altura: 1050, valor: 350 },
                     
                     { altura: 150, valor: "1 CV" }, { altura: 150, valor: "1.5 CV" },{ altura: 150, valor: "2 CV" }, { altura: 150, valor: "3 CV" }, 
                     { altura: 150, valor: "5 CV" }, { altura: 300, valor: "7.5 CV" },{ altura: 300, valor: "10 CV" }, { altura: 300, valor: "15 CV" }, 
@@ -190,8 +190,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 valor.placeholder = "Digite a Corrente(A)";
                 break;
             case 'Inversor':
-                label.innerText = "Potência (kW)";
-                valor.placeholder = "Digite a Potência(kW)";
+                label.innerText = "Potência (CV)";
+                valor.placeholder = "Digite a Potência(CV)";
                 break;
             case 'Soft-Starter':
                 label.innerText = "Potência (CV)";

@@ -30,21 +30,21 @@ document.addEventListener('DOMContentLoaded', function() {
         let bin = document.getElementById('bin');
         let bins = bin.querySelectorAll('.bins');
         TotalColumns.textContent = 'Total de Colunas: ' + bins.length;
+        
+       
     });
-
-    
-
     sessionStorage.removeItem("item");
+    
 });
-
 
 function firstFit() {
     const data = JSON.parse(sessionStorage.getItem('data'));
 
-    // Ordena os dados do objeto data em ordem crescente de altura
 
     const columnCapacity = 1800;
-    let scale = columnCapacity / 350;
+    let scale = columnCapacity/350;
+    
+
 
     let columns = [];
 

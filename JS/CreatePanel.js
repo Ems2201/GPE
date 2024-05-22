@@ -98,27 +98,25 @@ const fabricantes = [
              {
                 nome: 'Disjuntor CDC',
                 dados: [
-                    { altura: 600, valor: 630 }, { altura: 600, valor: 800 }, { altura: 600, valor: 1000 }, { altura: 600, valor: 1200 }, 
-                    { altura: 900, valor: 1600 }, { altura: 900, valor: 2000 }, { altura: 900, valor: 2500 }, { altura: 1800, valor: 3200 }, 
+                    { altura: 200, valor: 160 }, { altura: 200, valor: 250 }, { altura: 300, valor: 400 },
+                    { altura: 550, valor: 630 }, { altura: 550, valor: 800 }, { altura: 550, valor: 1000 }, { altura: 550, valor: 1250 }, 
+                    { altura: 550, valor: 1600 }, { altura: 900, valor: 2000 }, { altura: 900, valor: 2500 }, { altura: 1800, valor: 3200 }, 
                     { altura: 1800, valor: 4000 }, { altura: 1800, valor: 5000 }, { altura: 1800, valor: 6300 },
-                    { altura: 600, valor: "630 A" }, { altura: 600, valor: "800 A" }, { altura: 600, valor: "1000 A" }, { altura: 600, valor: "1200 A" },
-                    { altura: 900, valor: "1600 A" }, { altura: 900, valor: "2000 A" }, { altura: 900, valor: "2500 A" }, { altura: 1800, valor: "3200 A" },
+                    { altura: 200, valor: "160 A"}, { altura: 200, valor: "250 A"}, { altura: 300, valor: "400 A"},
+                    { altura: 550, valor: "630 A"}, { altura: 550, valor: "800 A"}, { altura: 550, valor: "1000 A" }, { altura: 550, valor: "1250 A" }, 
+                    { altura: 550, valor: "1600 A" }, { altura: 900, valor: "2000 A" }, { altura: 900, valor: "2500 A" }, { altura: 1800, valor: "3200 A" }, 
                     { altura: 1800, valor: "4000 A" }, { altura: 1800, valor: "5000 A" }, { altura: 1800, valor: "6300 A" }
                 ]
              },
              {
                 nome: 'Alimentador CDC',
                 dados: [
-                    { altura: 150, valor: 15 }, { altura: 150, valor: 20 }, { altura: 150, valor: 25 }, { altura: 150, valor: 30 },
-                    { altura: 150, valor: 35 }, { altura: 150, valor: 40 }, { altura: 150, valor: 50 }, { altura: 150, valor: 60 },
-                    { altura: 150, valor: 70 }, { altura: 150, valor: 80 }, { altura: 150, valor: 90 }, { altura: 250, valor: 100 },
-                    { altura: 250, valor: 125 }, { altura: 250, valor: 150 }, { altura: 250, valor: 200 }, { altura: 250, valor: 250 },
-                    { altura: 250, valor: 300 }, { altura: 250, valor: 400 }, { altura: 600, valor: 630 }, { altura: 600, valor: 800 },
-                    { altura: 150, valor: "15 A" }, { altura: 150, valor: "20 A" }, { altura: 150, valor: "25 A" }, { altura: 150, valor: "30 A" },
-                    { altura: 150, valor: "35 A" }, { altura: 150, valor: "40 A" }, { altura: 150, valor: "50 A" }, { altura: 150, valor: "60 A" },
-                    { altura: 150, valor: "70 A" }, { altura: 150, valor: "80 A" }, { altura: 150, valor: "90 A" }, { altura: 250, valor: "100 A" },
-                    { altura: 250, valor: "125 A" }, { altura: 250, valor: "150 A" }, { altura: 250, valor: "200 A" }, { altura: 250, valor: "250 A" },
-                    { altura: 250, valor: "300 A" }, { altura: 250, valor: "400 A" }, { altura: 600, valor: "630 A" }, { altura: 600, valor: "800 A" }
+                    { altura: 200, valor: 100 },
+                    { altura: 200, valor: 125 }, { altura: 200, valor: 150 }, { altura: 200, valor: 200 }, { altura: 200, valor: 250 },
+                    { altura: 200, valor: 300 }, { altura: 300, valor: 400 }, { altura: 550, valor: 630 }, { altura: 550, valor: 800 },
+                    { altura: 200, valor: "100 A" },
+                    { altura: 200, valor: "125 A" }, { altura: 200, valor: "150 A" }, { altura: 200, valor: "200 A" }, { altura: 200, valor: "250 A" },
+                    { altura: 200, valor: "300 A" }, { altura: 300, valor: "400 A" }, { altura: 550, valor: "630 A" }, { altura: 550, valor: "800 A" }
                 ]
              },
              {

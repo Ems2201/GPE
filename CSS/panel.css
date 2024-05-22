@@ -436,7 +436,6 @@ body {
 @media (min-width:769px) AND (max-width: 1024px) {
     .main {
         min-height: 600px;
-        margin: 3vh;
     }
     
     .container {

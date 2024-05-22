@@ -114,19 +114,21 @@ const fabricantes = [
                     { altura: 200, valor: 100 },
                     { altura: 200, valor: 125 }, { altura: 200, valor: 150 }, { altura: 200, valor: 200 }, { altura: 200, valor: 250 },
                     { altura: 200, valor: 300 }, { altura: 300, valor: 400 }, { altura: 550, valor: 630 }, { altura: 550, valor: 800 },
+                    { altura: 550, valor: 1000 }, { altura: 550, valor: 1250 },{ altura: 550, valor: 1600 },
                     { altura: 200, valor: "100 A" },
                     { altura: 200, valor: "125 A" }, { altura: 200, valor: "150 A" }, { altura: 200, valor: "200 A" }, { altura: 200, valor: "250 A" },
-                    { altura: 200, valor: "300 A" }, { altura: 300, valor: "400 A" }, { altura: 550, valor: "630 A" }, { altura: 550, valor: "800 A" }
+                    { altura: 200, valor: "300 A" }, { altura: 300, valor: "400 A" }, { altura: 550, valor: "630 A" }, { altura: 550, valor: "800 A" },
+                    { altura: 550, valor: "1000 A" }, { altura: 550, valor: "1250 A" }, { altura: 550, valor: "1600 A" },
                 ]
              },
              {
                 nome: 'Compartimento de Controle',
                 dados: [
-                    { altura: 150, valor: 150 }, { altura: 200, valor: 200 }, { altura: 250, valor: 250 }, { altura: 300, valor: 300 }, 
+                    { altura: 150, valor: 150 }, { altura: 200, valor: 200 }, { altura: 250, valor: 250 }, { altura: 300, valor: 300 }, { altura: 400, valor: 400 },
                     { altura: 450, valor: 450 }, { altura: 600, valor: 600 }, { altura: 750, valor: 750 }, { altura: 900, valor: 900 },
                     { altura: 1050, valor: 1050 }, { altura: 1200, valor: 1200 }, { altura: 1800, valor: 1800 },
                     { altura: 150, valor: "150 mm" }, { altura: 200, valor: "200 mm" }, { altura: 250, valor: "250 mm" }, { altura: 300, valor: "300 mm" }, 
-                    { altura: 450, valor: "450 mm" }, { altura: 600, valor: "600 mm" }, { altura: 750, valor: "750 mm" }, { altura: 900, valor: "900 mm" },
+                    { altura: 400, valor: "400 mm" }, { altura: 450, valor: "450 mm" }, { altura: 600, valor: "600 mm" }, { altura: 750, valor: "750 mm" }, { altura: 900, valor: "900 mm" },
                     { altura: 1050, valor: "1050 mm" }, { altura: 1200, valor: "1200 mm" }, { altura: 1800, valor: "1800 mm" },
                 ]
              }

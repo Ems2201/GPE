@@ -8,19 +8,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 firstFit('normal');
                 break;
             case "firstFit2":
-                firstFit2('Crescente');
+                firstFit('Crescente');
                 break;
             case "firstFit3":
-                firstFit3('Decrescente');
+                firstFit('Decrescente');
                 break;
             case "bestFit":
                 bestFit('normal');
                 break;
             case "bestFit2":
-                bestFit2('Crescente');
+                bestFit('Crescente');
                 break;
             case "bestFit3":
-                bestFit3('Decrescente');
+                bestFit('Decrescente');
                 break;
             default:
                 break;
@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
 function firstFit(sortType = 'normal') {
     let data = JSON.parse(sessionStorage.getItem('data'));
 
+    const container = document.getElementById('bin');
+    container.innerHTML = '';
+
     switch (sortType) {
         case 'Crescente':
             data.sort((a, b) => a.altura - b.altura);
@@ -54,9 +57,6 @@ function firstFit(sortType = 'normal') {
     let scale = columnCapacity / 400;
 
     let columns = [];
-
-    const container = document.getElementById('bin');
-    container.innerHTML = '';
 
     for (let k = 0; k < data.length; k++) {
         const uf = data[k];

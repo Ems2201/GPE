@@ -445,16 +445,16 @@ p {
     }
     
     .main {
-        min-height: 550px;
+        min-height: 500px;
     }
 
     .content {
-        height: 550px;
+        height: 530px;
     }
 
     .panel {
         height: 400px;
-        margin: 15px 0;
+        margin: 5px 0;
     }
 
     h3 {

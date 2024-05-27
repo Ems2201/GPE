@@ -167,3 +167,4 @@ function bestFit(sortType = 'normal') {
         });
     });
 }
+

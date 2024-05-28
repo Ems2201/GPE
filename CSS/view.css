@@ -402,11 +402,11 @@ p {
 
 
     .main {
-        min-height: 550px;
+        min-height: 500px;
     }
 
     .content {
-        height: 550px;
+        height: 600px;
     }
 
     .panel {
@@ -449,7 +449,7 @@ p {
     }
 
     .content {
-        height: 530px;
+        height: 600px;
     }
 
     .panel {

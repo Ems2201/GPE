@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let label = document.getElementById('labelvalor');
         let valor = document.getElementById('valor');
         switch (unidadeSelect.value) {
-            case 'Disjuntor':
+            case 'Disjuntor CCM':
                 label.innerText = "Corrente (A)";
                 valor.placeholder = "Digite a Corrente(A)";
                 break;
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 label.innerText = "Potência (CV)";
                 valor.placeholder = "Digite a Potência(CV)";
                 break;
-            case 'Alimentador':
+            case 'Alimentador CCM':
                 label.innerText = "Corrente (A)";
                 valor.placeholder = "Digite a Corrente(A)";
                 break;
@@ -61,14 +61,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 label.innerText = "Potência (CV)";
                 valor.placeholder = "Digite a Potência(CV)";
                 break;
-            case 'Disjuntor CDC':
+            case 'Disjuntor CDC Aberto':
                 label.innerText = "Corrente (A)";
                 valor.placeholder = "Digite a Corrente(A)";
                 break;
-            case 'Alimentador CDC':
+            case 'Disjuntor CDC Caixa Moldada':
                 label.innerText = "Corrente (A)";
                 valor.placeholder = "Digite a Corrente(A)";
-                break;
+                break;     
             case 'Compartimento de Controle':
                 label.innerText = "Altura (mm)";
                 valor.placeholder = "Digite a Altura(mm)";

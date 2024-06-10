@@ -81,7 +81,7 @@ export const fabricantes = [
                 nome: 'Disjuntor CDC Caixa Moldada',
                 dados: [
                     { altura: 200, valor: 160 }, { altura: 200, valor: 250 }, { altura: 300, valor: 400 },
-                    { altura: 550, valor: 630 }, { altura: 550, valor: 800 }, { altura: 550, valor: 1000 }, { altura: 550, valor: 1250 }, 
+                    { altura: 300, valor: 630 }, { altura: 550, valor: 800 }, { altura: 550, valor: 1000 }, { altura: 550, valor: 1250 }, 
                     { altura: 550, valor: 1600 }
                 ],
                 medida: 'A'

@@ -185,7 +185,7 @@ p {
     }
 
     .main {
-        min-height: 550px;
+        min-height: 600px;
     }
 
     .content {
@@ -233,7 +233,7 @@ p {
     }   
 
     .main {
-        min-height: 550px;
+        min-height: 600px;
     }
 
     .content {
@@ -275,7 +275,7 @@ p {
     }
 
     .main {
-        min-height: 550px;
+        min-height: 600px;
     }
 
     .content {
@@ -316,7 +316,7 @@ p {
     }
 
     .main {
-        min-height: 550px;
+        min-height: 600px;
     }
 
     .content {
@@ -358,7 +358,7 @@ p {
     }
 
     .main {
-        min-height: 550px;
+        min-height: 600px;
     }
 
     .content {
@@ -402,16 +402,16 @@ p {
 
 
     .main {
-        min-height: 500px;
+        min-height: 550px;
     }
 
     .content {
-        height: 500px;
+        height: 520px;
     }
 
     .panel {
         height: 400px;
-        margin: 15px 0;
+        margin: 5px 0;
     }
 
     h3 {
@@ -449,12 +449,12 @@ p {
     }
 
     .content {
-        height: 550px;
+        height: 520px;
     }
 
     .panel {
         height: 400px;
-        margin: 5px 0;
+        margin: 1px 0;
     }
 
     h3 {

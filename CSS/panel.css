@@ -435,12 +435,12 @@ body {
 
 @media (min-width:769px) AND (max-width: 1024px) {
     .main {
-        min-height: 500px;
+        min-height: 300px;
     }
     
     .container {
         width: 800px;
-        height: 600px;
+        height: 400px;
     }
 
     input, select {
@@ -509,11 +509,12 @@ body {
 
 @media (min-width:1024px) AND (max-width: 1439px) {
     .main {
-        min-height: 500px;
+        min-height: 400px;
     }
     
     .container {
-        height: 600px;
+        height: 500px;
+        width: 1000px;
         margin: 0;
     }
 

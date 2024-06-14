@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     sessionStorage.removeItem("item");
     
 });
+
 function bestFitMelhorado() {
     // Carregar Dados
     let data = JSON.parse(sessionStorage.getItem('data'));
@@ -47,8 +48,6 @@ function bestFitMelhorado() {
         }
     }
 
-    shuffleArray(data);
-
     // Define Altura da Coluna e Número Mínimo de colunas com base nos dados da página de cadastro.
     const columnCapacity = 1800;
     let scale = columnCapacity / 400;
@@ -58,6 +57,7 @@ function bestFitMelhorado() {
     // Inicialize a Lista de Colunas
     let bestColumns = [];
     let bestColumnCount = Infinity;
+    let bestFullColumnsCount = 0;
     const container = document.getElementById('bin');
     container.innerHTML = '';
 
@@ -100,13 +100,16 @@ function bestFitMelhorado() {
     const maxAttempts = 100;
     while (attempts < maxAttempts) {
         let columns = addItemToColumns(data);
-        if (columns.length < bestColumnCount) {
+        let fullColumnsCount = columns.filter(column => column.currentCapacity === columnCapacity).length;
+
+        if (columns.length < bestColumnCount || fullColumnsCount > bestFullColumnsCount) {
             bestColumnCount = columns.length;
             bestColumns = columns;
+            bestFullColumnsCount = fullColumnsCount;
         }
 
-        // Se as colunas forem iguais ou menor ao número mínimo de colunas, parar
-        if (bestColumnCount <= minColumns) {
+        // Se as colunas forem iguais ou menor ao número mínimo de colunas e o número de colunas cheias for o máximo possível, parar
+        if (bestColumnCount <= minColumns && fullColumnsCount === columns.length) {
             break;
         }
 

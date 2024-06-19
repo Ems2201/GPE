@@ -248,6 +248,13 @@ function bestFit(sortType = 'normal') {
         }
     }
 
+    // Calcula L2(S) conforme a fórmula
+    
+    let sumAlturas = data.reduce((sum, item) => sum + (item.altura * item.quantidade), 0);
+    let L2_S = Math.ceil((1 / columnCapacity) * sumAlturas);
+
+    console.log("L2(S) =", L2_S);
+
     columns.forEach((column) => {
         const columnElement = document.createElement('div');
         columnElement.classList.add('bins');
@@ -262,3 +269,4 @@ function bestFit(sortType = 'normal') {
         });
     });
 }
+

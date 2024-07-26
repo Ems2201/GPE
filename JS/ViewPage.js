@@ -24,17 +24,31 @@ document.addEventListener('DOMContentLoaded', function() {
             default:
                 break;
         }
-        //  Exibir o Número Total de Colunas
+        // Exibir o Número Total de Colunas
         let TotalColumns = document.getElementById('TotalColumns');
         let bin = document.getElementById('bin');
         let bins = bin.querySelectorAll('.bins');
         TotalColumns.textContent = 'Total de Colunas: ' + bins.length;
-        
-       
+
+        // Remover colunas vazias
+        removeEmptyColumns();
     });
     sessionStorage.removeItem("item");
-    
 });
+
+function removeEmptyColumns() {
+    const container = document.getElementById('bin');
+    const columns = container.querySelectorAll('.bins');
+    columns.forEach(column => {
+        if (column.children.length === 0) {
+            container.removeChild(column);
+        }
+    });
+
+    // Atualizar o número total de colunas após a remoção
+    const TotalColumns = document.getElementById('TotalColumns');
+    TotalColumns.textContent = 'Total de Colunas: ' + container.querySelectorAll('.bins').length;
+}
 
 function bestFitMelhorado() {
     // Carregar Dados
@@ -118,19 +132,116 @@ function bestFitMelhorado() {
     }
 
     // Exibe Resultado
-    bestColumns.forEach((column) => {
+    bestColumns.forEach((column, columnIndex) => {
         const columnElement = document.createElement('div');
         columnElement.classList.add('bins');
         container.appendChild(columnElement);
 
-        column.ufs.forEach(uf => {
+        column.ufs.forEach((uf, ufIndex) => {
             const ufElement = document.createElement('div');
             ufElement.classList.add('item');
             ufElement.textContent = `${uf.nome} ${uf.valor}`;
             ufElement.style.height = (uf.altura / scale) + 'px';
+
+            // Adicionar botão de travar
+            const lockButton = document.createElement('button');
+            lockButton.textContent = 'Mudar';
+            lockButton.classList.add('lock-button');
+            lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement);
+            ufElement.appendChild(lockButton);
+
             columnElement.appendChild(ufElement);
         });
     });
+
+    function openLockMenu(uf, columnIndex, ufElement) {
+        // Remove qualquer menu de lock existente
+        const existingMenu = document.querySelector('.lock-menu');
+        if (existingMenu) {
+            document.body.removeChild(existingMenu);
+        }
+
+        // Cria o menu de lock
+        const lockMenu = document.createElement('div');
+        lockMenu.classList.add('lock-menu');
+
+        const lockLabel = document.createElement('label');
+        lockLabel.textContent = 'Selecione a Coluna:';
+        lockMenu.appendChild(lockLabel);
+
+        const lockSelect = document.createElement('select');
+        for (let i = 0; i < document.querySelectorAll('.bins').length; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = `Coluna ${i + 1}`;
+            lockSelect.appendChild(option);
+        }
+        lockMenu.appendChild(lockSelect);
+
+        const lockButton = document.createElement('button');
+        lockButton.textContent = 'Mudar';
+        lockButton.onclick = () => lockItemToColumn(uf, columnIndex, ufElement, lockSelect.value);
+        lockMenu.appendChild(lockButton);
+
+        // Adiciona o menu de lock ao body como o primeiro elemento
+        document.body.insertBefore(lockMenu, document.body.firstChild);
+    }
+
+    function lockItemToColumn(uf, columnIndex, ufElement, targetColumnIndex) {
+        // Remove a unidade funcional da coluna atual
+        const columnElement = document.querySelectorAll('.bins')[columnIndex];
+        if (columnElement.contains(ufElement)) {
+            columnElement.removeChild(ufElement);
+        }
+
+        // Atualiza a capacidade da coluna atual
+        let currentCapacity = Array.from(columnElement.children)
+            .filter(item => item.classList.contains('item'))
+            .reduce((sum, item) => sum + parseInt(item.style.height), 0);
+
+        // Se a coluna atual estiver vazia, remove-a
+        if (currentCapacity === 0) {
+            columnElement.parentElement.removeChild(columnElement);
+        }
+
+        // Adiciona a unidade funcional à nova coluna ou cria uma nova coluna se necessário
+        let targetColumnElement = document.querySelectorAll('.bins')[targetColumnIndex];
+
+        if (!targetColumnElement) {
+            targetColumnElement = document.createElement('div');
+            targetColumnElement.classList.add('bins');
+            document.getElementById('bin').appendChild(targetColumnElement);
+        }
+
+        let targetCapacity = Array.from(targetColumnElement.children)
+            .filter(item => item.classList.contains('item'))
+            .reduce((sum, item) => sum + parseInt(item.style.height), 0);
+
+        if (targetCapacity + parseInt(ufElement.style.height) > columnCapacity / scale) {
+            const newColumnElement = document.createElement('div');
+            newColumnElement.classList.add('bins');
+            document.getElementById('bin').appendChild(newColumnElement);
+            newColumnElement.appendChild(ufElement);
+        } else {
+            targetColumnElement.appendChild(ufElement);
+        }
+
+        // Atualiza os dados da coluna
+        let data = JSON.parse(sessionStorage.getItem('data'));
+        let ufData = data.find(item => item.nome === uf.nome && item.valor === uf.valor);
+        ufData.lockedColumn = targetColumnIndex;
+        sessionStorage.setItem('data', JSON.stringify(data));
+
+        // Remove o menu de lock
+        const lockMenu = document.querySelector('.lock-menu');
+        if (lockMenu) {
+            document.body.removeChild(lockMenu);
+        }
+
+        // Remover colunas vazias
+        removeEmptyColumns();
+   
+    }
 }
 
 function bestFitBinCompletion() {

@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
             case "bestFit5":
                 bestFitBinCompletion();
                 break;
+            case "nextFit":
+                nextFit();
+                break;
             default:
                 break;
         }
@@ -381,3 +384,72 @@ function bestFit(sortType = 'normal') {
     });
 }
 
+function nextFit(sortType = 'normal') {
+    let data = JSON.parse(sessionStorage.getItem('data'));
+
+    // Ordena os dados conforme o tipo de ordenação solicitado
+    switch (sortType) {
+        case 'Crescente':
+            data.sort((a, b) => a.altura - b.altura);
+            break;
+        case 'Decrescente':
+            data.sort((a, b) => b.altura - a.altura);
+            break;
+        // 'normal' ou 'none' não precisam de ordenação
+    }
+
+    const columnCapacity = 1800;
+    let scale = columnCapacity / 400;
+
+    let columns = [];
+    let currentColumn = {
+        currentCapacity: 0,
+        ufs: []
+    };
+    columns.push(currentColumn);
+
+    const container = document.getElementById('bin');
+    container.innerHTML = '';
+
+    // Loop para inserir os itens nas colunas de acordo com Next-Fit
+    for (let k = 0; k < data.length; k++) {
+        const uf = data[k];
+        const { nome, altura, valor, quantidade } = uf;
+
+        for (let j = 0; j < quantidade; j++) {
+            if (currentColumn.currentCapacity + altura <= columnCapacity) {
+                // Adiciona o item ao bin atual
+                currentColumn.ufs.push({ nome, altura, valor });
+                currentColumn.currentCapacity += altura;
+            } else {
+                // Fecha o bin atual e começa um novo bin
+                currentColumn = {
+                    currentCapacity: altura,
+                    ufs: [{ nome, altura, valor }]
+                };
+                columns.push(currentColumn);
+            }
+        }
+    }
+
+    // Calcula L2(S) conforme a fórmula
+    let sumAlturas = data.reduce((sum, item) => sum + (item.altura * item.quantidade), 0);
+    let L2_S = Math.ceil((1 / columnCapacity) * sumAlturas);
+
+    console.log("L2(S) =", L2_S);
+
+    // Renderiza as colunas e os itens na interface
+    columns.forEach((column) => {
+        const columnElement = document.createElement('div');
+        columnElement.classList.add('bins');
+        container.appendChild(columnElement);
+
+        column.ufs.forEach(uf => {
+            const ufElement = document.createElement('div');
+            ufElement.classList.add('item');
+            ufElement.textContent = `${uf.nome} ${uf.valor}`;
+            ufElement.style.height = (uf.altura / scale) + 'px';
+            columnElement.appendChild(ufElement);
+        });
+    });
+}

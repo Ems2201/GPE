@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     -webkit-box-sizing: border-box;
-            box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
@@ -59,7 +59,6 @@ a:hover {
 }
 
 .main {
-    margin: 0vh 0vw;
     height: 84vh;
     width: 100vw;
     min-height: 700px;
@@ -67,6 +66,7 @@ a:hover {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
 }
 
 .content {
@@ -117,8 +117,23 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
 }
+
+#binA, #binB, #binTie {
+    display: none;
+    height: 100%;
+    align-items: center; 
+}
+
+
+
+#binA h2, #binB h2, #binTie h2 {
+    font-size: 1em;
+    margin: 0 10px;
+}
+
+
+
 
 .bins {
     border: 0.1px solid black;
@@ -221,6 +236,7 @@ p {
     border: 1px solid white;
 }
 
+
 @media (min-width: 320px) and (max-width: 400px) {
     .nav {
         padding: 12px 25px 12px;
@@ -270,7 +286,7 @@ p {
     .lock-menu {
         width: 300px;
         height: 40px;
-        top: 80px;
+        top: 50px;
         font-size: 0.8em;
     }
 
@@ -333,7 +349,7 @@ p {
     .lock-menu {
         width: 350px;
         height: 40px;
-        top: 80px;
+        top: 50px;
         font-size: 0.8em;
     }
 
@@ -391,7 +407,7 @@ p {
     .lock-menu {
         width: 350px;
         height: 40px;
-        top: 80px;
+        top: 50px;
         font-size: 0.8em;
     }
 
@@ -449,7 +465,7 @@ p {
     .lock-menu {
         width: 450px;
         height: 45px;
-        top: 80px;
+        top: 50px;
         font-size: 1em;
     }
 
@@ -509,7 +525,7 @@ p {
     .lock-menu {
         width: 450px;
         height: 45px;
-        top: 80px;
+        top: 50px;
         font-size: 1em;
     }
 
@@ -570,7 +586,7 @@ p {
     .lock-menu {
         width: 450px;
         height: 45px;
-        top: 80px;
+        top: 50px;
         font-size: 1em;
     }
 
@@ -630,7 +646,7 @@ p {
     .lock-menu {
         width: 500px;
         height: 45px;
-        top: 80px;
+        top: 50px;
         font-size: 1em;
     }
 
@@ -704,3 +720,12 @@ p {
     }
 }
 
+@media (max-height: 650px) {
+    body {
+        overflow-x: hidden;
+    }
+    
+    .main {
+    height: 700px;
+   }
+}

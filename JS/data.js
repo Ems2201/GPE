@@ -1,7 +1,18 @@
 export const fabricantes = [
     {
+        nome: 'Selecione o Fabricante',
+        unidadesFuncionais: [ {
+            nome: 'Selecione a Unidade Funcional',
+            dados: ['']
+        }]
+    },
+    {
         nome: 'ABB',
         unidadesFuncionais: [
+            {
+                nome: '',
+                dados: ['']
+            },
             {
                 nome: 'Disjuntor CCM',
                 dados: [
@@ -97,6 +108,15 @@ export const fabricantes = [
                     { altura: 1050, valor: "1050 mm" }, { altura: 1200, valor: "1200 mm" }, { altura: 1800, valor: "1800 mm" },
                 ],
                 medida: 'mm'
+             },
+             {
+                nome: 'Tie Breaker',
+                dados: [
+                    { altura: 550, valor: 630 }, { altura: 550, valor: 800 }, { altura: 550, valor: 1000 }, { altura: 550, valor: 1250 }, 
+                    { altura: 550, valor: 1600 }, { altura: 900, valor: 2000 }, { altura: 900, valor: 2500 }, { altura: 1800, valor: 3200 }, 
+                    { altura: 1800, valor: 4000 }, { altura: 1800, valor: 5000 }, { altura: 1800, valor: 6300 }
+                ],
+                medida: 'A'
              }
         ]
     }

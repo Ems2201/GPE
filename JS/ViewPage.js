@@ -149,17 +149,10 @@ function bestFitMelhorado() {
         if (success) {
             columns = attemptColumns;
             allocationSuccess = true;
-            break; // Parar as tentativas se a alocação foi bem-sucedida
+            break;
         } else {
-            // Embaralha as UFs apenas em colunas que não estão totalmente preenchidas
-            data = data.map(uf => {
-                const relevantColumns = attemptColumns[uf.barramento];
-                const filledColumns = relevantColumns.filter(column => column.currentCapacity === columnCapacity);
-                if (filledColumns.length < relevantColumns.length) {
-                    return data.sort(() => Math.random() - 0.5)[k];
-                }
-                return uf;
-            });
+            // Embaralha as UFs
+            data = data.sort(() => Math.random() - 0.5);
         }
     }
 
@@ -194,7 +187,7 @@ function bestFitMelhorado() {
             });
         }
     } else {
-        console.log('Não foi possível encontrar uma solução dentro das tentativas.');
+        console.log('Não foi possível encontrar uma solução dentro das tentativas, mas exibindo normalmente.');
     }
 
     function openLockMenu(uf, columnIndex, ufElement, barramento) {
@@ -283,6 +276,7 @@ function bestFitMelhorado() {
         });
     }
 }
+
 
 
 function binCompletion() {

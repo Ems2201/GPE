@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Ver Painel</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name="author" content="Erick Paes">
+    <meta name="description" content="Gerador de Painéis Elétricos">
+    <meta name="robots" content="nofollow, noindex">
+    <link rel='stylesheet' type='text/css' media='screen' href='../CSS/style.css'>
+</head>
+<body>
+    <header class="header">
+        <nav class = "nav">
+            <div class="nav_logo">
+                <a href="./HomePage.html" class="title"><h1>GPE</h1></a>
+            </div>
+                <ul class="nav_list">        
+                    <li><a href="./CreatePanel.html" class="nav_link">Criar Painel</a></li>
+                </ul>
+        </nav>
+    </header>
+     <main class="main">
+        <h2>Como Funciona o GPE?</h2>
+        <p>Hoje iremos ver como funciona o GPE, e como utilizarmos ele para realizar a exibição das vistas frontais de alguns conjuntos de manobra</p>
+        <figure>
+            <img src="./images/homePage.png" alt="Página Inicial">
+            <figcaption>Página de Criação de Paíneis do GPE</figcaption>
+        </figure>
+        <p>O gerador de painéis elétricos, ou <span>GPE</span>, é um gerador de vistas frontais de conjuntos de manobra que ajuda os usuários a tentarem alocar as unidades funcionais de um conjunto de manobra com o menor número possível de colunas. Ele possui um pequeno banco de dados com unidades funcionais retiradas do catálogo do ABB (MNS-MCC), para tornar as simulações mais realistas, pois os valores de corrente, potência e altura podem variar de fabricante para fabricante. </p>
+        <p>Além disso o GPE é dividido em duas partes, o formulário de dados, isto é, onde deve ser realizado um passo a passo para inserir as unidades funcionais, e a tabela de dados onde é exibido cada unidade funcional que foi adicionada.  Porém, por ser um software <i>open-source</i>, isto é, um software de código aberto, é permitido colocar outros fabricantes, com outros dados, apenas modificando o arquivo “data.js”, sendo este, o arquivo com os dados.</p>
+        <h3>Como simular um Conjunto de Manobra no GPE?</h3>
+        <p>A primeira coisa a ser feita para gerar uma vista frontal é selecionar o fabricante, no caso sendo o da ABB.</p>
+        <figure>
+            <img src="./images/fabricante.png" alt="">
+        </figure>
+        <p>
+            Logo após, deve ser selecionado qual unidade deseja inserir, no caso do exemplo vamos inserir um <strong>disjuntor de entrada de um CCM de 2000 A</strong>, mas poderia ser qualquer unidade funcional. O CCM é um centro de controle de motores, composto principalmente de partidas de motores. Logo, devemos escolher o Disjuntor CCM da lista de unidades funcionais, informar sua corrente no campo corrente e informar a quantidade no campo quantidade.
+        </p>
+        <figure>
+            <img src="./images/CCM.png" alt="">
+        </figure>
+        <p>
+            Feito isso devemos indicar qual barramento está unidade será inserida, no caso de CCMs, o padrão é utilizar apenas um barramento, no caso <strong>Barramento A</strong>. Haveria um barramento B se houvesse duas entradas separadas por um <i>tie breaker</i>.
+        </p>
+        <figure>
+            <img src="./images/barramento.png" alt="">
+        </figure>
+        <p>
+            Agora é necessário clicar no botão de <strong>adicionar <abbr title="Unidade Funcional">UF</abbr></strong>, que logo após de ser clicado irá aparecer na tabela de entradas a unidade funcional adicionada.
+        </p>
+        <figure>
+            <img src="./images/adicionar.png" alt="">
+        </figure>
+        <p>
+            Pronto, já será possível cadastrar o painel e ser encaminhado <strong>para a vista frontal</strong>.
+        </p>
+        <figure>
+            <img src="./images/vistafrontal.png" alt="">
+        </figure>
+        <p>
+            Exemplo de <strong>CCM com mais unidades funcionais</strong>:
+        </p>
+        <figure>
+            <img src="./images/vistafrontalccm.png" alt="">
+        </figure>
+
+        <p>
+            Para o caso de CDCs <strong>(Centros de Distribuição de Carga)</strong> com mais de um barramento deve ser feita da seguinte maneira:
+        </p>
+
+        <p>
+            Adicionar as Unidades do primeiro <strong>Barramento (A)</strong>:
+        </p>
+
+        <figure>
+            <img src="./images/barramentoA.png" alt="">
+        </figure>
+
+        <p>
+            Adicionar o <i>Tie Breaker</i>:
+        </p>
+        
+        <figure>
+            <img src="./images/tiebreaker.png" alt="">
+        </figure>
+
+        <p>
+            Adicionar as Unidades do segundo <strong>Barramento (B)</strong>:
+        </p>
+
+        
+        <figure>
+            <img src="./images/barramentoB.png" alt="">
+        </figure>
+        
+        <p>
+            Pronto, agora é possível simular qualquer <span>conjunto de manobra</span>.
+        </p>
+
+        <p>
+            Após entender como realizar as simulações é possível também, mudar as ordenações das unidades funcionais conforme os algoritmos do <strong>menu das vistas frontais</strong>.
+        </p>
+
+        <figure>
+            <img src="./images/menu.png" alt="">
+        </figure>
+
+        <p>
+            <strong>Lembrete</strong>: para cada algoritmo, há uma resposta diferente, onde os seguintes algoritmos realizam os seguintes procedimentos:
+        </p>
+
+        <ul class="list" style="font-size: 18px;">
+            <li>
+            	<strong>Best-Fit:</strong> Seleciona a unidade funcional correspondente e a aloca na coluna com menor espaço possível.
+            </li>
+            <li>
+                <strong>Best-Fit Menor Para o Maior:</strong>Igual ao Best-Fit, mas ordena as unidades funcionais de maneira crescente na entrada.
+            </li>
+            <li>
+                <strong>Best-Fit Maior Para o Menor:</strong>Igual ao Best-Fit, mas ordena as unidades funcionais de maneira decrescente na entrada.
+            </li>
+            <li>
+                <strong>Best-Fit Melhorado:</strong> Faz o mesmo procedimento do maior para o menor, porém ele realiza um cálculo do número mínimo de colunas a partir da soma das alturas, e caso o número mínimo de colunas não seja atingido, ele reordena as unidades funcionais das colunas que não estão cheias. Além disso, ele tem um botão que permite ao usuário mudar de posição as unidades funcionais.
+            </li>
+            <li>
+               <strong>Bin-completion:</strong> Outra derivação do Best-Fit, porém ele deve primeiro preencher uma coluna para depois iniciar uma coluna com outra unidade funcional, ou seja, ele somente insere uma unidade funcional assim que ele preencher totalmente a coluna, e caso não consiga preencher totalmente a coluna, passa para próxima coluna e próxima unidade funcional correspondentes
+            </li>
+            <li>
+                <strong>Next-Fit:</strong> Ele coloca cada unidade funcional na coluna atual se houver espaço suficiente; caso contrário, abre uma nova coluna. Logo, mesmo que haja colunas anteriores à atual que contenham espaço, ele só pode alocar as unidades funcionais. 
+            </li>
+        </ul>
+
+        <p>
+            Entendido isso, é necessário compreender que certos algoritmos terão exibições diferentes ou até mesmo iguais a depender da maneira que foi inserido os dados, além de que, fazendo que alguns algoritmos exibam mais colunas e outros menos colunas.
+        </p>
+    </main>
+    <footer class="footer">
+        <p>Feito Por Erick Paes</p>
+        <p><a href="mailto:Ems2201@outlook.com" target="_blank">Contato</a></p>
+        <p><a href="https://sor.ifsp.edu.br/" target="_blank">Conheça o IFSP Sorocaba</a></p>
+    </footer>
+    <script src="../JS/ViewPage.js"></script>  
+</body>
+</html>

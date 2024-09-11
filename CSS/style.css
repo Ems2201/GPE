@@ -114,6 +114,10 @@ h2 {
     text-align: center;
 }
 
+figure {
+    width: 1000px;
+}
+
 img {
     height: 500px;
 }
@@ -138,8 +142,17 @@ figcaption {
         font-size: 0.7em;
     }
 
+    .main {
+        padding: 20px;
+    }
+
+    figure {
+        width: 280px;
+        overflow: scroll;
+    }
+
     img {
-        height: 100px;
+        height: 300px;
     }
 }
 
@@ -156,8 +169,17 @@ figcaption {
         font-size: 0.8em;
     }
 
+    .main {
+        padding: 20px;
+    }
+
+    figure {
+        width: 350px;
+        overflow: scroll;
+    }
+
     img {
-        height: 120px;
+        height: 300px;
     }
 }
 
@@ -174,9 +196,28 @@ figcaption {
         font-size: 0.9em;
     }
 
+    .main {
+        padding: 20px;
+    }
+
+    figure {
+        width: 440px;
+        overflow: scroll;
+    }
+
     img {
-        height: 160px;
-        overflow-x: visible;
+        height: 350px;
+    }
+}
+
+@media(min-width: 600px) AND (max-width: 768px) {
+    figure {
+        width: 550px;
+        overflow: scroll;
+    }
+
+    img {
+        height: 400px;
     }
 }
 
@@ -193,7 +234,15 @@ figcaption {
         font-size: 0.9em;
     }
 
-    figure img {
+    .main {
+        padding: 20px;
+    }
+
+    figure {
+        width: 700px;
+    }
+
+    img {
         height: 300px;
     }
 }

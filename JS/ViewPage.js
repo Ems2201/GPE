@@ -62,29 +62,38 @@ function removeEmptyColumns() {
 }
 
 function bestFitMelhorado() {
+    // Carregar Dados
     let data = JSON.parse(sessionStorage.getItem('data'));
 
-    data.sort((a, b) => b.altura - a.altura);
+    // Embaralhar Dados
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
 
+    // Define Altura da Coluna e Número Mínimo de colunas com base nos dados da página de cadastro.
     const columnCapacity = 1800;
     let scale = columnCapacity / 400;
+    let totalHeight = data.reduce((sum, uf) => sum + (uf.altura * uf.quantidade), 0);
+    let minColumns = Math.ceil(totalHeight / columnCapacity);
 
+    // Inicialize os barramentos e colunas
     let columns = {
         A: [],
         Tie: [],
         B: []
     };
 
-    document.getElementById('binA').innerHTML = '';
-    document.getElementById('binB').innerHTML = '';
-    document.getElementById('binTie').innerHTML = '';
+    let bestColumns = { A: [], Tie: [], B: [] };
+    let bestColumnCount = Infinity;
+    let bestFullColumnsCount = 0;
+    const container = document.getElementById('bin');
+    container.innerHTML = '';
 
-    let sumAlturas = data.reduce((sum, item) => sum + (item.altura * item.quantidade), 0);
-    let minColumns = Math.ceil(sumAlturas / columnCapacity);
-
-    let allocationSuccess = false;
-
-    for (let attempt = 0; attempt < 100; attempt++) {
+    // Função para alocar itens nas colunas
+    function addItemToColumns(data) {
         let attemptColumns = JSON.parse(JSON.stringify(columns));
         let success = true;
 
@@ -92,6 +101,7 @@ function bestFitMelhorado() {
             const uf = data[k];
             let { nome, altura, valor, quantidade, barramento } = uf;
 
+            // Lógica do Tie Breaker
             if (nome === 'Tie Breaker' && altura < 1000) {
                 let bestBarramento = barramento;
                 let maxAvailableSpace = -1;
@@ -110,87 +120,90 @@ function bestFitMelhorado() {
             }
 
             for (let j = 0; j < quantidade; j++) {
-                let bestColumnIndex = -1;
-                let minWaste = Number.MAX_VALUE;
-
+                let columnFound = false;
                 let relevantColumns = attemptColumns[barramento];
 
+                // Tenta adicionar o item a uma coluna parcialmente preenchida
                 for (let i = 0; i < relevantColumns.length; i++) {
                     let column = relevantColumns[i];
                     if (column.currentCapacity + altura <= columnCapacity) {
-                        let waste = columnCapacity - (column.currentCapacity + altura);
-                        if (waste < minWaste) {
-                            minWaste = waste;
-                            bestColumnIndex = i;
-                        }
-                    }
-                }
-
-                if (bestColumnIndex !== -1) {
-                    relevantColumns[bestColumnIndex].ufs.push({ nome, altura, valor });
-                    relevantColumns[bestColumnIndex].currentCapacity += altura;
-                } else {
-                    if (relevantColumns.length < minColumns) {
-                        const newColumn = {
-                            currentCapacity: altura,
-                            ufs: [{ nome, altura, valor }]
-                        };
-                        relevantColumns.push(newColumn);
-                    } else {
-                        success = false;
+                        column.ufs.push({ nome, altura, valor });
+                        column.currentCapacity += altura;
+                        columnFound = true;
                         break;
                     }
                 }
+
+                // Se não encontrar uma coluna adequada, criar uma nova coluna
+                if (!columnFound) {
+                    const newColumn = {
+                        currentCapacity: altura,
+                        ufs: [{ nome, altura, valor }]
+                    };
+                    relevantColumns.push(newColumn);
+                }
             }
-
-            if (!success) break;
         }
 
-        if (success) {
-            columns = attemptColumns;
-            allocationSuccess = true;
-            break;
-        } else {
-            // Embaralha as UFs
-            data = data.sort(() => Math.random() - 0.5);
-        }
+        return attemptColumns;
     }
 
-    if (allocationSuccess) {
-        for (let barramento in columns) {
-            const barramentoColumns = columns[barramento];
-            const barramentoContainer = document.getElementById(`bin${barramento}`);
+    // Busca a melhor solução
+    let attempts = 0;
+    const maxAttempts = 100;
+    while (attempts < maxAttempts) {
+        let attemptColumns = addItemToColumns(data);
+        let totalColumns = Object.values(attemptColumns).reduce((count, barramento) => count + barramento.length, 0);
+        let fullColumnsCount = Object.values(attemptColumns).reduce((count, barramento) => count + barramento.filter(column => column.currentCapacity === columnCapacity).length, 0);
 
-            const titleElement = document.createElement('h2');
-            titleElement.textContent = `Barramento ${barramento}`;
-            barramentoContainer.appendChild(titleElement);
-
-            barramentoColumns.forEach((column, columnIndex) => {
-                const columnElement = document.createElement('div');
-                columnElement.classList.add('bins');
-                barramentoContainer.appendChild(columnElement);
-
-                column.ufs.forEach(uf => {
-                    const ufElement = document.createElement('div');
-                    ufElement.classList.add('item');
-                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
-                    ufElement.style.height = (uf.altura / scale) + 'px';
-
-                    const lockButton = document.createElement('button');
-                    lockButton.textContent = 'Mudar';
-                    lockButton.classList.add('lock-button');
-                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                    ufElement.appendChild(lockButton);
-
-                    columnElement.appendChild(ufElement);
-                });
-            });
+        if (totalColumns < bestColumnCount || fullColumnsCount > bestFullColumnsCount) {
+            bestColumnCount = totalColumns;
+            bestColumns = attemptColumns;
+            bestFullColumnsCount = fullColumnsCount;
         }
-    } else {
-        console.log('Não foi possível encontrar uma solução dentro das tentativas, mas exibindo normalmente.');
+
+        // Se as colunas forem iguais ou menor ao número mínimo de colunas e o número de colunas cheias for o máximo possível, parar
+        if (bestColumnCount <= minColumns && fullColumnsCount === totalColumns) {
+            break;
+        }
+
+        shuffleArray(data);
+        attempts++;
+    }
+
+    // Exibe o resultado
+    for (let barramento in bestColumns) {
+        const barramentoColumns = bestColumns[barramento];
+        const barramentoContainer = document.createElement('div');
+        barramentoContainer.id = `bin${barramento}`;
+        barramentoContainer.innerHTML = `<h2>Barramento ${barramento}</h2>`;
+        container.appendChild(barramentoContainer);
+
+        barramentoColumns.forEach((column, columnIndex) => {
+            const columnElement = document.createElement('div');
+            columnElement.classList.add('bins');
+            barramentoContainer.appendChild(columnElement);
+
+            column.ufs.forEach((uf, ufIndex) => {
+                const ufElement = document.createElement('div');
+                ufElement.classList.add('item');
+                ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                ufElement.style.height = (uf.altura / scale) + 'px';
+
+                // Adicionar botão de travar
+                const lockButton = document.createElement('button');
+                lockButton.textContent = 'Mudar';
+                lockButton.classList.add('lock-button');
+                lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
+                ufElement.appendChild(lockButton);
+
+                columnElement.appendChild(ufElement);
+            });
+        });
     }
 
     function openLockMenu(uf, columnIndex, ufElement, barramento) {
+        // Lógica do menu de lock adaptada para barramentos
         const existingMenu = document.querySelector('.lock-menu');
         if (existingMenu) {
             document.body.removeChild(existingMenu);
@@ -221,6 +234,7 @@ function bestFitMelhorado() {
     }
 
     function lockItemToColumn(uf, columnIndex, ufElement, targetColumnIndex, barramento) {
+        // Lógica de troca de colunas com barramentos
         const columnElement = document.querySelectorAll(`#bin${barramento} .bins`)[columnIndex];
         if (columnElement.contains(ufElement)) {
             columnElement.removeChild(ufElement);
@@ -276,6 +290,7 @@ function bestFitMelhorado() {
         });
     }
 }
+
 
 
 

@@ -201,6 +201,10 @@ input[type=number] {
     padding-bottom: 1px;
 }
 
+td:last-of-type {
+    display: none;
+}
+
 .footer a, .footer p {
     color: #ECECEC;
     text-decoration: none;

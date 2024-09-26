@@ -1,5 +1,5 @@
 // Seleciona o elemento do select
-const select = document.getElementById('select');
+const select = document.getElementById('select-algoritmo');
 
 // Quando a página carrega
 document.addEventListener('DOMContentLoaded', () => {
@@ -74,10 +74,11 @@ function bestFitMelhorado() {
     }
 
     // Define Altura da Coluna e Número Mínimo de colunas com base nos dados da página de cadastro.
-    const columnCapacity = 1800;
-    let scale = columnCapacity / 400;
+    const columnHeightCapacity = 1800;
+    const columnWidthCapacity = 100;
+    let scale = columnHeightCapacity / 400;
     let totalHeight = data.reduce((sum, uf) => sum + (uf.altura * uf.quantidade), 0);
-    let minColumns = Math.ceil(totalHeight / columnCapacity);
+    let minColumns = Math.ceil(totalHeight / columnHeightCapacity);
 
     // Inicialize os barramentos e colunas
     let columns = {
@@ -95,57 +96,86 @@ function bestFitMelhorado() {
     // Função para alocar itens nas colunas
     function addItemToColumns(data) {
         let attemptColumns = JSON.parse(JSON.stringify(columns));
-        let success = true;
-
+        // Lógica do Tie Breaker
+        
         for (let k = 0; k < data.length; k++) {
             const uf = data[k];
-            let { nome, altura, valor, quantidade, barramento } = uf;
+            let { nome, altura, valor, quantidade, barramento, largura } = uf;
 
-            // Lógica do Tie Breaker
             if (nome === 'Tie Breaker' && altura < 1000) {
                 let bestBarramento = barramento;
                 let maxAvailableSpace = -1;
-
+    
                 for (let b in attemptColumns) {
                     let totalUsedSpace = attemptColumns[b].reduce((sum, column) => sum + column.currentCapacity, 0);
-                    let availableSpace = columnCapacity * attemptColumns[b].length - totalUsedSpace;
-
+                    let availableSpace = columnHeightCapacity * attemptColumns[b].length - totalUsedSpace;
+    
                     if (availableSpace > maxAvailableSpace) {
                         maxAvailableSpace = availableSpace;
                         bestBarramento = b;
                     }
                 }
-
+    
                 barramento = bestBarramento;
             }
 
-            for (let j = 0; j < quantidade; j++) {
-                let columnFound = false;
-                let relevantColumns = attemptColumns[barramento];
+            if (largura <= 50) {
+                let pares = Math.floor(quantidade / 2);
+                let restante = quantidade % 2;
 
-                // Tenta adicionar o item a uma coluna parcialmente preenchida
-                for (let i = 0; i < relevantColumns.length; i++) {
-                    let column = relevantColumns[i];
-                    if (column.currentCapacity + altura <= columnCapacity) {
-                        column.ufs.push({ nome, altura, valor });
-                        column.currentCapacity += altura;
-                        columnFound = true;
-                        break;
-                    }
+                for (let p = 0; p < pares; p++) {
+                    let novaUF = {
+                        nome: `${nome}`,
+                        altura: altura,
+                        valor: valor,
+                        largura: 100,
+                        barramento: barramento,
+                        quantidade: 1
+                    };
+
+                    adicionarUF(novaUF, attemptColumns, barramento, columnHeightCapacity, true);
                 }
 
-                // Se não encontrar uma coluna adequada, criar uma nova coluna
-                if (!columnFound) {
-                    const newColumn = {
-                        currentCapacity: altura,
-                        ufs: [{ nome, altura, valor }]
-                    };
-                    relevantColumns.push(newColumn);
+                if (restante === 1) {
+                    adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false);
+                }
+            } else {
+                for (let j = 0; j < quantidade; j++) {
+                    adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false);
                 }
             }
         }
 
         return attemptColumns;
+    }
+
+    function adicionarUF(uf, columns, barramento, columnHeightCapacity, gavetaVertical) {
+        let { nome, altura, valor, largura } = uf;
+        let relevantColumns = columns[barramento];
+        let bestColumnIndex = -1;
+        let minWaste = Number.MAX_VALUE;
+
+        for (let i = 0; i < relevantColumns.length; i++) {
+            let column = relevantColumns[i];
+            if (column.currentCapacity + altura <= columnHeightCapacity) {
+                let waste = columnHeightCapacity - (column.currentCapacity + altura);
+                if (waste < minWaste) {
+                    minWaste = waste;
+                    bestColumnIndex = i;
+                }
+            }
+        }
+
+        if (bestColumnIndex !== -1) {
+            relevantColumns[bestColumnIndex].ufs.push({ nome, altura, valor, largura, gavetaVertical });
+            relevantColumns[bestColumnIndex].currentCapacity += altura;
+        } else {
+            const newColumn = {
+                currentCapacity: altura,
+                ufs: [{ nome, altura, valor, largura, gavetaVertical }]
+            };
+            relevantColumns.push(newColumn);
+        }
     }
 
     // Busca a melhor solução
@@ -154,7 +184,7 @@ function bestFitMelhorado() {
     while (attempts < maxAttempts) {
         let attemptColumns = addItemToColumns(data);
         let totalColumns = Object.values(attemptColumns).reduce((count, barramento) => count + barramento.length, 0);
-        let fullColumnsCount = Object.values(attemptColumns).reduce((count, barramento) => count + barramento.filter(column => column.currentCapacity === columnCapacity).length, 0);
+        let fullColumnsCount = Object.values(attemptColumns).reduce((count, barramento) => count + barramento.filter(column => column.currentCapacity === columnHeightCapacity).length, 0);
 
         if (totalColumns < bestColumnCount || fullColumnsCount > bestFullColumnsCount) {
             bestColumnCount = totalColumns;
@@ -162,7 +192,6 @@ function bestFitMelhorado() {
             bestFullColumnsCount = fullColumnsCount;
         }
 
-        // Se as colunas forem iguais ou menor ao número mínimo de colunas e o número de colunas cheias for o máximo possível, parar
         if (bestColumnCount <= minColumns && fullColumnsCount === totalColumns) {
             break;
         }
@@ -183,27 +212,62 @@ function bestFitMelhorado() {
             const columnElement = document.createElement('div');
             columnElement.classList.add('bins');
             barramentoContainer.appendChild(columnElement);
-
+            
             column.ufs.forEach((uf, ufIndex) => {
                 const ufElement = document.createElement('div');
                 ufElement.classList.add('item');
-                ufElement.textContent = `${uf.nome} ${uf.valor}`;
                 ufElement.style.height = (uf.altura / scale) + 'px';
 
-                // Adicionar botão de travar
                 const lockButton = document.createElement('button');
                 lockButton.textContent = 'Mudar';
                 lockButton.classList.add('lock-button');
                 lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
                 ufElement.appendChild(lockButton);
-
                 columnElement.appendChild(ufElement);
+
+                if (uf.largura === 100 && uf.gavetaVertical) {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '50%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `${uf.nome} ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '50%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `${uf.nome} ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+
+                    lockButton.textContent = 'Mudar';
+                    lockButton.classList.add('lock-button');
+                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
+                    uf1.appendChild(lockButton);
+                    columnElement.appendChild(ufElement);
+                } else {
+                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    lockButton.textContent = 'Mudar';
+                    lockButton.classList.add('lock-button');
+                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
+                    ufElement.appendChild(lockButton);
+                    columnElement.appendChild(ufElement);
+                }
             });
         });
     }
 
     function openLockMenu(uf, columnIndex, ufElement, barramento) {
-        // Lógica do menu de lock adaptada para barramentos
         const existingMenu = document.querySelector('.lock-menu');
         if (existingMenu) {
             document.body.removeChild(existingMenu);
@@ -234,7 +298,6 @@ function bestFitMelhorado() {
     }
 
     function lockItemToColumn(uf, columnIndex, ufElement, targetColumnIndex, barramento) {
-        // Lógica de troca de colunas com barramentos
         const columnElement = document.querySelectorAll(`#bin${barramento} .bins`)[columnIndex];
         if (columnElement.contains(ufElement)) {
             columnElement.removeChild(ufElement);
@@ -260,52 +323,32 @@ function bestFitMelhorado() {
             .filter(item => item.classList.contains('item'))
             .reduce((sum, item) => sum + parseInt(item.style.height), 0);
 
-        if (targetCapacity + parseInt(ufElement.style.height) > columnCapacity / scale) {
-            const newColumnElement = document.createElement('div');
-            newColumnElement.classList.add('bins');
-            document.getElementById(`bin${barramento}`).appendChild(newColumnElement);
-            newColumnElement.appendChild(ufElement);
-        } else {
+        if (targetCapacity + ufElement.clientHeight <= columnHeightCapacity) {
             targetColumnElement.appendChild(ufElement);
+        } else {
+            alert('Capacidade da coluna excedida!');
         }
-
-        let data = JSON.parse(sessionStorage.getItem('data'));
-        let ufData = data.find(item => item.nome === uf.nome && item.valor === uf.valor);
-        ufData.lockedColumn = targetColumnIndex;
-        sessionStorage.setItem('data', JSON.stringify(data));
 
         const lockMenu = document.querySelector('.lock-menu');
         if (lockMenu) {
             document.body.removeChild(lockMenu);
         }
-
-        removeEmptyColumns();
-    }
-
-    function removeEmptyColumns() {
-        document.querySelectorAll('.bins').forEach(columnElement => {
-            if (columnElement.children.length === 0) {
-                columnElement.parentElement.removeChild(columnElement);
-            }
-        });
     }
 }
 
 
-
-
 function binCompletion() {
     let data = JSON.parse(sessionStorage.getItem('data'));
-
-    const columnCapacity = 1800;
-    let scale = columnCapacity / 400;
+    console.log(data);
+    const columnHeightCapacity = 1800;  // Capacidade de altura
+    const columnWidthCapacity = 100;    // Capacidade de largura máxima
+    let heightScale = columnHeightCapacity / 400;
 
     // Inicializa colunas para cada barramento
     let columns = {
         A: [],
         Tie: [],
         B: []
-        // Adicione mais barramentos aqui, se necessário
     };
 
     // Limpa os containers de cada barramento
@@ -314,17 +357,16 @@ function binCompletion() {
     document.getElementById('binTie').innerHTML = '';
 
     for (let k = 0; k < data.length; k++) {
-        const uf = data[k];
-        let { nome, altura, valor, quantidade, barramento } = uf;
+        let uf = data[k];
+        let { nome, altura, valor, quantidade, barramento, largura } = uf;
 
-        // Verificação para mover "Tie" com altura menor que 1000
         if (nome === 'Tie Breaker' && altura < 1000) {
             let bestBarramento = barramento;
             let maxAvailableSpace = -1;
 
             for (let b in columns) {
                 let totalUsedSpace = columns[b].reduce((sum, column) => sum + column.currentCapacity, 0);
-                let availableSpace = columnCapacity * columns[b].length - totalUsedSpace;
+                let availableSpace = columnHeightCapacity * columns[b].length - totalUsedSpace;
 
                 if (availableSpace > maxAvailableSpace) {
                     maxAvailableSpace = availableSpace;
@@ -335,34 +377,30 @@ function binCompletion() {
             barramento = bestBarramento;
         }
 
-        for (let j = 0; j < quantidade; j++) {
-            let relevantColumns = columns[barramento];
-            let bestColumnIndex = -1;
-            let minWaste = Number.MAX_VALUE;
+        // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
+        if (largura <= 50) {
+            let pares = Math.floor(quantidade / 2);
+            let restante = quantidade % 2;
 
-            // Seleciona a coluna que mais se aproxima da capacidade total sem exceder
-            for (let i = 0; i < relevantColumns.length; i++) {
-                let column = relevantColumns[i];
-                if (column.currentCapacity + altura <= columnCapacity) {
-                    let waste = columnCapacity - (column.currentCapacity + altura);
-                    if (waste < minWaste) {
-                        minWaste = waste;
-                        bestColumnIndex = i;
-                    }
-                }
+            for (let p = 0; p < pares; p++) {
+                let novaUF = {
+                    nome: `${nome}`,
+                    altura: altura,
+                    valor: valor,
+                    largura: 100,
+                    barramento: barramento,
+                    quantidade: 1
+                };
+                // Adiciona a nova UF combinada com largura 100
+                adicionarUFCompleto(novaUF, columns, barramento, columnHeightCapacity, true);
             }
 
-            // Se encontrar uma coluna com espaço, aloca a unidade nela
-            if (bestColumnIndex !== -1) {
-                relevantColumns[bestColumnIndex].ufs.push({ nome, altura, valor });
-                relevantColumns[bestColumnIndex].currentCapacity += altura;
-            } else {
-                // Se nenhuma coluna tiver espaço suficiente, cria uma nova
-                const newColumn = {
-                    currentCapacity: altura,
-                    ufs: [{ nome, altura, valor }]
-                };
-                relevantColumns.push(newColumn);
+            if (restante === 1) {
+                adicionarUFCompleto(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        } else {
+            for (let j = 0; j < quantidade; j++) {
+                adicionarUFCompleto(uf, columns, barramento, columnHeightCapacity, false);
             }
         }
     }
@@ -372,12 +410,10 @@ function binCompletion() {
         const barramentoColumns = columns[barramento];
         const barramentoContainer = document.getElementById(`bin${barramento}`);
 
-        // Adiciona o nome do barramento
         const titleElement = document.createElement('h2');
         titleElement.textContent = `Barramento ${barramento}`;
         barramentoContainer.appendChild(titleElement);
 
-        // Renderiza cada coluna no barramento correspondente
         barramentoColumns.forEach((column) => {
             const columnElement = document.createElement('div');
             columnElement.classList.add('bins');
@@ -386,18 +422,78 @@ function binCompletion() {
             column.ufs.forEach(uf => {
                 const ufElement = document.createElement('div');
                 ufElement.classList.add('item');
-                ufElement.textContent = `${uf.nome} ${uf.valor}`;
-                ufElement.style.height = (uf.altura / scale) + 'px';
+                ufElement.style.height = (uf.altura / heightScale) + 'px';
+
+                if (uf.largura === 100 && uf.gavetaVertical) {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '50%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `${uf.nome} ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '50%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `${uf.nome} ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                } else {
+                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                }
+
                 columnElement.appendChild(ufElement);
             });
         });
     }
 }
 
+// Função auxiliar para adicionar UF tentando completar a coluna
+function adicionarUFCompleto(uf, columns, barramento, columnHeightCapacity, gavetaVertical) {
+    let { nome, altura, valor, largura } = uf;
+    let relevantColumns = columns[barramento];
+
+    // Ordena as colunas que ainda têm espaço disponível de forma decrescente, para tentar completar ao máximo
+    relevantColumns.sort((a, b) => (b.currentCapacity - a.currentCapacity));
+
+    let ufAdicionada = false;
+
+    for (let i = 0; i < relevantColumns.length; i++) {
+        let column = relevantColumns[i];
+
+        // Tenta completar a coluna se houver espaço suficiente
+        if (column.currentCapacity + altura <= columnHeightCapacity) {
+            column.ufs.push({ nome, altura, valor, largura, gavetaVertical });
+            column.currentCapacity += altura;
+            ufAdicionada = true;
+            break;
+        }
+    }
+
+    // Se não foi possível completar nenhuma coluna, cria uma nova coluna
+    if (!ufAdicionada) {
+        const newColumn = {
+            currentCapacity: altura,
+            ufs: [{ nome, altura, valor, largura, gavetaVertical }]
+        };
+        relevantColumns.push(newColumn);
+    }
+}
+
 
 function bestFit(sortType) {
     let data = JSON.parse(sessionStorage.getItem('data'));
-
+    console.log(data);
     switch (sortType) {
         case 'Crescente':
             data.sort((a, b) => a.altura - b.altura);
@@ -408,15 +504,15 @@ function bestFit(sortType) {
         // Caso 'none', não precisa ordenar
     }
 
-    const columnCapacity = 1800;
-    let scale = columnCapacity / 400;
+    const columnHeightCapacity = 1800;  // Capacidade de altura
+    const columnWidthCapacity = 100;    // Capacidade de largura máxima
+    let heightScale = columnHeightCapacity / 400;
 
     // Inicializa colunas para cada barramento
     let columns = {
         A: [],
         Tie: [],
         B: []
-        // Adicione mais barramentos aqui, se necessário
     };
 
     // Limpa os containers de cada barramento
@@ -425,18 +521,16 @@ function bestFit(sortType) {
     document.getElementById('binTie').innerHTML = '';
 
     for (let k = 0; k < data.length; k++) {
-        const uf = data[k];
-        let { nome, altura, valor, quantidade, barramento } = uf;
+        let uf = data[k];
+        let { nome, altura, valor, quantidade, barramento, largura } = uf;
 
-        // Verificação para mover "Tie" com altura menor que 1000
         if (nome === 'Tie Breaker' && altura < 1000) {
-            // Encontrar o barramento com mais espaço sobrando
             let bestBarramento = barramento;
             let maxAvailableSpace = -1;
 
             for (let b in columns) {
                 let totalUsedSpace = columns[b].reduce((sum, column) => sum + column.currentCapacity, 0);
-                let availableSpace = columnCapacity * columns[b].length - totalUsedSpace;
+                let availableSpace = columnHeightCapacity * columns[b].length - totalUsedSpace;
 
                 if (availableSpace > maxAvailableSpace) {
                     maxAvailableSpace = availableSpace;
@@ -447,36 +541,34 @@ function bestFit(sortType) {
             barramento = bestBarramento;
         }
 
-        for (let j = 0; j < quantidade; j++) {
-            let bestColumnIndex = -1;
-            let minWaste = Number.MAX_VALUE;
+        // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
+        if (largura <= 50) {
+            // Calcula quantos pares de UFs de largura 50 podem ser criados
+            let pares = Math.floor(quantidade / 2);
+            let restante = quantidade % 2;
 
-            // Seleciona as colunas do barramento correto
-            let relevantColumns = columns[barramento];
+            for (let p = 0; p < pares; p++) {
+                let novaUF = {
+                    nome: `${nome}`,
+                    altura: altura,  // Mantém a mesma altura
+                    valor: valor,  // Dobrar o valor se for necessário
+                    largura: 100,  // Nova largura
+                    barramento: barramento,
+                    quantidade: 1
+                };
 
-            // Tenta encontrar uma coluna que caiba a unidade funcional
-            for (let i = 0; i < relevantColumns.length; i++) {
-                let column = relevantColumns[i];
-                if (column.currentCapacity + altura <= columnCapacity) {
-                    let waste = columnCapacity - (column.currentCapacity + altura);
-                    if (waste < minWaste) {
-                        minWaste = waste;
-                        bestColumnIndex = i;
-                    }
-                }
+                // Adiciona a nova UF combinada com largura 100
+                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
             }
 
-            // Se encontrar uma coluna com espaço, aloca a unidade nela
-            if (bestColumnIndex !== -1) {
-                relevantColumns[bestColumnIndex].ufs.push({ nome, altura, valor });
-                relevantColumns[bestColumnIndex].currentCapacity += altura;
-            } else {
-                // Se nenhuma coluna tiver espaço suficiente, cria uma nova
-                const newColumn = {
-                    currentCapacity: altura,
-                    ufs: [{ nome, altura, valor }]
-                };
-                relevantColumns.push(newColumn);
+            // Se houver uma UF restante (não pareada), coloca ela sozinha
+            if (restante === 1) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        } else {
+            // Para UFs com largura maior que 50, adiciona normalmente
+            for (let j = 0; j < quantidade; j++) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
             }
         }
     }
@@ -486,12 +578,10 @@ function bestFit(sortType) {
         const barramentoColumns = columns[barramento];
         const barramentoContainer = document.getElementById(`bin${barramento}`);
 
-        // Adiciona o nome do barramento
         const titleElement = document.createElement('h2');
         titleElement.textContent = `Barramento ${barramento}`;
         barramentoContainer.appendChild(titleElement);
 
-        // Renderiza cada coluna no barramento correspondente
         barramentoColumns.forEach((column) => {
             const columnElement = document.createElement('div');
             columnElement.classList.add('bins');
@@ -500,26 +590,87 @@ function bestFit(sortType) {
             column.ufs.forEach(uf => {
                 const ufElement = document.createElement('div');
                 ufElement.classList.add('item');
-                ufElement.textContent = `${uf.nome} ${uf.valor}`;
-                ufElement.style.height = (uf.altura / scale) + 'px';
+                ufElement.style.height = (uf.altura / heightScale) + 'px';
+
+                if (uf.largura === 100 && uf.gavetaVertical) {
+                    // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '50%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `${uf.nome} ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '50%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `${uf.nome} ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+
+                    // Adiciona as duas partes na gaveta
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                } else {
+                    // Ajuste da largura para ser proporcional à capacidade total de largura
+                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                }
+
                 columnElement.appendChild(ufElement);
             });
         });
     }
 }
 
+// Função auxiliar para adicionar UF à coluna correta
+function adicionarUF(uf, columns, barramento, columnHeightCapacity, gavetaVertical) {
+    let { nome, altura, valor, largura } = uf;
+    let relevantColumns = columns[barramento];
+    let bestColumnIndex = -1;
+    let minWaste = Number.MAX_VALUE;
+
+    for (let i = 0; i < relevantColumns.length; i++) {
+        let column = relevantColumns[i];
+        if (column.currentCapacity + altura <= columnHeightCapacity) {
+            let waste = columnHeightCapacity - (column.currentCapacity + altura);
+            if (waste < minWaste) {
+                minWaste = waste;
+                bestColumnIndex = i;
+            }
+        }
+    }
+
+    if (bestColumnIndex !== -1) {
+        relevantColumns[bestColumnIndex].ufs.push({ nome, altura, valor, largura, gavetaVertical });
+        relevantColumns[bestColumnIndex].currentCapacity += altura;
+    } else {
+        const newColumn = {
+            currentCapacity: altura,
+            ufs: [{ nome, altura, valor, largura, gavetaVertical }]
+        };
+        relevantColumns.push(newColumn);
+    }
+}
+
 function nextFit() {
     let data = JSON.parse(sessionStorage.getItem('data'));
-
-    const columnCapacity = 1800;
-    let scale = columnCapacity / 400;
+    const columnHeightCapacity = 1800;  // Capacidade de altura
+    const columnWidthCapacity = 100;    // Capacidade de largura máxima
+    let heightScale = columnHeightCapacity / 400;
 
     // Inicializa colunas para cada barramento
     let columns = {
         A: [],
         Tie: [],
         B: []
-        // Adicione mais barramentos aqui, se necessário
     };
 
     // Limpa os containers de cada barramento
@@ -528,18 +679,16 @@ function nextFit() {
     document.getElementById('binTie').innerHTML = '';
 
     for (let k = 0; k < data.length; k++) {
-        const uf = data[k];
-        let { nome, altura, valor, quantidade, barramento } = uf;
+        let uf = data[k];
+        let { nome, altura, valor, quantidade, barramento, largura } = uf;
 
-        // Verificação para mover "Tie" com altura menor que 1000
         if (nome === 'Tie Breaker' && altura < 1000) {
-            // Encontrar o barramento com mais espaço sobrando
             let bestBarramento = barramento;
             let maxAvailableSpace = -1;
 
             for (let b in columns) {
                 let totalUsedSpace = columns[b].reduce((sum, column) => sum + column.currentCapacity, 0);
-                let availableSpace = columnCapacity * columns[b].length - totalUsedSpace;
+                let availableSpace = columnHeightCapacity * columns[b].length - totalUsedSpace;
 
                 if (availableSpace > maxAvailableSpace) {
                     maxAvailableSpace = availableSpace;
@@ -550,21 +699,30 @@ function nextFit() {
             barramento = bestBarramento;
         }
 
-        for (let j = 0; j < quantidade; j++) {
-            let relevantColumns = columns[barramento];
+        // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
+        if (largura <= 50) {
+            let pares = Math.floor(quantidade / 2);
+            let restante = quantidade % 2;
 
-            // Se a última coluna não tem espaço, cria uma nova coluna
-            if (relevantColumns.length === 0 || relevantColumns[relevantColumns.length - 1].currentCapacity + altura > columnCapacity) {
-                const newColumn = {
-                    currentCapacity: altura,
-                    ufs: [{ nome, altura, valor }]
+            for (let p = 0; p < pares; p++) {
+                let novaUF = {
+                    nome: `${nome}`,
+                    altura: altura,
+                    valor: valor,
+                    largura: 100,
+                    barramento: barramento,
+                    quantidade: 1
                 };
-                relevantColumns.push(newColumn);
-            } else {
-                // Adiciona a unidade funcional à última coluna
-                let lastColumn = relevantColumns[relevantColumns.length - 1];
-                lastColumn.ufs.push({ nome, altura, valor });
-                lastColumn.currentCapacity += altura;
+                // Adiciona a nova UF combinada com largura 100
+                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
+            }
+
+            if (restante === 1) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        } else {
+            for (let j = 0; j < quantidade; j++) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
             }
         }
     }
@@ -574,12 +732,10 @@ function nextFit() {
         const barramentoColumns = columns[barramento];
         const barramentoContainer = document.getElementById(`bin${barramento}`);
 
-        // Adiciona o nome do barramento
         const titleElement = document.createElement('h2');
         titleElement.textContent = `Barramento ${barramento}`;
         barramentoContainer.appendChild(titleElement);
 
-        // Renderiza cada coluna no barramento correspondente
         barramentoColumns.forEach((column) => {
             const columnElement = document.createElement('div');
             columnElement.classList.add('bins');
@@ -588,10 +744,68 @@ function nextFit() {
             column.ufs.forEach(uf => {
                 const ufElement = document.createElement('div');
                 ufElement.classList.add('item');
-                ufElement.textContent = `${uf.nome} ${uf.valor}`;
-                ufElement.style.height = (uf.altura / scale) + 'px';
+                ufElement.style.height = (uf.altura / heightScale) + 'px';
+
+                if (uf.largura === 100 && uf.gavetaVertical) {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '50%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `${uf.nome} ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '50%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `${uf.nome} ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                } else {
+                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                }
+
                 columnElement.appendChild(ufElement);
             });
         });
+    }
+}
+
+// Função auxiliar para adicionar UF à última coluna ou criar nova, se necessário
+function adicionarUF(uf, columns, barramento, columnHeightCapacity, gavetaVertical) {
+    let { nome, altura, valor, largura } = uf;
+    let relevantColumns = columns[barramento];
+
+    // Se não houver colunas, cria a primeira
+    if (relevantColumns.length === 0) {
+        const newColumn = {
+            currentCapacity: altura,
+            ufs: [{ nome, altura, valor, largura, gavetaVertical }]
+        };
+        relevantColumns.push(newColumn);
+    } else {
+        // Verifica a última coluna
+        let lastColumn = relevantColumns[relevantColumns.length - 1];
+
+        if (lastColumn.currentCapacity + altura <= columnHeightCapacity) {
+            lastColumn.ufs.push({ nome, altura, valor, largura, gavetaVertical });
+            lastColumn.currentCapacity += altura;
+        } else {
+            // Se não couber, cria uma nova coluna
+            const newColumn = {
+                currentCapacity: altura,
+                ufs: [{ nome, altura, valor, largura, gavetaVertical }]
+            };
+            relevantColumns.push(newColumn);
+        }
     }
 }

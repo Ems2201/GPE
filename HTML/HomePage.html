@@ -31,9 +31,9 @@
         <p>O gerador de painéis elétricos, ou <span>GPE</span>, é um gerador de vistas frontais de conjuntos de manobra que ajuda os usuários a tentarem alocar as unidades funcionais de um conjunto de manobra com o menor número possível de colunas. Ele possui um pequeno banco de dados com unidades funcionais retiradas do catálogo do ABB (MNS-MCC), para tornar as simulações mais realistas, pois os valores de corrente, potência e altura podem variar de fabricante para fabricante. </p>
         <p>Além disso o GPE é dividido em duas partes, o formulário de dados, isto é, onde deve ser realizado um passo a passo para inserir as unidades funcionais, e a tabela de dados onde é exibido cada unidade funcional que foi adicionada.  Porém, por ser um software <i>open-source</i>, isto é, um software de código aberto, é permitido colocar outros fabricantes, com outros dados, apenas modificando o arquivo “data.js”, sendo este, o arquivo com os dados.</p>
         <h3>Como simular um Conjunto de Manobra no GPE?</h3>
-        <p>A primeira coisa a ser feita para gerar uma vista frontal é selecionar o fabricante, no caso sendo o da ABB.</p>
+        <p>A primeira coisa a ser feita para gerar uma vista frontal é selecionar o <strong>Conjunto de Manobra</strong>, no caso de exemplo, CCM.</p>
         <figure>
-            <img src="./images/fabricante.png" alt="">
+            <img src="./images/conjuntoManobra.png" alt="">
         </figure>
         <p>
             Logo após, deve ser selecionado qual unidade deseja inserir, no caso do exemplo vamos inserir um <strong>disjuntor de entrada de um CCM de 2000 A</strong>, mas poderia ser qualquer unidade funcional. O CCM é um centro de controle de motores, composto principalmente de partidas de motores. Logo, devemos escolher o Disjuntor CCM da lista de unidades funcionais, informar sua corrente no campo corrente e informar a quantidade no campo quantidade.
@@ -42,7 +42,7 @@
             <img src="./images/CCM.png" alt="">
         </figure>
         <p>
-            Feito isso devemos indicar qual barramento está unidade será inserida, no caso de CCMs, o padrão é utilizar apenas um barramento, no caso <strong>Barramento A</strong>. Haveria um barramento B se houvesse duas entradas separadas por um <i>tie breaker</i>.
+            Feito isso devemos indicar qual barramento está unidade será inserida, no caso de CCMs, o padrão é utilizar apenas um barramento,  no caso <strong>Barramento A</strong>. Haveria um barramento B se houvesse duas entradas separadas por um <i>tie breaker</i>.
         </p>
         <figure>
             <img src="./images/barramento.png" alt="">

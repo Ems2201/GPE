@@ -125,6 +125,13 @@ p {
     align-items: center; 
 }
 
+.select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    height: 50px;
+}
 
 
 #binA h2, #binB h2, #binTie h2 {
@@ -132,31 +139,40 @@ p {
     margin: 0 10px;
 }
 
-
-
-
 .bins {
     border: 0.1px solid black;
     width: 160px;
     height: 100%;
-    text-align: center;
-    margin: 0px;
-    padding: 0px;
-    box-sizing: content-box;
     font-size: 0.7em;
+    margin: 0;
+    padding: 0;
+}
+
+.sub-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    border: 0.1px solid black;
+}
+
+.sub-item button{
+    width: 70%;
+    font-size: 90%;
 }
 
 .item {
     border: 0.1px solid black;
-    margin: 0px;
-    padding: 0;
-    width: 100%;
     background-color: #7842d7;
-    display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    box-sizing: border-box;
+    margin: 0;
+    padding: 0px;
+    text-align: center;
+    display: flex;
 }
 
 .footer {
@@ -275,12 +291,16 @@ p {
     }
 
     h3 {
-        font-size: 0.9em;
-        text-align: center;
+        font-size: 0.4em;
     }
 
     select {
-        width: 100%;
+        max-width: 90px;
+    }
+
+    #select-algoritmo {
+        max-width: 130px;
+        font-size: 0.5em;
     }
 
     .lock-menu {
@@ -335,11 +355,17 @@ p {
     }
 
     h3 {
-        font-size: 1em;
+        font-size: 0.5em;
     }
 
     select {
-        width: 100%;
+        max-width: 120px;
+        font-size: 0.8em;
+    }
+
+    #select-algoritmo {
+        max-width: 180px;
+        font-size: 0.6em;
     }
 
     .footer {
@@ -392,11 +418,12 @@ p {
     }
 
     h3 {
-        font-size: 1em;
+        font-size: 0.7em;
     }
 
     select {
-        width: 70%;
+        max-width: 180px;
+        font-size: 0.6em;
     }
 
     .bins {
@@ -450,11 +477,11 @@ p {
     }
 
     h3 {
-        font-size: 1em;
+        font-size: 0.8em;
     }
 
     select {
-        width: 300px;
+        max-width: 200px;
     }
 
     .bins {
@@ -514,7 +541,7 @@ p {
 
 
     select {
-        width: 380px;
+        max-width: 250px;
     }
 
     .bins {
@@ -538,6 +565,11 @@ p {
         font-size: 0.8em;
         width: 90px;
     }
+}
+
+.disjuntor-cdc-caixa-moldada {
+    width: 100%; /* 0.25 da largura padrão */
+    height: 25%;
 }
 
 @media (min-width: 921px) and (max-width: 1200px) {

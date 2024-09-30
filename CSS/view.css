@@ -159,8 +159,8 @@ p {
 }
 
 .sub-item button{
-    width: 70%;
-    font-size: 90%;
+    width: 80%;
+    font-size: 100%;
 }
 
 .item {
@@ -173,6 +173,14 @@ p {
     padding: 0px;
     text-align: center;
     display: flex;
+}
+
+.large {
+    flex-direction: column;
+}
+
+.large button {
+    width: 80%;
 }
 
 .footer {

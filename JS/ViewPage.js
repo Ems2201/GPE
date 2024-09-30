@@ -216,6 +216,7 @@ function bestFitMelhorado() {
             column.ufs.forEach((uf, ufIndex) => {
                 const ufElement = document.createElement('div');
                 ufElement.classList.add('item');
+                ufElement.classList.add('large');
                 ufElement.style.height = (uf.altura / scale) + 'px';
 
                 const lockButton = document.createElement('button');
@@ -231,6 +232,7 @@ function bestFitMelhorado() {
                     ufElement.style.justifyContent = 'center';
                     ufElement.style.width = '100%';
                     ufElement.style.color = 'white';
+                    ufElement.style.flexDirection = 'row';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -266,6 +268,9 @@ function bestFitMelhorado() {
             });
         });
     }
+
+
+      
 
     function openLockMenu(uf, columnIndex, ufElement, barramento) {
         const existingMenu = document.querySelector('.lock-menu');
@@ -323,16 +328,34 @@ function bestFitMelhorado() {
             .filter(item => item.classList.contains('item'))
             .reduce((sum, item) => sum + parseInt(item.style.height), 0);
 
-        if (targetCapacity + ufElement.clientHeight <= columnHeightCapacity) {
-            targetColumnElement.appendChild(ufElement);
+        if (targetCapacity + parseInt(ufElement.style.height) > columnHeightCapacity / scale) {
+            const newColumnElement = document.createElement('div');
+            newColumnElement.classList.add('bins');
+            document.getElementById(`bin${barramento}`).appendChild(newColumnElement);
+            newColumnElement.appendChild(ufElement);
         } else {
-            alert('Capacidade da coluna excedida!');
+            targetColumnElement.appendChild(ufElement);
         }
+
+        let data = JSON.parse(sessionStorage.getItem('data'));
+        let ufData = data.find(item => item.nome === uf.nome && item.valor === uf.valor);
+        ufData.lockedColumn = targetColumnIndex;
+        sessionStorage.setItem('data', JSON.stringify(data));
 
         const lockMenu = document.querySelector('.lock-menu');
         if (lockMenu) {
             document.body.removeChild(lockMenu);
         }
+
+        removeEmptyColumns();
+    }
+
+    function removeEmptyColumns() {
+        document.querySelectorAll('.bins').forEach(columnElement => {
+            if (columnElement.children.length === 0) {
+                columnElement.parentElement.removeChild(columnElement);
+            }
+        });
     }
 }
 

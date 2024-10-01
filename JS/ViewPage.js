@@ -119,9 +119,9 @@ function bestFitMelhorado() {
                 barramento = bestBarramento;
             }
 
-            if (largura <= 50) {
-                let pares = Math.floor(quantidade / 2);
-                let restante = quantidade % 2;
+            if (largura <= 25) {
+                let pares = Math.floor(quantidade / 4);
+                let restante = quantidade % 4;
 
                 for (let p = 0; p < pares; p++) {
                     let novaUF = {
@@ -139,6 +139,26 @@ function bestFitMelhorado() {
                 if (restante === 1) {
                     adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false);
                 }
+            } else if (largura <= 50) {
+                    let pares = Math.floor(quantidade / 2);
+                    let restante = quantidade % 2;
+    
+                    for (let p = 0; p < pares; p++) {
+                        let novaUF = {
+                            nome: `${nome}`,
+                            altura: altura,
+                            valor: valor,
+                            largura: 100,
+                            barramento: barramento,
+                            quantidade: 1
+                        };
+    
+                        adicionarUF(novaUF, attemptColumns, barramento, columnHeightCapacity, true);
+                    }
+    
+                    if (restante === 1) {
+                        adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false);
+                    }
             } else {
                 for (let j = 0; j < quantidade; j++) {
                     adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false);
@@ -227,12 +247,60 @@ function bestFitMelhorado() {
                 columnElement.appendChild(ufElement);
 
                 if (uf.largura === 100 && uf.gavetaVertical) {
+                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
                     ufElement.classList.add('gaveta-vertical');
                     ufElement.style.display = 'flex';
                     ufElement.style.justifyContent = 'center';
                     ufElement.style.width = '100%';
                     ufElement.style.color = 'white';
                     ufElement.style.flexDirection = 'row';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '25%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `DISJ. ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '25%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `DISJ. ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    const uf3 = document.createElement('div');
+                    uf3.classList.add('sub-item');
+                    uf3.style.width = '25%';
+                    uf3.style.height = '100%';
+                    uf3.textContent = `DISJ. ${uf.valor}`;
+                    uf3.style.color = 'white';
+
+                    const uf4 = document.createElement('div');
+                    uf4.classList.add('sub-item');
+                    uf4.style.width = '25%';
+                    uf4.style.height = '100%';
+                    uf4.textContent = `DISJ. ${uf.valor}`;
+                    uf4.style.color = 'white';
+
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                    ufElement.appendChild(uf3);
+                    ufElement.appendChild(uf4);
+
+                    lockButton.textContent = 'Mudar';
+                    lockButton.classList.add('lock-button');
+                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
+                    uf1.appendChild(lockButton);
+                    columnElement.appendChild(ufElement);
+                } else {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+                    ufElement.style.flexDirection = 'row';
+                    ufElement.style.fontSize = '90%';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -256,9 +324,15 @@ function bestFitMelhorado() {
                     lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
                     uf1.appendChild(lockButton);
                     columnElement.appendChild(ufElement);
+                }
                 } else {
+                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                        ufElement.textContent = `DISJ. ${uf.valor}`;
+                    } else {
+                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    }
                     ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
-                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    ufElement.style.fontSize = '90%';
                     lockButton.textContent = 'Mudar';
                     lockButton.classList.add('lock-button');
                     lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
@@ -401,29 +475,55 @@ function binCompletion() {
         }
 
         // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
-        if (largura <= 50) {
+        if (largura <= 25) {
+            // Calcula quantos pares de UFs de largura 50 podem ser criados
+            let pares = Math.floor(quantidade / 4);
+            let restante = quantidade % 4;
+
+            for (let p = 0; p < pares; p++) {
+                let novaUF = {
+                    nome: `${nome}`,
+                    altura: altura,  // Mantém a mesma altura
+                    valor: valor,  // Dobrar o valor se for necessário
+                    largura: 100,  // Nova largura
+                    barramento: barramento,
+                    quantidade: 1
+                };
+
+                // Adiciona a nova UF combinada com largura 100
+                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
+            }
+
+            // Se houver uma UF restante (não pareada), coloca ela sozinha
+            if (restante === 1) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        } else if (largura <= 50) {
             let pares = Math.floor(quantidade / 2);
             let restante = quantidade % 2;
 
             for (let p = 0; p < pares; p++) {
                 let novaUF = {
                     nome: `${nome}`,
-                    altura: altura,
-                    valor: valor,
-                    largura: 100,
+                    altura: altura,  // Mantém a mesma altura
+                    valor: valor,  // Dobrar o valor se for necessário
+                    largura: 100,  // Nova largura
                     barramento: barramento,
                     quantidade: 1
                 };
+
                 // Adiciona a nova UF combinada com largura 100
-                adicionarUFCompleto(novaUF, columns, barramento, columnHeightCapacity, true);
+                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
             }
 
+            // Se houver uma UF restante (não pareada), coloca ela sozinha
             if (restante === 1) {
-                adicionarUFCompleto(uf, columns, barramento, columnHeightCapacity, false);
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
             }
         } else {
+            // Para UFs com largura maior que 50, adiciona normalmente
             for (let j = 0; j < quantidade; j++) {
-                adicionarUFCompleto(uf, columns, barramento, columnHeightCapacity, false);
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
             }
         }
     }
@@ -448,6 +548,49 @@ function binCompletion() {
                 ufElement.style.height = (uf.altura / heightScale) + 'px';
 
                 if (uf.largura === 100 && uf.gavetaVertical) {
+                  if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '25%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `DISJ. ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '25%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `DISJ. ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    const uf3 = document.createElement('div');
+                    uf3.classList.add('sub-item');
+                    uf3.style.width = '25%';
+                    uf3.style.height = '100%';
+                    uf3.textContent = `DISJ. ${uf.valor}`;
+                    uf3.style.color = 'white';
+
+                    const uf4 = document.createElement('div');
+                    uf4.classList.add('sub-item');
+                    uf4.style.width = '25%';
+                    uf4.style.height = '100%';
+                    uf4.textContent = `DISJ. ${uf.valor}`;
+                    uf4.style.color = 'white';
+
+
+                    // Adiciona as duas partes na gaveta
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                    ufElement.appendChild(uf3);
+                    ufElement.appendChild(uf4);
+                  } else {
+                    // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
                     ufElement.classList.add('gaveta-vertical');
                     ufElement.style.display = 'flex';
                     ufElement.style.justifyContent = 'center';
@@ -468,11 +611,20 @@ function binCompletion() {
                     uf2.textContent = `${uf.nome} ${uf.valor}`;
                     uf2.style.color = 'white';
 
+
+                    // Adiciona as duas partes na gaveta
                     ufElement.appendChild(uf1);
                     ufElement.appendChild(uf2);
+                  } 
                 } else {
+                    // Ajuste da largura para ser proporcional à capacidade total de largura
                     ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
-                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                        ufElement.textContent = `DISJ. ${uf.valor}`;
+                    }
+                    else {
+                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    }
                 }
 
                 columnElement.appendChild(ufElement);
@@ -482,36 +634,6 @@ function binCompletion() {
 }
 
 // Função auxiliar para adicionar UF tentando completar a coluna
-function adicionarUFCompleto(uf, columns, barramento, columnHeightCapacity, gavetaVertical) {
-    let { nome, altura, valor, largura } = uf;
-    let relevantColumns = columns[barramento];
-
-    // Ordena as colunas que ainda têm espaço disponível de forma decrescente, para tentar completar ao máximo
-    relevantColumns.sort((a, b) => (b.currentCapacity - a.currentCapacity));
-
-    let ufAdicionada = false;
-
-    for (let i = 0; i < relevantColumns.length; i++) {
-        let column = relevantColumns[i];
-
-        // Tenta completar a coluna se houver espaço suficiente
-        if (column.currentCapacity + altura <= columnHeightCapacity) {
-            column.ufs.push({ nome, altura, valor, largura, gavetaVertical });
-            column.currentCapacity += altura;
-            ufAdicionada = true;
-            break;
-        }
-    }
-
-    // Se não foi possível completar nenhuma coluna, cria uma nova coluna
-    if (!ufAdicionada) {
-        const newColumn = {
-            currentCapacity: altura,
-            ufs: [{ nome, altura, valor, largura, gavetaVertical }]
-        };
-        relevantColumns.push(newColumn);
-    }
-}
 
 
 function bestFit(sortType) {
@@ -565,8 +687,230 @@ function bestFit(sortType) {
         }
 
         // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
-        if (largura <= 50) {
+        if (largura <= 25) {
             // Calcula quantos pares de UFs de largura 50 podem ser criados
+            let pares = Math.floor(quantidade / 4);
+            let restante = quantidade % 4;
+
+            for (let p = 0; p < pares; p++) {
+                let novaUF = {
+                    nome: `${nome}`,
+                    altura: altura,  // Mantém a mesma altura
+                    valor: valor,  // Dobrar o valor se for necessário
+                    largura: 100,  // Nova largura
+                    barramento: barramento,
+                    quantidade: 1
+                };
+
+                // Adiciona a nova UF combinada com largura 100
+                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
+            }
+
+            // Se houver uma UF restante (não pareada), coloca ela sozinha
+            if (restante === 1) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        } else if (largura <= 50) {
+            let pares = Math.floor(quantidade / 2);
+            let restante = quantidade % 2;
+
+            for (let p = 0; p < pares; p++) {
+                let novaUF = {
+                    nome: `${nome}`,
+                    altura: altura,  // Mantém a mesma altura
+                    valor: valor,  // Dobrar o valor se for necessário
+                    largura: 100,  // Nova largura
+                    barramento: barramento,
+                    quantidade: 1
+                };
+
+                // Adiciona a nova UF combinada com largura 100
+                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
+            }
+
+            // Se houver uma UF restante (não pareada), coloca ela sozinha
+            if (restante === 1) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        } else {
+            // Para UFs com largura maior que 50, adiciona normalmente
+            for (let j = 0; j < quantidade; j++) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        }
+        
+    }
+
+    // Renderiza as colunas separadamente para cada barramento
+    for (let barramento in columns) {
+        const barramentoColumns = columns[barramento];
+        const barramentoContainer = document.getElementById(`bin${barramento}`);
+
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = `Barramento ${barramento}`;
+        barramentoContainer.appendChild(titleElement);
+
+        barramentoColumns.forEach((column) => {
+            const columnElement = document.createElement('div');
+            columnElement.classList.add('bins');
+            barramentoContainer.appendChild(columnElement);
+
+            column.ufs.forEach(uf => {
+                const ufElement = document.createElement('div');
+                ufElement.classList.add('item');
+                ufElement.style.height = (uf.altura / heightScale) + 'px';
+
+                if (uf.largura === 100 && uf.gavetaVertical) {
+                  if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '25%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `DISJ. ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '25%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `DISJ. ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    const uf3 = document.createElement('div');
+                    uf3.classList.add('sub-item');
+                    uf3.style.width = '25%';
+                    uf3.style.height = '100%';
+                    uf3.textContent = `DISJ. ${uf.valor}`;
+                    uf3.style.color = 'white';
+
+                    const uf4 = document.createElement('div');
+                    uf4.classList.add('sub-item');
+                    uf4.style.width = '25%';
+                    uf4.style.height = '100%';
+                    uf4.textContent = `DISJ. ${uf.valor}`;
+                    uf4.style.color = 'white';
+
+
+                    // Adiciona as duas partes na gaveta
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                    ufElement.appendChild(uf3);
+                    ufElement.appendChild(uf4);
+                  } else {
+                    // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '50%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `${uf.nome} ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '50%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `${uf.nome} ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+
+                    // Adiciona as duas partes na gaveta
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                  } 
+                } else {
+                    // Ajuste da largura para ser proporcional à capacidade total de largura
+                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                        ufElement.textContent = `DISJ. ${uf.valor}`;
+                    }
+                    else {
+                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    }
+                }
+
+                columnElement.appendChild(ufElement);
+            });
+        });
+    }
+}
+
+// Função auxiliar para adicionar UF à coluna correta
+function nextFit() {
+    let data = JSON.parse(sessionStorage.getItem('data'));
+    const columnHeightCapacity = 1800;  // Capacidade de altura
+    const columnWidthCapacity = 100;    // Capacidade de largura máxima
+    let heightScale = columnHeightCapacity / 400;
+
+    // Inicializa colunas para cada barramento
+    let columns = {
+        A: [],
+        Tie: [],
+        B: []
+    };
+
+    // Limpa os containers de cada barramento
+    document.getElementById('binA').innerHTML = '';
+    document.getElementById('binB').innerHTML = '';
+    document.getElementById('binTie').innerHTML = '';
+
+    for (let k = 0; k < data.length; k++) {
+        let uf = data[k];
+        let { nome, altura, valor, quantidade, barramento, largura } = uf;
+
+        if (nome === 'Tie Breaker' && altura < 1000) {
+            let bestBarramento = barramento;
+            let maxAvailableSpace = -1;
+
+            for (let b in columns) {
+                let totalUsedSpace = columns[b].reduce((sum, column) => sum + column.currentCapacity, 0);
+                let availableSpace = columnHeightCapacity * columns[b].length - totalUsedSpace;
+
+                if (availableSpace > maxAvailableSpace) {
+                    maxAvailableSpace = availableSpace;
+                    bestBarramento = b;
+                }
+            }
+
+            barramento = bestBarramento;
+        }
+
+        // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
+         if (largura <= 25) {
+            // Calcula quantos pares de UFs de largura 50 podem ser criados
+            let pares = Math.floor(quantidade / 4);
+            let restante = quantidade % 4;
+
+            for (let p = 0; p < pares; p++) {
+                let novaUF = {
+                    nome: `${nome}`,
+                    altura: altura,  // Mantém a mesma altura
+                    valor: valor,  // Dobrar o valor se for necessário
+                    largura: 100,  // Nova largura
+                    barramento: barramento,
+                    quantidade: 1
+                };
+
+                // Adiciona a nova UF combinada com largura 100
+                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
+            }
+
+            // Se houver uma UF restante (não pareada), coloca ela sozinha
+            if (restante === 1) {
+                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
+            }
+        } else if (largura <= 50) {
             let pares = Math.floor(quantidade / 2);
             let restante = quantidade % 2;
 
@@ -616,6 +960,48 @@ function bestFit(sortType) {
                 ufElement.style.height = (uf.altura / heightScale) + 'px';
 
                 if (uf.largura === 100 && uf.gavetaVertical) {
+                  if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '25%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `DISJ. ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '25%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `DISJ. ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    const uf3 = document.createElement('div');
+                    uf3.classList.add('sub-item');
+                    uf3.style.width = '25%';
+                    uf3.style.height = '100%';
+                    uf3.textContent = `DISJ. ${uf.valor}`;
+                    uf3.style.color = 'white';
+
+                    const uf4 = document.createElement('div');
+                    uf4.classList.add('sub-item');
+                    uf4.style.width = '25%';
+                    uf4.style.height = '100%';
+                    uf4.textContent = `DISJ. ${uf.valor}`;
+                    uf4.style.color = 'white';
+
+
+                    // Adiciona as duas partes na gaveta
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                    ufElement.appendChild(uf3);
+                    ufElement.appendChild(uf4);
+                  } else {
                     // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
                     ufElement.classList.add('gaveta-vertical');
                     ufElement.style.display = 'flex';
@@ -641,160 +1027,16 @@ function bestFit(sortType) {
                     // Adiciona as duas partes na gaveta
                     ufElement.appendChild(uf1);
                     ufElement.appendChild(uf2);
+                  } 
                 } else {
                     // Ajuste da largura para ser proporcional à capacidade total de largura
                     ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
-                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
-                }
-
-                columnElement.appendChild(ufElement);
-            });
-        });
-    }
-}
-
-// Função auxiliar para adicionar UF à coluna correta
-function adicionarUF(uf, columns, barramento, columnHeightCapacity, gavetaVertical) {
-    let { nome, altura, valor, largura } = uf;
-    let relevantColumns = columns[barramento];
-    let bestColumnIndex = -1;
-    let minWaste = Number.MAX_VALUE;
-
-    for (let i = 0; i < relevantColumns.length; i++) {
-        let column = relevantColumns[i];
-        if (column.currentCapacity + altura <= columnHeightCapacity) {
-            let waste = columnHeightCapacity - (column.currentCapacity + altura);
-            if (waste < minWaste) {
-                minWaste = waste;
-                bestColumnIndex = i;
-            }
-        }
-    }
-
-    if (bestColumnIndex !== -1) {
-        relevantColumns[bestColumnIndex].ufs.push({ nome, altura, valor, largura, gavetaVertical });
-        relevantColumns[bestColumnIndex].currentCapacity += altura;
-    } else {
-        const newColumn = {
-            currentCapacity: altura,
-            ufs: [{ nome, altura, valor, largura, gavetaVertical }]
-        };
-        relevantColumns.push(newColumn);
-    }
-}
-
-function nextFit() {
-    let data = JSON.parse(sessionStorage.getItem('data'));
-    const columnHeightCapacity = 1800;  // Capacidade de altura
-    const columnWidthCapacity = 100;    // Capacidade de largura máxima
-    let heightScale = columnHeightCapacity / 400;
-
-    // Inicializa colunas para cada barramento
-    let columns = {
-        A: [],
-        Tie: [],
-        B: []
-    };
-
-    // Limpa os containers de cada barramento
-    document.getElementById('binA').innerHTML = '';
-    document.getElementById('binB').innerHTML = '';
-    document.getElementById('binTie').innerHTML = '';
-
-    for (let k = 0; k < data.length; k++) {
-        let uf = data[k];
-        let { nome, altura, valor, quantidade, barramento, largura } = uf;
-
-        if (nome === 'Tie Breaker' && altura < 1000) {
-            let bestBarramento = barramento;
-            let maxAvailableSpace = -1;
-
-            for (let b in columns) {
-                let totalUsedSpace = columns[b].reduce((sum, column) => sum + column.currentCapacity, 0);
-                let availableSpace = columnHeightCapacity * columns[b].length - totalUsedSpace;
-
-                if (availableSpace > maxAvailableSpace) {
-                    maxAvailableSpace = availableSpace;
-                    bestBarramento = b;
-                }
-            }
-
-            barramento = bestBarramento;
-        }
-
-        // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
-        if (largura <= 50) {
-            let pares = Math.floor(quantidade / 2);
-            let restante = quantidade % 2;
-
-            for (let p = 0; p < pares; p++) {
-                let novaUF = {
-                    nome: `${nome}`,
-                    altura: altura,
-                    valor: valor,
-                    largura: 100,
-                    barramento: barramento,
-                    quantidade: 1
-                };
-                // Adiciona a nova UF combinada com largura 100
-                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true);
-            }
-
-            if (restante === 1) {
-                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
-            }
-        } else {
-            for (let j = 0; j < quantidade; j++) {
-                adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
-            }
-        }
-    }
-
-    // Renderiza as colunas separadamente para cada barramento
-    for (let barramento in columns) {
-        const barramentoColumns = columns[barramento];
-        const barramentoContainer = document.getElementById(`bin${barramento}`);
-
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = `Barramento ${barramento}`;
-        barramentoContainer.appendChild(titleElement);
-
-        barramentoColumns.forEach((column) => {
-            const columnElement = document.createElement('div');
-            columnElement.classList.add('bins');
-            barramentoContainer.appendChild(columnElement);
-
-            column.ufs.forEach(uf => {
-                const ufElement = document.createElement('div');
-                ufElement.classList.add('item');
-                ufElement.style.height = (uf.altura / heightScale) + 'px';
-
-                if (uf.largura === 100 && uf.gavetaVertical) {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-
-                    const uf1 = document.createElement('div');
-                    uf1.classList.add('sub-item');
-                    uf1.style.width = '50%';
-                    uf1.style.height = '100%';
-                    uf1.textContent = `${uf.nome} ${uf.valor}`;
-                    uf1.style.color = 'white';
-
-                    const uf2 = document.createElement('div');
-                    uf2.classList.add('sub-item');
-                    uf2.style.width = '50%';
-                    uf2.style.height = '100%';
-                    uf2.textContent = `${uf.nome} ${uf.valor}`;
-                    uf2.style.color = 'white';
-
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                } else {
-                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
-                    ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                        ufElement.textContent = `DISJ. ${uf.valor}`;
+                    }
+                    else {
+                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                    }
                 }
 
                 columnElement.appendChild(ufElement);

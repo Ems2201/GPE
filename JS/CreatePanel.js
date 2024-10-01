@@ -52,11 +52,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const valor = document.getElementById('valor');
         const unidade = unidadeSelect.value;
         const config = {
-            'Disjuntor CCM': ["Corrente (A)", "Digite a Corrente(A)"],
+            'Disjuntor de Entrada': ["Corrente (A)", "Digite a Corrente(A)"],
             'Partida Direta': ["Potência (CV)", "Digite a Potência(CV)"],
             'Partida Reversora': ["Potência (CV)", "Digite a Potência(CV)"],
             'Alimentador': ["Corrente (A)", "Digite a Corrente(A)"],
-            'Alimentador Vertical': ["Corrente (A)", "Digite a Corrente(A)"],
+            'Partida Direta Vertical': ["Potência (CV)", "Digite a Potência(CV)"],
             'Inversor': ["Potência (CV)", "Digite a Potência(CV)"],
             'Soft-Starter': ["Potência (CV)", "Digite a Potência(CV)"],
             'Disjuntor Aberto': ["Corrente (A)", "Digite a Corrente(A)"],

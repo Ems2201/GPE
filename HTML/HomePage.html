@@ -29,14 +29,14 @@
             <figcaption>Página de Criação de Paíneis do GPE</figcaption>
         </figure>
         <p>O gerador de painéis elétricos, ou <span>GPE</span>, é um gerador de vistas frontais de conjuntos de manobra que ajuda os usuários a tentarem alocar as unidades funcionais de um conjunto de manobra com o menor número possível de colunas. Ele possui um pequeno banco de dados com unidades funcionais retiradas do catálogo do ABB (MNS-MCC), para tornar as simulações mais realistas, pois os valores de corrente, potência e altura podem variar de fabricante para fabricante. </p>
-        <p>Além disso o GPE é dividido em duas partes, o formulário de dados, isto é, onde deve ser realizado um passo a passo para inserir as unidades funcionais, e a tabela de dados onde é exibido cada unidade funcional que foi adicionada.  Porém, por ser um software <i>open-source</i>, isto é, um software de código aberto, é permitido colocar outros fabricantes, com outros dados, apenas modificando o arquivo “data.js”, sendo este, o arquivo com os dados.</p>
+        <p>Além disso o GPE é dividido em duas partes, o formulário de entrada de dados, isto é, uma caixa onde deve ser realizado um passo a passo para inserir as unidades funcionais, e a tabela de entrada de dados, onde a mesma exibe cada unidade funcional que foi adicionada por meio do formulário.  Porém, por ser um software <i>open-source</i>, isto é, um software de código aberto, é permitido colocar outros fabricantes, com outros dados, apenas modificando o arquivo “data.js”, sendo este, o arquivo com os dados.</p>
         <h3>Como simular um Conjunto de Manobra no GPE?</h3>
         <p>A primeira coisa a ser feita para gerar uma vista frontal é selecionar o <strong>Conjunto de Manobra</strong>, no caso de exemplo, CCM.</p>
         <figure>
             <img src="./images/conjuntoManobra.png" alt="">
         </figure>
         <p>
-            Logo após, deve ser selecionado qual unidade deseja inserir, no caso do exemplo vamos inserir um <strong>disjuntor de entrada de um CCM de 2000 A</strong>, mas poderia ser qualquer unidade funcional. O CCM é um centro de controle de motores, composto principalmente de partidas de motores. Logo, devemos escolher o Disjuntor CCM da lista de unidades funcionais, informar sua corrente no campo corrente e informar a quantidade no campo quantidade.
+            Logo após, é necessário selecionar qual unidade deseja inserir, no caso do exemplo vamos inserir um <strong>disjuntor de entrada de um CCM de 2000 A</strong>, mas poderia ser qualquer unidade funcional. O CCM é um centro de controle de motores, composto principalmente de partidas de motores. Logo, devemos escolher o Disjuntor de Entrada da lista de unidades funcionais, informar sua corrente no campo corrente e informar a quantidade no campo quantidade.
         </p>
         <figure>
             <img src="./images/CCM.png" alt="">
@@ -100,7 +100,7 @@
         </p>
 
         <p>
-            Após entender como realizar as simulações é possível também, mudar as ordenações das unidades funcionais conforme os algoritmos do <strong>menu das vistas frontais</strong>.
+            Após entender como realizar as simulações é possível também mudar as ordenações das unidades funcionais conforme os algoritmos do <strong>menu das vistas frontais</strong>.
         </p>
 
         <figure>
@@ -108,7 +108,7 @@
         </figure>
 
         <p>
-            <strong>Lembrete</strong>: para cada algoritmo, há uma resposta diferente, onde os seguintes algoritmos realizam os seguintes procedimentos:
+            <strong>Lembrete</strong>: para cada algoritmo há uma resposta diferente, onde os seguintes algoritmos realizam os seguintes procedimentos:
         </p>
 
         <ul class="list" style="font-size: 18px;">
@@ -128,7 +128,7 @@
                <strong>Bin-completion:</strong> Outra derivação do Best-Fit, porém ele deve primeiro preencher uma coluna para depois iniciar uma coluna com outra unidade funcional, ou seja, ele somente insere uma unidade funcional assim que ele preencher totalmente a coluna, e caso não consiga preencher totalmente a coluna, passa para próxima coluna e próxima unidade funcional correspondentes
             </li>
             <li>
-                <strong>Next-Fit:</strong> Ele coloca cada unidade funcional na coluna atual se houver espaço suficiente; caso contrário, abre uma nova coluna. Logo, mesmo que haja colunas anteriores à atual que contenham espaço, ele só pode alocar as unidades funcionais. 
+                <strong>Next-Fit:</strong> Ele primeiro tenta alocar a unidade funcional atual na coluna atual se houver espaço suficiente; Caso contrário, abre uma nova coluna. Logo, mesmo que haja colunas anteriores à atual que contenham espaço, ele só pode alocar as unidades funcionais na última coluna que foi adicionada, fazendo que haja uma sobra de espaço desnecessária. 
             </li>
         </ul>
 

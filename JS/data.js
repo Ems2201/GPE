@@ -14,7 +14,7 @@ export const conjuntos = [
                 dados: ['']
             },
             {
-                nome: 'Disjuntor CCM',
+                nome: 'Disjuntor de Entrada',
                 dados: [
                     { altura: 600, valor: 540, largura: 100 }, { altura: 750, valor: 640, largura: 100 }, { altura: 1800, valor: 800, largura: 100 },
                     { altura: 1800, valor: 960, largura: 100 }, { altura: 1800, valor: 1200, largura: 100 }, { altura: 1800, valor: 1600, largura: 100 },
@@ -65,16 +65,13 @@ export const conjuntos = [
                 medida: 'A'
             },
             {
-                nome: 'Alimentador Vertical',
+                nome: 'Partida Direta Vertical',
                 dados: [
                     { altura: 300, valor: 15, largura: 50 }, { altura: 300, valor: 20, largura: 50 }, { altura: 300, valor: 25, largura: 50 },
                     { altura: 300, valor: 30, largura: 50 }, { altura: 300, valor: 35, largura: 50 }, { altura: 300, valor: 40, largura: 50 },
-                    { altura: 300, valor: 50, largura: 50 }, { altura: 300, valor: 60, largura: 50 }, { altura: 300, valor: 70, largura: 50 },
-                    { altura: 300, valor: 80, largura: 50 }, { altura: 300, valor: 90, largura: 50 }, { altura: 250, valor: 100, largura: 50 },
-                    { altura: 500, valor: 125, largura: 50 }, { altura: 500, valor: 150, largura: 50 }, { altura: 500, valor: 200, largura: 50 },
-                    { altura: 500, valor: 250, largura: 50 }, { altura: 500, valor: 320, largura: 100 }, { altura: 500, valor: 400, largura: 100 }
+                    { altura: 300, valor: 50, largura: 50 }, { altura: 300, valor: 60, largura: 50 }
                 ],
-                medida: 'A'
+                medida: 'CV'
             },
             {
                 nome: 'Inversor',
@@ -142,7 +139,7 @@ export const conjuntos = [
             {
                 nome: 'Disjuntor Caixa Moldada Vertical',
                 dados: [
-                    { altura: 400, valor: 160, largura: 50 }, { altura: 400, valor: 250, largura: 50 }, { altura: 400, valor: 320, largura: 50 }
+                    { altura: 400, valor: 160, largura: 25 }, { altura: 400, valor: 250, largura: 25 }, { altura: 400, valor: 320, largura: 25 }
                 ],
                 medida: 'A'
             },

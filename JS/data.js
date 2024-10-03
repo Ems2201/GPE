@@ -67,9 +67,11 @@ export const conjuntos = [
             {
                 nome: 'Partida Direta Vertical',
                 dados: [
-                    { altura: 300, valor: 15, largura: 50 }, { altura: 300, valor: 20, largura: 50 }, { altura: 300, valor: 25, largura: 50 },
-                    { altura: 300, valor: 30, largura: 50 }, { altura: 300, valor: 35, largura: 50 }, { altura: 300, valor: 40, largura: 50 },
-                    { altura: 300, valor: 50, largura: 50 }, { altura: 300, valor: 60, largura: 50 }
+                    { altura: 300, valor: 0.5, largura: 25 }, { altura: 300, valor: 0.75, largura: 25 }, { altura: 300, valor: 1, largura: 25},
+                    { altura: 300, valor: 1.5, largura: 25 }, { altura: 300, valor: 2, largura: 25 }, { altura: 300, valor: 3, largura: 25 },
+                    { altura: 300, valor: 5, largura: 25 }, { altura: 300, valor: 7.5, largura: 25 }, { altura: 300, valor: 10, largura: 25 },
+                    { altura: 300, valor: 15, largura: 25 }, { altura: 300, valor: 20, largura: 50 }, { altura: 300, valor: 25, largura: 50 },
+                    { altura: 300, valor: 30, largura: 50 },
                 ],
                 medida: 'CV'
             },
@@ -139,7 +141,7 @@ export const conjuntos = [
             {
                 nome: 'Disjuntor Caixa Moldada Vertical',
                 dados: [
-                    { altura: 400, valor: 160, largura: 25 }, { altura: 400, valor: 250, largura: 25 }, { altura: 400, valor: 320, largura: 25 }
+                    { altura: 400, valor: 160, largura: 25 }
                 ],
                 medida: 'A'
             },

@@ -119,9 +119,9 @@ function bestFitMelhorado() {
                 barramento = bestBarramento;
             }
 
-            if (largura <= 25) {
-                let pares = Math.floor(quantidade / 4);
-                let restante = quantidade % 4;
+            if (largura > 25 && largura <= 50) {
+                let pares = Math.floor(quantidade / 2);
+                let restante = quantidade % 2;
 
                 for (let p = 0; p < pares; p++) {
                     let novaUF = {
@@ -139,9 +139,9 @@ function bestFitMelhorado() {
                 if (restante === 1) {
                     adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false);
                 }
-            } else if (largura <= 50) {
-                    let pares = Math.floor(quantidade / 2);
-                    let restante = quantidade % 2;
+            } else if (largura <= 25) {
+                    let pares = Math.floor(quantidade / 4);
+                    let restante = quantidade % 4;
     
                     for (let p = 0; p < pares; p++) {
                         let novaUF = {
@@ -293,7 +293,54 @@ function bestFitMelhorado() {
                     lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
                     uf1.appendChild(lockButton);
                     columnElement.appendChild(ufElement);
-                } else {
+                } else  if (uf.nome === 'Partida Direta Vertical' && Number(uf.valor.match(/\d+/g).join('')) < 30) {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+                    ufElement.style.flexDirection = 'row';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '25%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `PTD. ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '25%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `PTD. ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    const uf3 = document.createElement('div');
+                    uf3.classList.add('sub-item');
+                    uf3.style.width = '25%';
+                    uf3.style.height = '100%';
+                    uf3.textContent = `PTD. ${uf.valor}`;
+                    uf3.style.color = 'white';
+
+                    const uf4 = document.createElement('div');
+                    uf4.classList.add('sub-item');
+                    uf4.style.width = '25%';
+                    uf4.style.height = '100%';
+                    uf4.textContent = `PTD. ${uf.valor}`;
+                    uf4.style.color = 'white';
+
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                    ufElement.appendChild(uf3);
+                    ufElement.appendChild(uf4);
+
+                    lockButton.textContent = 'Mudar';
+                    lockButton.classList.add('lock-button');
+                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
+                    uf1.appendChild(lockButton);
+                    columnElement.appendChild(ufElement);
+                }  
+                else {
                     ufElement.classList.add('gaveta-vertical');
                     ufElement.style.display = 'flex';
                     ufElement.style.justifyContent = 'center';
@@ -326,8 +373,10 @@ function bestFitMelhorado() {
                     columnElement.appendChild(ufElement);
                 }
                 } else {
-                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical' && uf.largura == 25) {
                         ufElement.textContent = `DISJ. ${uf.valor}`;
+                    } else if (uf.nome === 'Partida Direta Vertical' && uf.largura == 25) {
+                        ufElement.textContent = `PTD. ${uf.valor}`;
                     } else {
                         ufElement.textContent = `${uf.nome} ${uf.valor}`;
                     }
@@ -475,10 +524,9 @@ function binCompletion() {
         }
 
         // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
-        if (largura <= 25) {
-            // Calcula quantos pares de UFs de largura 50 podem ser criados
-            let pares = Math.floor(quantidade / 4);
-            let restante = quantidade % 4;
+        if (largura > 25 && largura <= 50) {
+            let pares = Math.floor(quantidade / 2);
+            let restante = quantidade % 2;
 
             for (let p = 0; p < pares; p++) {
                 let novaUF = {
@@ -498,9 +546,9 @@ function binCompletion() {
             if (restante === 1) {
                 adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
             }
-        } else if (largura <= 50) {
-            let pares = Math.floor(quantidade / 2);
-            let restante = quantidade % 2;
+        } else if (largura <= 25) {
+            let pares = Math.floor(quantidade / 4);
+            let restante = quantidade % 4;
 
             for (let p = 0; p < pares; p++) {
                 let novaUF = {
@@ -547,85 +595,130 @@ function binCompletion() {
                 ufElement.classList.add('item');
                 ufElement.style.height = (uf.altura / heightScale) + 'px';
 
-                if (uf.largura === 100 && uf.gavetaVertical) {
-                  if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-
-                    const uf1 = document.createElement('div');
-                    uf1.classList.add('sub-item');
-                    uf1.style.width = '25%';
-                    uf1.style.height = '100%';
-                    uf1.textContent = `DISJ. ${uf.valor}`;
-                    uf1.style.color = 'white';
-
-                    const uf2 = document.createElement('div');
-                    uf2.classList.add('sub-item');
-                    uf2.style.width = '25%';
-                    uf2.style.height = '100%';
-                    uf2.textContent = `DISJ. ${uf.valor}`;
-                    uf2.style.color = 'white';
-
-                    const uf3 = document.createElement('div');
-                    uf3.classList.add('sub-item');
-                    uf3.style.width = '25%';
-                    uf3.style.height = '100%';
-                    uf3.textContent = `DISJ. ${uf.valor}`;
-                    uf3.style.color = 'white';
-
-                    const uf4 = document.createElement('div');
-                    uf4.classList.add('sub-item');
-                    uf4.style.width = '25%';
-                    uf4.style.height = '100%';
-                    uf4.textContent = `DISJ. ${uf.valor}`;
-                    uf4.style.color = 'white';
-
-
-                    // Adiciona as duas partes na gaveta
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
-                    ufElement.appendChild(uf4);
-                  } else {
-                    // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-
-                    const uf1 = document.createElement('div');
-                    uf1.classList.add('sub-item');
-                    uf1.style.width = '50%';
-                    uf1.style.height = '100%';
-                    uf1.textContent = `${uf.nome} ${uf.valor}`;
-                    uf1.style.color = 'white';
-
-                    const uf2 = document.createElement('div');
-                    uf2.classList.add('sub-item');
-                    uf2.style.width = '50%';
-                    uf2.style.height = '100%';
-                    uf2.textContent = `${uf.nome} ${uf.valor}`;
-                    uf2.style.color = 'white';
-
-
-                    // Adiciona as duas partes na gaveta
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                  } 
-                } else {
-                    // Ajuste da largura para ser proporcional à capacidade total de largura
-                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                if (uf.largura === 100) {
                     if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
-                        ufElement.textContent = `DISJ. ${uf.valor}`;
-                    }
+                      ufElement.classList.add('gaveta-vertical');
+                      ufElement.style.display = 'flex';
+                      ufElement.style.justifyContent = 'center';
+                      ufElement.style.width = '100%';
+                      ufElement.style.color = 'white';
+  
+                      const uf1 = document.createElement('div');
+                      uf1.classList.add('sub-item');
+                      uf1.style.width = '25%';
+                      uf1.style.height = '100%';
+                      uf1.textContent = `DISJ. ${uf.valor}`;
+                      uf1.style.color = 'white';
+  
+                      const uf2 = document.createElement('div');
+                      uf2.classList.add('sub-item');
+                      uf2.style.width = '25%';
+                      uf2.style.height = '100%';
+                      uf2.textContent = `DISJ. ${uf.valor}`;
+                      uf2.style.color = 'white';
+  
+                      const uf3 = document.createElement('div');
+                      uf3.classList.add('sub-item');
+                      uf3.style.width = '25%';
+                      uf3.style.height = '100%';
+                      uf3.textContent = `DISJ. ${uf.valor}`;
+                      uf3.style.color = 'white';
+  
+                      const uf4 = document.createElement('div');
+                      uf4.classList.add('sub-item');
+                      uf4.style.width = '25%';
+                      uf4.style.height = '100%';
+                      uf4.textContent = `DISJ. ${uf.valor}`;
+                      uf4.style.color = 'white';
+  
+  
+                      // Adiciona as duas partes na gaveta
+                      ufElement.appendChild(uf1);
+                      ufElement.appendChild(uf2);
+                      ufElement.appendChild(uf3);
+                      ufElement.appendChild(uf4);
+                    } else if (uf.nome === 'Partida Direta Vertical' && Number(uf.valor.match(/\d+/g).join('')) < 30) {
+                      ufElement.classList.add('gaveta-vertical');
+                      ufElement.style.display = 'flex';
+                      ufElement.style.justifyContent = 'center';
+                      ufElement.style.width = '100%';
+                      ufElement.style.color = 'white';
+  
+                      const uf1 = document.createElement('div');
+                      uf1.classList.add('sub-item');
+                      uf1.style.width = '25%';
+                      uf1.style.height = '100%';
+                      uf1.textContent = `PTD. ${uf.valor}`;
+                      uf1.style.color = 'white';
+  
+                      const uf2 = document.createElement('div');
+                      uf2.classList.add('sub-item');
+                      uf2.style.width = '25%';
+                      uf2.style.height = '100%';
+                      uf2.textContent = `PTD. ${uf.valor}`;
+                      uf2.style.color = 'white';
+  
+                      const uf3 = document.createElement('div');
+                      uf3.classList.add('sub-item');
+                      uf3.style.width = '25%';
+                      uf3.style.height = '100%';
+                      uf3.textContent = `PTD. ${uf.valor}`;
+                      uf3.style.color = 'white';
+  
+                      const uf4 = document.createElement('div');
+                      uf4.classList.add('sub-item');
+                      uf4.style.width = '25%';
+                      uf4.style.height = '100%';
+                      uf4.textContent = `PTD. ${uf.valor}`;
+                      uf4.style.color = 'white';
+  
+  
+                      // Adiciona as duas partes na gaveta
+                      ufElement.appendChild(uf1);
+                      ufElement.appendChild(uf2);
+                      ufElement.appendChild(uf3);
+                      ufElement.appendChild(uf4);
+                    } 
                     else {
-                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
-                    }
-                }
+                      // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
+                      ufElement.classList.add('gaveta-vertical');
+                      ufElement.style.display = 'flex';
+                      ufElement.style.justifyContent = 'center';
+                      ufElement.style.width = '100%';
+                      ufElement.style.color = 'white';
+  
+                      const uf1 = document.createElement('div');
+                      uf1.classList.add('sub-item');
+                      uf1.style.width = '50%';
+                      uf1.style.height = '100%';
+                      uf1.textContent = `${uf.nome} ${uf.valor}`;
+                      uf1.style.color = 'white';
+  
+                      const uf2 = document.createElement('div');
+                      uf2.classList.add('sub-item');
+                      uf2.style.width = '50%';
+                      uf2.style.height = '100%';
+                      uf2.textContent = `${uf.nome} ${uf.valor}`;
+                      uf2.style.color = 'white';
+  
+  
+                      // Adiciona as duas partes na gaveta
+                      ufElement.appendChild(uf1);
+                      ufElement.appendChild(uf2);
+                    } 
+                  } else {
+                      // Ajuste da largura para ser proporcional à capacidade total de largura
+                      ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                      if (uf.nome === 'Disjuntor Caixa Moldada Vertical' && uf.largura == 25) {
+                          ufElement.textContent = `DISJ. ${uf.valor}`;
+                      }
+                      else if (uf.nome === 'Partida Direta Vertical' && uf.largura == 25) {
+                          ufElement.textContent = `PTD. ${uf.valor}`;
+                      }
+                      else {
+                          ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                      }
+                  }
 
                 columnElement.appendChild(ufElement);
             });
@@ -686,11 +779,9 @@ function bestFit(sortType) {
             barramento = bestBarramento;
         }
 
-        // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
-        if (largura <= 25) {
-            // Calcula quantos pares de UFs de largura 50 podem ser criados
-            let pares = Math.floor(quantidade / 4);
-            let restante = quantidade % 4;
+        if (largura > 25 && largura <= 50) {
+            let pares = Math.floor(quantidade / 2);
+            let restante = quantidade % 2;
 
             for (let p = 0; p < pares; p++) {
                 let novaUF = {
@@ -710,9 +801,9 @@ function bestFit(sortType) {
             if (restante === 1) {
                 adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
             }
-        } else if (largura <= 50) {
-            let pares = Math.floor(quantidade / 2);
-            let restante = quantidade % 2;
+        } else if (largura <= 25) {
+            let pares = Math.floor(quantidade / 4);
+            let restante = quantidade % 4;
 
             for (let p = 0; p < pares; p++) {
                 let novaUF = {
@@ -760,7 +851,7 @@ function bestFit(sortType) {
                 ufElement.classList.add('item');
                 ufElement.style.height = (uf.altura / heightScale) + 'px';
 
-                if (uf.largura === 100 && uf.gavetaVertical) {
+                if (uf.largura === 100) {
                   if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
                     ufElement.classList.add('gaveta-vertical');
                     ufElement.style.display = 'flex';
@@ -802,7 +893,49 @@ function bestFit(sortType) {
                     ufElement.appendChild(uf2);
                     ufElement.appendChild(uf3);
                     ufElement.appendChild(uf4);
-                  } else {
+                  } else if (uf.nome === 'Partida Direta Vertical' && Number(uf.valor.match(/\d+/g).join('')) < 30) {
+                    ufElement.classList.add('gaveta-vertical');
+                    ufElement.style.display = 'flex';
+                    ufElement.style.justifyContent = 'center';
+                    ufElement.style.width = '100%';
+                    ufElement.style.color = 'white';
+
+                    const uf1 = document.createElement('div');
+                    uf1.classList.add('sub-item');
+                    uf1.style.width = '25%';
+                    uf1.style.height = '100%';
+                    uf1.textContent = `PTD. ${uf.valor}`;
+                    uf1.style.color = 'white';
+
+                    const uf2 = document.createElement('div');
+                    uf2.classList.add('sub-item');
+                    uf2.style.width = '25%';
+                    uf2.style.height = '100%';
+                    uf2.textContent = `PTD. ${uf.valor}`;
+                    uf2.style.color = 'white';
+
+                    const uf3 = document.createElement('div');
+                    uf3.classList.add('sub-item');
+                    uf3.style.width = '25%';
+                    uf3.style.height = '100%';
+                    uf3.textContent = `PTD. ${uf.valor}`;
+                    uf3.style.color = 'white';
+
+                    const uf4 = document.createElement('div');
+                    uf4.classList.add('sub-item');
+                    uf4.style.width = '25%';
+                    uf4.style.height = '100%';
+                    uf4.textContent = `PTD. ${uf.valor}`;
+                    uf4.style.color = 'white';
+
+
+                    // Adiciona as duas partes na gaveta
+                    ufElement.appendChild(uf1);
+                    ufElement.appendChild(uf2);
+                    ufElement.appendChild(uf3);
+                    ufElement.appendChild(uf4);
+                  } 
+                  else {
                     // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
                     ufElement.classList.add('gaveta-vertical');
                     ufElement.style.display = 'flex';
@@ -832,8 +965,11 @@ function bestFit(sortType) {
                 } else {
                     // Ajuste da largura para ser proporcional à capacidade total de largura
                     ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
-                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
+                    if (uf.nome === 'Disjuntor Caixa Moldada Vertical' && uf.largura == 25) {
                         ufElement.textContent = `DISJ. ${uf.valor}`;
+                    }
+                    else if (uf.nome === 'Partida Direta Vertical' && uf.largura == 25) {
+                        ufElement.textContent = `PTD. ${uf.valor}`;
                     }
                     else {
                         ufElement.textContent = `${uf.nome} ${uf.valor}`;
@@ -886,11 +1022,9 @@ function nextFit() {
             barramento = bestBarramento;
         }
 
-        // Se a largura da UF for 50 ou menor, cria uma nova UF com largura 100 e coloca duas UFs de 50 dentro
-         if (largura <= 25) {
-            // Calcula quantos pares de UFs de largura 50 podem ser criados
-            let pares = Math.floor(quantidade / 4);
-            let restante = quantidade % 4;
+        if (largura > 25 && largura <= 50) {
+            let pares = Math.floor(quantidade / 2);
+            let restante = quantidade % 2;
 
             for (let p = 0; p < pares; p++) {
                 let novaUF = {
@@ -910,9 +1044,9 @@ function nextFit() {
             if (restante === 1) {
                 adicionarUF(uf, columns, barramento, columnHeightCapacity, false);
             }
-        } else if (largura <= 50) {
-            let pares = Math.floor(quantidade / 2);
-            let restante = quantidade % 2;
+        } else if (largura <= 25) {
+            let pares = Math.floor(quantidade / 4);
+            let restante = quantidade % 4;
 
             for (let p = 0; p < pares; p++) {
                 let novaUF = {
@@ -959,85 +1093,130 @@ function nextFit() {
                 ufElement.classList.add('item');
                 ufElement.style.height = (uf.altura / heightScale) + 'px';
 
-                if (uf.largura === 100 && uf.gavetaVertical) {
-                  if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-
-                    const uf1 = document.createElement('div');
-                    uf1.classList.add('sub-item');
-                    uf1.style.width = '25%';
-                    uf1.style.height = '100%';
-                    uf1.textContent = `DISJ. ${uf.valor}`;
-                    uf1.style.color = 'white';
-
-                    const uf2 = document.createElement('div');
-                    uf2.classList.add('sub-item');
-                    uf2.style.width = '25%';
-                    uf2.style.height = '100%';
-                    uf2.textContent = `DISJ. ${uf.valor}`;
-                    uf2.style.color = 'white';
-
-                    const uf3 = document.createElement('div');
-                    uf3.classList.add('sub-item');
-                    uf3.style.width = '25%';
-                    uf3.style.height = '100%';
-                    uf3.textContent = `DISJ. ${uf.valor}`;
-                    uf3.style.color = 'white';
-
-                    const uf4 = document.createElement('div');
-                    uf4.classList.add('sub-item');
-                    uf4.style.width = '25%';
-                    uf4.style.height = '100%';
-                    uf4.textContent = `DISJ. ${uf.valor}`;
-                    uf4.style.color = 'white';
-
-
-                    // Adiciona as duas partes na gaveta
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
-                    ufElement.appendChild(uf4);
-                  } else {
-                    // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-
-                    const uf1 = document.createElement('div');
-                    uf1.classList.add('sub-item');
-                    uf1.style.width = '50%';
-                    uf1.style.height = '100%';
-                    uf1.textContent = `${uf.nome} ${uf.valor}`;
-                    uf1.style.color = 'white';
-
-                    const uf2 = document.createElement('div');
-                    uf2.classList.add('sub-item');
-                    uf2.style.width = '50%';
-                    uf2.style.height = '100%';
-                    uf2.textContent = `${uf.nome} ${uf.valor}`;
-                    uf2.style.color = 'white';
-
-
-                    // Adiciona as duas partes na gaveta
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                  } 
-                } else {
-                    // Ajuste da largura para ser proporcional à capacidade total de largura
-                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                if (uf.largura === 100) {
                     if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
-                        ufElement.textContent = `DISJ. ${uf.valor}`;
-                    }
+                      ufElement.classList.add('gaveta-vertical');
+                      ufElement.style.display = 'flex';
+                      ufElement.style.justifyContent = 'center';
+                      ufElement.style.width = '100%';
+                      ufElement.style.color = 'white';
+  
+                      const uf1 = document.createElement('div');
+                      uf1.classList.add('sub-item');
+                      uf1.style.width = '25%';
+                      uf1.style.height = '100%';
+                      uf1.textContent = `DISJ. ${uf.valor}`;
+                      uf1.style.color = 'white';
+  
+                      const uf2 = document.createElement('div');
+                      uf2.classList.add('sub-item');
+                      uf2.style.width = '25%';
+                      uf2.style.height = '100%';
+                      uf2.textContent = `DISJ. ${uf.valor}`;
+                      uf2.style.color = 'white';
+  
+                      const uf3 = document.createElement('div');
+                      uf3.classList.add('sub-item');
+                      uf3.style.width = '25%';
+                      uf3.style.height = '100%';
+                      uf3.textContent = `DISJ. ${uf.valor}`;
+                      uf3.style.color = 'white';
+  
+                      const uf4 = document.createElement('div');
+                      uf4.classList.add('sub-item');
+                      uf4.style.width = '25%';
+                      uf4.style.height = '100%';
+                      uf4.textContent = `DISJ. ${uf.valor}`;
+                      uf4.style.color = 'white';
+  
+  
+                      // Adiciona as duas partes na gaveta
+                      ufElement.appendChild(uf1);
+                      ufElement.appendChild(uf2);
+                      ufElement.appendChild(uf3);
+                      ufElement.appendChild(uf4);
+                    } else if (uf.nome === 'Partida Direta Vertical' && Number(uf.valor.match(/\d+/g).join('')) < 30) {
+                      ufElement.classList.add('gaveta-vertical');
+                      ufElement.style.display = 'flex';
+                      ufElement.style.justifyContent = 'center';
+                      ufElement.style.width = '100%';
+                      ufElement.style.color = 'white';
+  
+                      const uf1 = document.createElement('div');
+                      uf1.classList.add('sub-item');
+                      uf1.style.width = '25%';
+                      uf1.style.height = '100%';
+                      uf1.textContent = `PTD. ${uf.valor}`;
+                      uf1.style.color = 'white';
+  
+                      const uf2 = document.createElement('div');
+                      uf2.classList.add('sub-item');
+                      uf2.style.width = '25%';
+                      uf2.style.height = '100%';
+                      uf2.textContent = `PTD. ${uf.valor}`;
+                      uf2.style.color = 'white';
+  
+                      const uf3 = document.createElement('div');
+                      uf3.classList.add('sub-item');
+                      uf3.style.width = '25%';
+                      uf3.style.height = '100%';
+                      uf3.textContent = `PTD. ${uf.valor}`;
+                      uf3.style.color = 'white';
+  
+                      const uf4 = document.createElement('div');
+                      uf4.classList.add('sub-item');
+                      uf4.style.width = '25%';
+                      uf4.style.height = '100%';
+                      uf4.textContent = `PTD. ${uf.valor}`;
+                      uf4.style.color = 'white';
+  
+  
+                      // Adiciona as duas partes na gaveta
+                      ufElement.appendChild(uf1);
+                      ufElement.appendChild(uf2);
+                      ufElement.appendChild(uf3);
+                      ufElement.appendChild(uf4);
+                    } 
                     else {
-                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
-                    }
-                }
+                      // Se a UF for uma "gaveta vertical", divide em 2 UFs lado a lado
+                      ufElement.classList.add('gaveta-vertical');
+                      ufElement.style.display = 'flex';
+                      ufElement.style.justifyContent = 'center';
+                      ufElement.style.width = '100%';
+                      ufElement.style.color = 'white';
+  
+                      const uf1 = document.createElement('div');
+                      uf1.classList.add('sub-item');
+                      uf1.style.width = '50%';
+                      uf1.style.height = '100%';
+                      uf1.textContent = `${uf.nome} ${uf.valor}`;
+                      uf1.style.color = 'white';
+  
+                      const uf2 = document.createElement('div');
+                      uf2.classList.add('sub-item');
+                      uf2.style.width = '50%';
+                      uf2.style.height = '100%';
+                      uf2.textContent = `${uf.nome} ${uf.valor}`;
+                      uf2.style.color = 'white';
+  
+  
+                      // Adiciona as duas partes na gaveta
+                      ufElement.appendChild(uf1);
+                      ufElement.appendChild(uf2);
+                    } 
+                  } else {
+                      // Ajuste da largura para ser proporcional à capacidade total de largura
+                      ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                      if (uf.nome === 'Disjuntor Caixa Moldada Vertical' && uf.largura == 25) {
+                          ufElement.textContent = `DISJ. ${uf.valor}`;
+                      }
+                      else if (uf.nome === 'Partida Direta Vertical' && uf.largura == 25) {
+                          ufElement.textContent = `PTD. ${uf.valor}`;
+                      }
+                      else {
+                          ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                      }
+                  }
 
                 columnElement.appendChild(ufElement);
             });

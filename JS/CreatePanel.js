@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const adicionarBtn = document.getElementById('adicionar');
     const cadastrarBtn = document.getElementById('cadastrar');
 
-    // Popula o select de conjuntos
     function popularConjuntos() {
         conjuntos.forEach(conjunto => {
             const option = document.createElement('option');
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Popula o select de unidades funcionais com base no conjunto selecionado
     function popularUnidadesFuncionais() {
         const conjuntoSelecionado = conjuntoSelect.value;
         const conjunto = conjuntos.find(fab => fab.nome === conjuntoSelecionado);
@@ -40,13 +38,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Encontra o valor mais próximo na lista de valores da unidade funcional
     function encontrarValorMaisProximo(unidade, valor) {
         const valores = unidade.dados.map(dado => dado.valor);
         return valores.find(v => v >= valor) || null;
     }
 
-    // Atualiza o placeholder e o label com base na unidade funcional selecionada
     unidadeSelect.addEventListener('change', () => {
         const label = document.getElementById('labelvalor');
         const valor = document.getElementById('valor');
@@ -69,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
         valor.placeholder = config[unidade][1];
     });
 
-    // Evento que ocorre ao selecionar um conjunto
     conjuntoSelect.addEventListener('change', popularUnidadesFuncionais);
 
     // Adiciona uma nova linha à tabela ao clicar em "Adicionar"
@@ -99,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const largura = dados ? dados.largura : '';
         const medida = unidade.medida;
 
-        // Adiciona a nova linha na tabela
         const newRow = tabela.insertRow();
         newRow.innerHTML = `
             <td>${unidadeNome}</td>
@@ -112,14 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
     });
 
-    // Remove uma linha da tabela ao clicar em "Remover"
     tabela.addEventListener('click', function(e) {
         if (e.target.classList.contains('remover')) {
             e.target.closest('tr').remove();
         }
     });
 
-    // Armazena os dados da tabela e redireciona para outra página
     cadastrarBtn.addEventListener('click', function() {
         if (tabela.rows.length < 1) {
             alert('Cadastre Uma Unidade Funcional Antes!');
@@ -142,7 +134,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'ViewPanel.html';
     });
 
-    // Inicializa os selects de conjuntos e unidades funcionais
     popularConjuntos();
     popularUnidadesFuncionais();
 });

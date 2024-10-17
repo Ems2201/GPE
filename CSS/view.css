@@ -103,16 +103,17 @@ p {
 }
 
 .panel {
-    margin: 10px 0px;
+    margin: 10px 0;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start; /* Alinha os bins à esquerda */
     align-items: center;
+    overflow-x: auto; /* Permite a rolagem horizontal */
+    overflow-y: hidden;
     width: 100%;
-    height: 400px;
+    white-space: nowrap; /* Garante que os bins fiquem em uma linha */
 }
 
 #bin {
-    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -123,6 +124,7 @@ p {
     display: none;
     height: 100%;
     align-items: center; 
+    flex-wrap: nowrap;
 }
 
 .select {
@@ -144,7 +146,7 @@ p {
     width: 160px;
     height: 100%;
     font-size: 0.7em;
-    margin: 0;
+    margin: 0px 10px;
     padding: 0;
 }
 
@@ -289,7 +291,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 15px 0;
     }
 
@@ -358,7 +360,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 15px 0;
     }
 
@@ -421,7 +423,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 15px 0;
     }
 
@@ -480,7 +482,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 15px 0;
     }
 
@@ -539,7 +541,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 15px 0;
     }
 
@@ -605,7 +607,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 5px 0;
     }
 
@@ -665,7 +667,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 1px 0;
     }
 
@@ -725,7 +727,7 @@ p {
     }
 
     .panel {
-        height: 400px;
+        height: 419px;
         margin: 85px 0;
     }
 

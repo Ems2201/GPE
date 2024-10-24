@@ -22,64 +22,66 @@ function handleSelectChange() {
         selectOptions[selectValue]();
     }
 
-    updateTotalColumns();
-    removeEmptyColumns();
+    numeroColunas();
+    atualizeColunas();
 }
 
-function updateTotalColumns() {
-    const totalColumns = document.getElementById('TotalColumns');
-    const bins = document.querySelectorAll('#bin .bins');
-    totalColumns.textContent = `Total de Colunas: ${bins.length}`;
+function numeroColunas() {
+    const numeroColunas = document.getElementById('TotalColumns');
+    const colunas = document.querySelectorAll('#bin .bins');
+    numeroColunas.textContent = `Total de Colunas: ${colunas.length}`;
 }
 
-function removeEmptyColumns() {
+function atualizeColunas() {
     const barramentos = ['Tie', 'A', 'B'];
 
     barramentos.forEach(barramento => {
         const container = document.getElementById(`bin${barramento}`);
-        const columns = container.querySelectorAll('.bins');
+        const colunas = container.querySelectorAll('.bins');
 
-        const allColumnsEmpty = Array.from(columns).every(column => column.children.length === 0);
+        const colunasVazias = Array.from(colunas).every(coluna => coluna.children.length === 0);
 
-        container.style.display = allColumnsEmpty ? 'none' : 'flex';
+        container.style.display = colunasVazias ? 'none' : 'flex';
     });
 
-    updateTotalColumns();
+    numeroColunas();
 }
 
 function bestFitMelhorado() {
-    let data = JSON.parse(sessionStorage.getItem('data'));
+    let dados = JSON.parse(sessionStorage.getItem('dados'));
 
-    function shuffleArray(array) {
+    dados.sort((a, b) => b.altura - a.altura);
+
+    function embaralheDados(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
     }
 
-    const columnHeightCapacity = 1800;
-    const columnWidthCapacity = 100;
-    let scale = columnHeightCapacity / 400;
-    let totalHeight = data.reduce((sum, uf) => sum + (uf.altura * uf.quantidade), 0);
-    let minColumns = Math.ceil(totalHeight / columnHeightCapacity);
+    const alturaColuna = 1800;
+    const larguraColuna = 100;
+    let escalaPixels = alturaColuna / 400;
+    let somaAlturas = dados.reduce((soma, uf) => soma + (uf.altura * uf.quantidade), 0);
+    let limiteColunas = Math.ceil(somaAlturas / alturaColuna);
 
-    let columns = {
+    let colunas = {
         A: [],
         Tie: [],
         B: []
     };
 
-    let bestColumns = { A: [], Tie: [], B: [] };
-    let bestColumnCount = Infinity;
-    let bestFullColumnsCount = 0;
+    let melhoresColunas = { A: [], Tie: [], B: [] };
+    let melhorNumeroColunas = Infinity;
+    let maiorNumeroColunasCheias = 0;
     const container = document.getElementById('bin');
     container.innerHTML = '';
 
-    function addItemToColumns(data) {
-        let attemptColumns = JSON.parse(JSON.stringify(columns));
+    function adicionarItemNaLista(dados) {
+        let colunasTentadas = JSON.parse(JSON.stringify(colunas));
         
-        for (let k = 0; k < data.length; k++) {
-            const uf = data[k];
+        for (let k = 0; k < dados.length; k++) {
+            const uf = dados[k];
             let { nome, altura, valor, quantidade, barramento, largura } = uf;
 
             if (largura > 25 && largura <= 50) {
@@ -96,11 +98,11 @@ function bestFitMelhorado() {
                         quantidade: 1
                     };
 
-                    adicionarUF(novaUF, attemptColumns, barramento, columnHeightCapacity, true, 'bestFit');
+                    adicionarUF(novaUF, colunasTentadas, barramento, alturaColuna, true, 'bestFit');
                 }
 
                 if (restante === 1) {
-                    adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false, 'bestFit');
+                    adicionarUF(uf, colunasTentadas, barramento, alturaColuna, false, 'bestFit');
                 }
             } else if (largura <= 25) {
                     let pares = Math.floor(quantidade / 4);
@@ -116,7 +118,7 @@ function bestFitMelhorado() {
                             quantidade: 1
                         };
     
-                        adicionarUF(novaUF, attemptColumns, barramento, columnHeightCapacity, true, 'bestFit');
+                        adicionarUF(novaUF, colunasTentadas, barramento, alturaColuna, true, 'bestFit');
                     }
     
                     if (restante > 0) {
@@ -132,72 +134,72 @@ function bestFitMelhorado() {
                         };
                         
 
-                        adicionarUF(novaUF, attemptColumns, barramento, columnHeightCapacity, false, 'bestFit');
+                        adicionarUF(novaUF, colunasTentadas, barramento, alturaColuna, false, 'bestFit');
                     }
             } else {
                 for (let j = 0; j < quantidade; j++) {
-                    adicionarUF(uf, attemptColumns, barramento, columnHeightCapacity, false, 'bestFit');
+                    adicionarUF(uf, colunasTentadas, barramento, alturaColuna, false, 'bestFit');
                 }
             }
         }
 
-        return attemptColumns;
+        return colunasTentadas;
     }
 
-    let attempts = 0;
-    const maxAttempts = 100;
-    while (attempts < maxAttempts) {
-        let attemptColumns = addItemToColumns(data);
-        let totalColumns = Object.values(attemptColumns).reduce((count, barramento) => count + barramento.length, 0);
-        let fullColumnsCount = Object.values(attemptColumns).reduce((count, barramento) => count + barramento.filter(column => column.currentCapacity === columnHeightCapacity).length, 0);
+    let tentativas = 0;
+    const maximoTentativas = 100;
+    while (tentativas < maximoTentativas) {
+        let colunasTentadas = adicionarItemNaLista(dados);
+        let numeroColunas = Object.values(colunasTentadas).reduce((quantidade, barramento) => quantidade + barramento.length, 0);
+        let quantidadeColunasCheias = Object.values(colunasTentadas).reduce((quantidade, barramento) => quantidade + barramento.filter(coluna => coluna.alturaColuna === alturaColuna).length, 0);
 
-        if (totalColumns < bestColumnCount || fullColumnsCount > bestFullColumnsCount) {
-            bestColumnCount = totalColumns;
-            bestColumns = attemptColumns;
-            bestFullColumnsCount = fullColumnsCount;
+        if (numeroColunas < melhorNumeroColunas || quantidadeColunasCheias > maiorNumeroColunasCheias) {
+            melhorNumeroColunas = numeroColunas;
+            melhoresColunas = colunasTentadas;
+            maiorNumeroColunasCheias = quantidadeColunasCheias;
         }
 
-        if (bestColumnCount <= minColumns && fullColumnsCount === totalColumns) {
+        if (melhorNumeroColunas <= limiteColunas && quantidadeColunasCheias === numeroColunas) {
             break;
         }
 
-        shuffleArray(data);
-        attempts++;
+        embaralheDados(dados);
+        tentativas++;
     }
 
-    for (let barramento in bestColumns) {
-        const barramentoColumns = bestColumns[barramento];
+    for (let barramento in melhoresColunas) {
+        const colunasBarramento = melhoresColunas[barramento];
         const barramentoContainer = document.createElement('div');
         barramentoContainer.id = `bin${barramento}`;
         barramentoContainer.innerHTML = `<h2>Barramento ${barramento}</h2>`;
         container.appendChild(barramentoContainer);
 
-        barramentoColumns.forEach((column, columnIndex) => {
-            const columnElement = document.createElement('div');
-            columnElement.classList.add('bins');
-            barramentoContainer.appendChild(columnElement);
+        colunasBarramento.forEach((coluna, columnIndex) => {
+            const elementoColuna = document.createElement('div');
+            elementoColuna.classList.add('bins');
+            barramentoContainer.appendChild(elementoColuna);
             
-            column.ufs.forEach((uf, ufIndex) => {
-                const ufElement = document.createElement('div');
-                ufElement.classList.add('item');
-                ufElement.classList.add('large');
-                ufElement.style.height = (uf.altura / scale) + 'px';
+            coluna.ufs.forEach((uf, ufIndex) => {
+                const elementoUF = document.createElement('div');
+                elementoUF.classList.add('item');
+                elementoUF.classList.add('large');
+                elementoUF.style.height = (uf.altura / escalaPixels) + 'px';
 
-                const lockButton = document.createElement('button');
-                lockButton.textContent = 'Mudar';
-                lockButton.classList.add('lock-button');
-                lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                ufElement.appendChild(lockButton);
-                columnElement.appendChild(ufElement);
+                const buttonMudar = document.createElement('button');
+                buttonMudar.textContent = 'Mudar';
+                buttonMudar.classList.add('lock-button');
+                buttonMudar.onclick = () => menuMudarUF(uf, columnIndex, elementoUF, barramento);
+                elementoUF.appendChild(buttonMudar);
+                elementoColuna.appendChild(elementoUF);
 
                 if (uf.largura === 100 && uf.gavetaVertical) {
                     if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-                    ufElement.style.flexDirection = 'row';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.display = 'flex';
+                    elementoUF.style.justifyContent = 'center';
+                    elementoUF.style.width = '100%';
+                    elementoUF.style.color = 'white';
+                    elementoUF.style.flexDirection = 'row';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -227,23 +229,23 @@ function bestFitMelhorado() {
                     uf4.textContent = `DISJ. ${uf.valor}`;
                     uf4.style.color = 'white';
 
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
-                    ufElement.appendChild(uf4);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
+                    elementoUF.appendChild(uf3);
+                    elementoUF.appendChild(uf4);
 
-                    lockButton.textContent = 'Mudar';
-                    lockButton.classList.add('lock-button');
-                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                    uf1.appendChild(lockButton);
-                    columnElement.appendChild(ufElement);
+                    buttonMudar.textContent = 'Mudar';
+                    buttonMudar.classList.add('lock-button');
+                    buttonMudar.onclick = () => menuMudarUF(uf, columnIndex, elementoUF, barramento);
+                    uf1.appendChild(buttonMudar);
+                    elementoColuna.appendChild(elementoUF);
                 } else  if (uf.nome === 'Partida Direta Vertical' && Number(uf.valor.match(/\d+/g).join('')) < 30) {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-                    ufElement.style.flexDirection = 'row';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.display = 'flex';
+                    elementoUF.style.justifyContent = 'center';
+                    elementoUF.style.width = '100%';
+                    elementoUF.style.color = 'white';
+                    elementoUF.style.flexDirection = 'row';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -273,25 +275,25 @@ function bestFitMelhorado() {
                     uf4.textContent = `PTD. ${uf.valor}`;
                     uf4.style.color = 'white';
 
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
-                    ufElement.appendChild(uf4);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
+                    elementoUF.appendChild(uf3);
+                    elementoUF.appendChild(uf4);
 
-                    lockButton.textContent = 'Mudar';
-                    lockButton.classList.add('lock-button');
-                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                    uf1.appendChild(lockButton);
-                    columnElement.appendChild(ufElement);
+                    buttonMudar.textContent = 'Mudar';
+                    buttonMudar.classList.add('lock-button');
+                    buttonMudar.onclick = () => menuMudarUF(uf, columnIndex, elementoUF, barramento);
+                    uf1.appendChild(buttonMudar);
+                    elementoColuna.appendChild(elementoUF);
                 }  
                 else {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
-                    ufElement.style.flexDirection = 'row';
-                    ufElement.style.fontSize = '90%';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.display = 'flex';
+                    elementoUF.style.justifyContent = 'center';
+                    elementoUF.style.width = '100%';
+                    elementoUF.style.color = 'white';
+                    elementoUF.style.flexDirection = 'row';
+                    elementoUF.style.fontSize = '90%';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -307,20 +309,20 @@ function bestFitMelhorado() {
                     uf2.textContent = `${uf.nome} ${uf.valor}`;
                     uf2.style.color = 'white';
 
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
 
-                    lockButton.textContent = 'Mudar';
-                    lockButton.classList.add('lock-button');
-                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                    uf1.appendChild(lockButton);
-                    columnElement.appendChild(ufElement);
+                    buttonMudar.textContent = 'Mudar';
+                    buttonMudar.classList.add('lock-button');
+                    buttonMudar.onclick = () => menuMudarUF(uf, columnIndex, elementoUF, barramento);
+                    uf1.appendChild(buttonMudar);
+                    elementoColuna.appendChild(elementoUF);
                 }
                 }else if (uf.largura === 50) {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.width = '50%';
-                    ufElement.style.color = 'white';
-                    ufElement.style.flexDirection = 'row';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.width = '50%';
+                    elementoUF.style.color = 'white';
+                    elementoUF.style.flexDirection = 'row';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -343,18 +345,18 @@ function bestFitMelhorado() {
                         uf2.textContent = `DISJ. ${uf.valor}`;
                     }
         
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    lockButton.textContent = 'Mudar';
-                    lockButton.classList.add('lock-button');
-                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                    uf1.appendChild(lockButton);
-                    columnElement.appendChild(ufElement);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
+                    buttonMudar.textContent = 'Mudar';
+                    buttonMudar.classList.add('lock-button');
+                    buttonMudar.onclick = () => menuMudarUF(uf, columnIndex, elementoUF, barramento);
+                    uf1.appendChild(buttonMudar);
+                    elementoColuna.appendChild(elementoUF);
                 } else if (uf.largura === 75) {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.width = '75%';
-                    ufElement.style.color = 'white';
-                    ufElement.style.flexDirection = 'row';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.width = '75%';
+                    elementoUF.style.color = 'white';
+                    elementoUF.style.flexDirection = 'row';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -385,29 +387,29 @@ function bestFitMelhorado() {
                         uf3.textContent = `DISJ. ${uf.valor}`;
                     }
         
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
-                    lockButton.textContent = 'Mudar';
-                    lockButton.classList.add('lock-button');
-                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                    uf1.appendChild(lockButton);
-                    columnElement.appendChild(ufElement);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
+                    elementoUF.appendChild(uf3);
+                    buttonMudar.textContent = 'Mudar';
+                    buttonMudar.classList.add('lock-button');
+                    buttonMudar.onclick = () => menuMudarUF(uf, columnIndex, elementoUF, barramento);
+                    uf1.appendChild(buttonMudar);
+                    elementoColuna.appendChild(elementoUF);
                 } else {
                     if (uf.nome === 'Disjuntor Caixa Moldada Vertical' && uf.largura == 25) {
-                        ufElement.textContent = `DISJ. ${uf.valor}`;
+                        elementoUF.textContent = `DISJ. ${uf.valor}`;
                     } else if (uf.nome === 'Partida Direta Vertical' && uf.largura == 25) {
-                        ufElement.textContent = `PTD. ${uf.valor}`;
+                        elementoUF.textContent = `PTD. ${uf.valor}`;
                     } else {
-                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                        elementoUF.textContent = `${uf.nome} ${uf.valor}`;
                     }
-                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
-                    ufElement.style.fontSize = '90%';
-                    lockButton.textContent = 'Mudar';
-                    lockButton.classList.add('lock-button');
-                    lockButton.onclick = () => openLockMenu(uf, columnIndex, ufElement, barramento);
-                    ufElement.appendChild(lockButton);
-                    columnElement.appendChild(ufElement);
+                    elementoUF.style.width = (uf.largura / larguraColuna) * 100 + '%';
+                    elementoUF.style.fontSize = '90%';
+                    buttonMudar.textContent = 'Mudar';
+                    buttonMudar.classList.add('lock-button');
+                    buttonMudar.onclick = () => menuMudarUF(uf, columnIndex, elementoUF, barramento);
+                    elementoUF.appendChild(buttonMudar);
+                    elementoColuna.appendChild(elementoUF);
                 }
             });
         });
@@ -416,111 +418,106 @@ function bestFitMelhorado() {
 
       
 
-    function openLockMenu(uf, columnIndex, ufElement, barramento) {
-        const existingMenu = document.querySelector('.lock-menu');
-        if (existingMenu) {
-            document.body.removeChild(existingMenu);
+    function menuMudarUF(uf, columnIndex, elementoUF, barramento) {
+        const menuExistente = document.querySelector('.lock-menu');
+        if (menuExistente) {
+            document.body.removeChild(menuExistente);
         }
 
-        const lockMenu = document.createElement('div');
-        lockMenu.classList.add('lock-menu');
+        const menuMudar = document.createElement('div');
+        menuMudar.classList.add('lock-menu');
 
-        const lockLabel = document.createElement('label');
-        lockLabel.textContent = 'Selecione a Coluna:';
-        lockMenu.appendChild(lockLabel);
+        const labelMudar = document.createElement('label');
+        labelMudar.textContent = 'Selecione a Coluna:';
+        menuMudar.appendChild(labelMudar);
 
-        const lockSelect = document.createElement('select');
+        const selectMudar = document.createElement('select');
         for (let i = 0; i < document.querySelectorAll(`#bin${barramento} .bins`).length; i++) {
             const option = document.createElement('option');
             option.value = i;
             option.textContent = `Coluna ${i + 1}`;
-            lockSelect.appendChild(option);
+            selectMudar.appendChild(option);
         }
-        lockMenu.appendChild(lockSelect);
+        menuMudar.appendChild(selectMudar);
 
-        const lockButton = document.createElement('button');
-        lockButton.textContent = 'Mudar';
-        lockButton.onclick = () => lockItemToColumn(uf, columnIndex, ufElement, lockSelect.value, barramento);
-        lockMenu.appendChild(lockButton);
+        const buttonMudar = document.createElement('button');
+        buttonMudar.textContent = 'Mudar';
+        buttonMudar.onclick = () => lockItemToColumn(uf, columnIndex, elementoUF, selectMudar.value, barramento);
+        menuMudar.appendChild(buttonMudar);
 
-        document.body.insertBefore(lockMenu, document.body.firstChild);
+        document.body.insertBefore(menuMudar, document.body.firstChild);
     }
 
-    function lockItemToColumn(uf, columnIndex, ufElement, targetColumnIndex, barramento) {
-        const columnElement = document.querySelectorAll(`#bin${barramento} .bins`)[columnIndex];
-        if (columnElement.contains(ufElement)) {
-            columnElement.removeChild(ufElement);
+    function lockItemToColumn(uf, columnIndex, elementoUF, targetColumnIndex, barramento) {
+        const elementoColuna = document.querySelectorAll(`#bin${barramento} .bins`)[columnIndex];
+        if (elementoColuna.contains(elementoUF)) {
+            elementoColuna.removeChild(elementoUF);
         }
 
-        let currentCapacity = Array.from(columnElement.children)
+        let capacidadeAtual = Array.from(elementoColuna.children)
             .filter(item => item.classList.contains('item'))
-            .reduce((sum, item) => sum + parseInt(item.style.height), 0);
+            .reduce((soma, item) => soma + parseInt(item.style.height), 0);
 
-        if (currentCapacity === 0) {
-            columnElement.parentElement.removeChild(columnElement);
+        if (capacidadeAtual === 0) {
+            elementoColuna.parentElement.removeChild(elementoColuna);
         }
 
-        let targetColumnElement = document.querySelectorAll(`#bin${barramento} .bins`)[targetColumnIndex];
+        let colunaSelecionada = document.querySelectorAll(`#bin${barramento} .bins`)[targetColumnIndex];
 
-        if (!targetColumnElement) {
-            targetColumnElement = document.createElement('div');
-            targetColumnElement.classList.add('bins');
-            document.getElementById(`bin${barramento}`).appendChild(targetColumnElement);
+        if (!colunaSelecionada) {
+            colunaSelecionada = document.createElement('div');
+            colunaSelecionada.classList.add('bins');
+            document.getElementById(`bin${barramento}`).appendChild(colunaSelecionada);
         }
 
-        let targetCapacity = Array.from(targetColumnElement.children)
+        let capacidadeSelecionada = Array.from(colunaSelecionada.children)
             .filter(item => item.classList.contains('item'))
-            .reduce((sum, item) => sum + parseInt(item.style.height), 0);
+            .reduce((soma, item) => soma + parseInt(item.style.height), 0);
 
-        if (targetCapacity + parseInt(ufElement.style.height) > columnHeightCapacity / scale) {
-            const newColumnElement = document.createElement('div');
-            newColumnElement.classList.add('bins');
-            document.getElementById(`bin${barramento}`).appendChild(newColumnElement);
-            newColumnElement.appendChild(ufElement);
+        if (capacidadeSelecionada + parseInt(elementoUF.style.height) > alturaColuna / escalaPixels) {
+            const novaElementoColuna = document.createElement('div');
+            novaElementoColuna.classList.add('bins');
+            document.getElementById(`bin${barramento}`).appendChild(novaElementoColuna);
+            novaElementoColuna.appendChild(elementoUF);
         } else {
-            targetColumnElement.appendChild(ufElement);
+            colunaSelecionada.appendChild(elementoUF);
         }
 
-        let data = JSON.parse(sessionStorage.getItem('data'));
-        let ufData = data.find(item => item.nome === uf.nome && item.valor === uf.valor);
-        ufData.lockedColumn = targetColumnIndex;
-        sessionStorage.setItem('data', JSON.stringify(data));
+        let dados = JSON.parse(sessionStorage.getItem('dados'));
+        let ufdados = dados.find(item => item.nome === uf.nome && item.valor === uf.valor);
+        ufdados.lockedColumn = targetColumnIndex;
+        sessionStorage.setItem('dados', JSON.stringify(dados));
 
-        const lockMenu = document.querySelector('.lock-menu');
-        if (lockMenu) {
-            document.body.removeChild(lockMenu);
+        const menuMudar = document.querySelector('.lock-menu');
+        if (menuMudar) {
+            document.body.removeChild(menuMudar);
         }
 
-        removeEmptyColumns();
-    }
-
-    function removeEmptyColumns() {
-        document.querySelectorAll('.bins').forEach(columnElement => {
-            if (columnElement.children.length === 0) {
-                columnElement.parentElement.removeChild(columnElement);
+        document.querySelectorAll('.bins').forEach(elementoColuna => {
+            if (elementoColuna.children.length === 0) {
+                elementoColuna.parentElement.removeChild(elementoColuna);
             }
         });
     }
 }
 
-function algoritmos(sortType, algorithm) {
-    let data = JSON.parse(sessionStorage.getItem('data'));
-    console.log(data);
+function algoritmos(sortType, algoritmo) {
+    let dados = JSON.parse(sessionStorage.getItem('dados'));
     switch (sortType) {
         case 'Crescente':
-            data.sort((a, b) => a.altura - b.altura);
+            dados.sort((a, b) => a.altura - b.altura);
             break;
         case 'Decrescente':
-            data.sort((a, b) => b.altura - a.altura);
+            dados.sort((a, b) => b.altura - a.altura);
             break;
     }
 
-    const columnHeightCapacity = 1800;  
-    const columnWidthCapacity = 100;    
-    let heightScale = columnHeightCapacity / 400;
+    const alturaColuna = 1800;  
+    const larguraColuna = 100;    
+    let heightScale = alturaColuna / 400;
 
     // Inicializa colunas para cada barramento
-    let columns = {
+    let colunas = {
         A: [],
         Tie: [],
         B: []
@@ -531,8 +528,8 @@ function algoritmos(sortType, algorithm) {
     document.getElementById('binB').innerHTML = '';
     document.getElementById('binTie').innerHTML = '';
 
-    for (let k = 0; k < data.length; k++) {
-        let uf = data[k];
+    for (let k = 0; k < dados.length; k++) {
+        let uf = dados[k];
         let { nome, altura, valor, quantidade, barramento, largura } = uf;
 
         if (largura > 25 && largura <= 50) {
@@ -550,12 +547,12 @@ function algoritmos(sortType, algorithm) {
                 };
 
                 
-                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true, algorithm);
+                adicionarUF(novaUF, colunas, barramento, alturaColuna, true, algoritmo);
             }
 
             
             if (restante === 1) {
-                adicionarUF(uf, columns, barramento, columnHeightCapacity, false, algorithm);
+                adicionarUF(uf, colunas, barramento, alturaColuna, false, algoritmo);
             }
         } else if (largura <= 25) {
             let gruposDeQuatro = Math.floor(quantidade / 4);
@@ -571,7 +568,7 @@ function algoritmos(sortType, algorithm) {
                     quantidade: 1
                 };
         
-                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, true, algorithm);
+                adicionarUF(novaUF, colunas, barramento, alturaColuna, true, algoritmo);
             }
         
             // Lida com os casos onde o restante é 1, 2 ou 3
@@ -587,41 +584,41 @@ function algoritmos(sortType, algorithm) {
                     quantidade: 1
                 };
         
-                adicionarUF(novaUF, columns, barramento, columnHeightCapacity, false, algorithm);
+                adicionarUF(novaUF, colunas, barramento, alturaColuna, false, algoritmo);
             }
         } else {
             for (let j = 0; j < quantidade; j++) {
-                adicionarUF(uf, columns, barramento, columnHeightCapacity, false, algorithm);
+                adicionarUF(uf, colunas, barramento, alturaColuna, false, algoritmo);
             }
         }
         
     }
 
-    for (let barramento in columns) {
-        const barramentoColumns = columns[barramento];
+    for (let barramento in colunas) {
+        const colunasBarramento = colunas[barramento];
         const barramentoContainer = document.getElementById(`bin${barramento}`);
 
-        const titleElement = document.createElement('h2');
-        titleElement.textContent = `Barramento ${barramento}`;
-        barramentoContainer.appendChild(titleElement);
+        const nomeBarramento = document.createElement('h2');
+        nomeBarramento.textContent = `Barramento ${barramento}`;
+        barramentoContainer.appendChild(nomeBarramento);
 
-        barramentoColumns.forEach((column) => {
-            const columnElement = document.createElement('div');
-            columnElement.classList.add('bins');
-            barramentoContainer.appendChild(columnElement);
+        colunasBarramento.forEach((coluna) => {
+            const elementoColuna = document.createElement('div');
+            elementoColuna.classList.add('bins');
+            barramentoContainer.appendChild(elementoColuna);
 
-            column.ufs.forEach(uf => {
-                const ufElement = document.createElement('div');
-                ufElement.classList.add('item');
-                ufElement.style.height = (uf.altura / heightScale) + 'px';
+            coluna.ufs.forEach(uf => {
+                const elementoUF = document.createElement('div');
+                elementoUF.classList.add('item');
+                elementoUF.style.height = (uf.altura / heightScale) + 'px';
 
                 if (uf.largura === 100) {
                   if (uf.nome === 'Disjuntor Caixa Moldada Vertical') {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.display = 'flex';
+                    elementoUF.style.justifyContent = 'center';
+                    elementoUF.style.width = '100%';
+                    elementoUF.style.color = 'white';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -653,16 +650,16 @@ function algoritmos(sortType, algorithm) {
 
 
             
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
-                    ufElement.appendChild(uf4);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
+                    elementoUF.appendChild(uf3);
+                    elementoUF.appendChild(uf4);
                   } else if (uf.nome === 'Partida Direta Vertical' && Number(uf.valor.match(/\d+/g).join('')) < 30) {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.display = 'flex';
+                    elementoUF.style.justifyContent = 'center';
+                    elementoUF.style.width = '100%';
+                    elementoUF.style.color = 'white';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -694,17 +691,17 @@ function algoritmos(sortType, algorithm) {
 
 
             
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
-                    ufElement.appendChild(uf4);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
+                    elementoUF.appendChild(uf3);
+                    elementoUF.appendChild(uf4);
                   } 
                   else {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.display = 'flex';
-                    ufElement.style.justifyContent = 'center';
-                    ufElement.style.width = '100%';
-                    ufElement.style.color = 'white';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.display = 'flex';
+                    elementoUF.style.justifyContent = 'center';
+                    elementoUF.style.width = '100%';
+                    elementoUF.style.color = 'white';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -722,13 +719,13 @@ function algoritmos(sortType, algorithm) {
 
 
             
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
                   } 
                 } else if (uf.largura === 50) {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.width = '50%';
-                    ufElement.style.color = 'white';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.width = '50%';
+                    elementoUF.style.color = 'white';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -751,12 +748,12 @@ function algoritmos(sortType, algorithm) {
                         uf2.textContent = `DISJ. ${uf.valor}`;
                     }
         
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
                 } else if (uf.largura === 75) {
-                    ufElement.classList.add('gaveta-vertical');
-                    ufElement.style.width = '75%';
-                    ufElement.style.color = 'white';
+                    elementoUF.classList.add('gaveta-vertical');
+                    elementoUF.style.width = '75%';
+                    elementoUF.style.color = 'white';
 
                     const uf1 = document.createElement('div');
                     uf1.classList.add('sub-item');
@@ -787,117 +784,107 @@ function algoritmos(sortType, algorithm) {
                         uf3.textContent = `DISJ. ${uf.valor}`;
                     }
         
-                    ufElement.appendChild(uf1);
-                    ufElement.appendChild(uf2);
-                    ufElement.appendChild(uf3);
+                    elementoUF.appendChild(uf1);
+                    elementoUF.appendChild(uf2);
+                    elementoUF.appendChild(uf3);
                 } else {
             
-                    ufElement.style.width = (uf.largura / columnWidthCapacity) * 100 + '%';
+                    elementoUF.style.width = (uf.largura / larguraColuna) * 100 + '%';
                     if (uf.nome === 'Disjuntor Caixa Moldada Vertical' && uf.largura == 25) {
-                        ufElement.textContent = `DISJ. ${uf.valor}`;
+                        elementoUF.textContent = `DISJ. ${uf.valor}`;
                     }
                     else if (uf.nome === 'Partida Direta Vertical' && uf.largura == 25) {
-                        ufElement.textContent = `PTD. ${uf.valor}`;
+                        elementoUF.textContent = `PTD. ${uf.valor}`;
                     }
                     else {
-                        ufElement.textContent = `${uf.nome} ${uf.valor}`;
+                        elementoUF.textContent = `${uf.nome} ${uf.valor}`;
                     }
                 }
 
-                columnElement.appendChild(ufElement);
+                elementoColuna.appendChild(elementoUF);
             });
         });
     }
 }
 
-function adicionarUF(uf, columns, barramento, columnHeightCapacity, gavetaVertical, algorithm = 'bestFit') {
+function adicionarUF(uf, colunas, barramento, alturaColuna, gavetaVertical, algoritmo = 'bestFit') {
     let { nome, altura, valor, largura } = uf;
 
-    // Se a UF for do tipo "Tie Breaker" e tiver altura menor que 1000
     if (nome === 'Tie Breaker' && altura < 1000) {
-        // Encontrar o barramento com mais espaço sobrando
-        let bestBarramento = barramento;
-        let maxAvailableSpace = -1;
+        let melhorBarramento = barramento;
+        let maiorEspacoSobrando = -1;
 
-        for (let b in columns) {
-            let totalUsedSpace = columns[b].reduce((sum, column) => sum + column.currentCapacity, 0);
-            let availableSpace = columnHeightCapacity * columns[b].length - totalUsedSpace;
+        for (let b in colunas) {
+            let espacoTotalUsado = colunas[b].reduce((soma, coluna) => soma + coluna.capacidadeAtual, 0);
+            let espacoDisponivel = alturaColuna * colunas[b].length - espacoTotalUsado;
 
-            if (availableSpace > maxAvailableSpace) {
-                maxAvailableSpace = availableSpace;
-                bestBarramento = b;
+            if (espacoDisponivel > maiorEspacoSobrando) {
+                maiorEspacoSobrando = espacoDisponivel;
+                melhorBarramento = b;
             }
         }
 
-        // Definir o barramento que foi encontrado como o melhor para adicionar a UF
-        barramento = bestBarramento;
+        barramento = melhorBarramento;
     }
 
-    // Atribuir as colunas relevantes para o barramento selecionado
-    let relevantColumns = columns[barramento];
+    let colunasBarramento = colunas[barramento];
 
-    switch (algorithm) {
+    switch (algoritmo) {
         case 'bestFit':
-            // Algoritmo Best Fit
-            let bestFitColumn = null;
-            let minSpaceLeft = columnHeightCapacity + 1;
+            let melhorColuna = null;
+            let menorEspacoSobrando = alturaColuna + 1;
 
-            relevantColumns.forEach((column) => {
-                const availableSpace = columnHeightCapacity - column.currentCapacity;
-                if (availableSpace >= altura && availableSpace < minSpaceLeft) {
-                    bestFitColumn = column;
-                    minSpaceLeft = availableSpace;
+            colunasBarramento.forEach((coluna) => {
+                const espacoDisponivel = alturaColuna - coluna.capacidadeAtual;
+                if (espacoDisponivel >= altura && espacoDisponivel < menorEspacoSobrando) {
+                    melhorColuna = coluna;
+                    menorEspacoSobrando = espacoDisponivel;
                 }
             });
 
-            if (bestFitColumn) {
-                bestFitColumn.ufs.push({ nome, altura, valor, largura, gavetaVertical });
-                bestFitColumn.currentCapacity += altura;
+            if (melhorColuna) {
+                melhorColuna.ufs.push({ nome, altura, valor, largura, gavetaVertical });
+                melhorColuna.capacidadeAtual += altura;
             } else {
-                const newColumn = {
-                    currentCapacity: altura,
+                const novaColuna = {
+                    capacidadeAtual: altura,
                     ufs: [{ nome, altura, valor, largura, gavetaVertical }]
                 };
-                relevantColumns.push(newColumn);
+                colunasBarramento.push(novaColuna);
             }
             break;
 
         case 'nextFit':
-            // Algoritmo Next Fit
-            let lastColumn = relevantColumns[relevantColumns.length - 1];
+            let ultimaColuna = colunasBarramento[colunasBarramento.length - 1];
 
-            if (lastColumn && lastColumn.currentCapacity + altura <= columnHeightCapacity) {
-                lastColumn.ufs.push({ nome, altura, valor, largura, gavetaVertical });
-                lastColumn.currentCapacity += altura;
+            if (ultimaColuna && ultimaColuna.capacidadeAtual + altura <= alturaColuna) {
+                ultimaColuna.ufs.push({ nome, altura, valor, largura, gavetaVertical });
+                ultimaColuna.capacidadeAtual += altura;
             } else {
-                const newColumn = {
-                    currentCapacity: altura,
+                const novaColuna = {
+                    capacidadeAtual: altura,
                     ufs: [{ nome, altura, valor, largura, gavetaVertical }]
                 };
-                relevantColumns.push(newColumn);
+                colunasBarramento.push(novaColuna);
             }
             break;
 
         case 'binCompletion':
-            // Algoritmo Bin Completion
-            let targetColumn = relevantColumns.find(column => column.currentCapacity + altura <= columnHeightCapacity);
-
-            if (targetColumn) {
-                targetColumn.ufs.push({ nome, altura, valor, largura, gavetaVertical });
-                targetColumn.currentCapacity += altura;
+            let colunaSelecionada = colunasBarramento.find(coluna => coluna.capacidadeAtual + altura <= alturaColuna);
+            if (colunaSelecionada) {
+                colunaSelecionada.ufs.push({ nome, altura, valor, largura, gavetaVertical });
+                colunaSelecionada.capacidadeAtual += altura;
             } else {
-                const newColumn = {
-                    currentCapacity: altura,
+                const novaColuna = {
+                    capacidadeAtual: altura,
                     ufs: [{ nome, altura, valor, largura, gavetaVertical }]
                 };
-                relevantColumns.push(newColumn);
+                colunasBarramento.push(novaColuna);
             }
             break;
 
-            targetColumn.sort((a, b) => b.columnHeightCapacity - a.columnHeightCapacity);
-
         default:
-            console.error('Algoritmo desconhecido:', algorithm);
+            console.error('Algoritmo desconhecido:', algoritmo);
             break;
     }
 }

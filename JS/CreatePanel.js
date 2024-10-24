@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const largura = dados ? dados.largura : '';
         const medida = unidade.medida;
 
-        const newRow = tabela.insertRow();
-        newRow.innerHTML = `
+        const linhadaTabela = tabela.insertRow();
+        linhadaTabela.innerHTML = `
             <td>${unidadeNome}</td>
             <td>${altura}</td>
             <td>${valor} ${medida}</td>
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const conjuntoNome = conjuntoSelect.value;
 
-        const data = Array.from(tabela.rows).map(row => ({
+        const dados = Array.from(tabela.rows).map(row => ({
             nome: row.cells[0].innerText,
             altura: Number(row.cells[1].innerText),
             valor: row.cells[2].innerText,
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
             largura: row.cells[6].innerText
         }));
 
-        sessionStorage.setItem('data', JSON.stringify(data));
+        sessionStorage.setItem('dados', JSON.stringify(dados));
         window.location.href = 'ViewPanel.html';
     });
 

@@ -158,7 +158,6 @@ p {
     text-align: center;
     width: 100%;
     border: 0.1px solid black;
-    white-space: normal;
 }
 
 .sub-item button{
@@ -176,6 +175,7 @@ p {
     padding: 0px;
     text-align: center;
     display: flex;
+    white-space: normal;
 }
 
 .large {
